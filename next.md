@@ -7,3 +7,8 @@
 > 使用python或者webmagic爬虫，推荐每日好文。
 
 以上工作内容只是简单的罗列，详细内容后面补充。
+
+工作记录
+
+1. springBoot默认使用的是tomcat-jdbc的数据库连接池，默认使用的是dbcp的
+2. 日志使用由'Starter POMs'，使用Commons Logging记录日志
