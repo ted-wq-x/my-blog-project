@@ -36,7 +36,7 @@
                     isValid = false;
                     var params = $form_container.serialize();
                     tale.post({
-                        url: '/install/conn_test',
+                        url: '/install/testCon',
                         data: params,
                         success: function (result) {
                             if (result && result.success) {

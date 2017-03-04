@@ -1,11 +1,12 @@
 #include('./header.html',{active: 'publish', title:'保存文章'})
-<link href="/static/admin/plugins/tagsinput/jquery.tagsinput.css" rel="stylesheet">
-<link href="/static/admin/plugins/select2/dist/css/select2-bootstrap.css" rel="stylesheet">
-<link href="/static/admin/plugins/toggles/toggles.css" rel="stylesheet">
+<html xmlns:th="http://www.thymeleaf.org">
+<link th:href="@{/admin/plugins/tagsinput/jquery.tagsinput.css}" rel="stylesheet"/>
+<link th:href="@{/admin/plugins/select2/dist/css/select2-bootstrap.css}" rel="stylesheet"/>
+<link th:href="@{/admin/plugins/toggles/toggles.css}" rel="stylesheet"/>
 
 <link href="//cdn.bootcss.com/multi-select/0.9.12/css/multi-select.css" rel="stylesheet"/>
 <link href="//cdn.bootcss.com/select2/3.4.8/select2.min.css" rel="stylesheet"/>
-<link href="/static/admin/plugins/md/css/style.css" rel="stylesheet"/>
+<link th:href="@{/admin/plugins/md/css/style.css}" rel="stylesheet"/>
 <style>
     #tags_tagsinput {
         background-color: #fafafa;
@@ -115,19 +116,19 @@
 </div>
 #include('./footer.html')
 
-<script src="/static/admin/plugins/tagsinput/jquery.tagsinput.min.js"></script>
-<script src="/static/admin/plugins/jquery-multi-select/jquery.quicksearch.js"></script>
+<script th:src="@{/admin/plugins/tagsinput/jquery.tagsinput.min.js}"></script>
+<script th:src="@{/admin/plugins/jquery-multi-select/jquery.quicksearch.js}"></script>
 
-<script src="/static/admin/plugins/md/js/jquery.scrollto.js"></script>
-<script src="/static/admin/plugins/md/js/pagedown.js"></script>
-<script src="/static/admin/plugins/md/js/pagedown-extra.js"></script>
-<script src="/static/admin/plugins/md/js/diff.js"></script>
-<script src="/static/admin/plugins/md/js/md.js"></script>
+<script th:src="@{/admin/plugins/md/js/jquery.scrollto.js}"></script>
+<script th:src="@{/admin/plugins/md/js/pagedown.js}"></script>
+<script th:src="@{/admin/plugins/md/js/pagedown-extra.js}"></script>
+<script th:src="@{/admin/plugins/md/js/diff.js}"></script>
+<script th:src="@{/admin/plugins/md/js/md.js}"></script>
 
-<script src="//cdn.bootcss.com/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>
-<script src="//cdn.bootcss.com/select2/3.4.8/select2.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-toggles/2.0.4/toggles.min.js"></script>
-<script src="/static/admin/js/article.js"></script>
+<script th:src="@{//cdn.bootcss.com/multi-select/0.9.12/js/jquery.multi-select.min.js}"></script>
+<script th:src="@{//cdn.bootcss.com/select2/3.4.8/select2.min.js}"></script>
+<script th:src="@{//cdn.bootcss.com/jquery-toggles/2.0.4/toggles.min.js}"></script>
+<script th:src="@{/admin/js/article.js}"></script>
 
 </body>
 </html>

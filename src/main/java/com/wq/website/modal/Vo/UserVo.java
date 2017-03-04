@@ -1,9 +1,9 @@
-package com.wq.website.modal;
+package com.wq.website.modal.Vo;
 
 /**
  * Created by BlueT on 2017/3/2.
  */
-public class User {
+public class UserVo {
     // user表主键
     private Integer uid;
 
@@ -116,7 +116,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserVo{" +
                 "uid=" + uid +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
