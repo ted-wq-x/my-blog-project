@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wq.website.dao.LogMapper">
+
+<insert id="insertLog" parameterType="com.wq.website.modal.Vo.LogVo" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO t_logs(action, data, author_id, ip, created) VALUES (#{action},#{data},#{author_id},#{ip},#{created})
+</insert>
+
+
+</mapper>
