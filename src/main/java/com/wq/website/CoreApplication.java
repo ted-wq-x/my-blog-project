@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.wq.website.dao")
-@SpringBootApplication(scanBasePackages = "com.wq.website")
+@SpringBootApplication
 public class CoreApplication  {
 
 	public static void main(String[] args) {

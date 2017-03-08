@@ -6,18 +6,18 @@ import com.wq.website.modal.Vo.DataSourceVo;
  * Created by BlueT on 2017/3/4.
  */
 public class InstallBo extends DataSourceVo {
-    private String AdminUser;
+    private String adminUser;
     private String siteTitle;
     private String siteUrl;
     private String adminEmail;
     private String adminPwd;
 
     public String getAdminUser() {
-        return AdminUser;
+        return adminUser;
     }
 
     public void setAdminUser(String adminUser) {
-        AdminUser = adminUser;
+        this.adminUser = adminUser;
     }
 
     public String getSiteTitle() {
@@ -55,7 +55,7 @@ public class InstallBo extends DataSourceVo {
     @Override
     public String toString() {
         return "InstallBo{" +
-                "AdminUser='" + AdminUser + '\'' +
+                "adminUser='" + adminUser + '\'' +
                 ", siteTitle='" + siteTitle + '\'' +
                 ", siteUrl='" + siteUrl + '\'' +
                 ", adminEmail='" + adminEmail + '\'' +

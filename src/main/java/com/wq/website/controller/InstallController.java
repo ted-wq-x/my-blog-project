@@ -9,12 +9,15 @@ import com.wq.website.modal.Vo.LogVo;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
 import com.wq.website.service.IUserService;
+import com.wq.website.utils.CustomerRoutingDataSource;
 import com.wq.website.utils.LogActions;
 import com.wq.website.utils.TaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,8 @@ import javax.annotation.Resource;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -41,6 +46,9 @@ public class InstallController {
 
     @Resource
     private ILogService logService;
+
+    @Resource
+    private CustomerRoutingDataSource dataSource;
 
     /**
      * 跳转安装页面
@@ -96,11 +104,18 @@ public class InstallController {
     @ResponseBody
     public RestResponseBo doInstall(InstallBo installBo) {
 
+//        网站参数
         String admin_pwd = installBo.getAdminPwd();
         String admin_email = installBo.getAdminEmail();
         String admin_user = installBo.getAdminUser();
         String site_url = installBo.getSiteUrl();
         String site_title = installBo.getSiteTitle();
+
+//        数据库参数
+        String dataBaseUrl = installBo.getUrl();
+        String dbName = installBo.getDbName();
+        String username = installBo.getUsername();
+        String password = installBo.getPassword();
 
         if (StringUtils.isBlank(site_title) ||
                 StringUtils.isBlank(site_url) ||
@@ -109,10 +124,10 @@ public class InstallController {
             return RestResponseBo.fail("请确认网站信息输入完整");
         }
 
-        if (StringUtils.isBlank(installBo.getUrl()) ||
-                StringUtils.isBlank(installBo.getDbName()) ||
-                StringUtils.isBlank(installBo.getUsername()) ||
-                StringUtils.isBlank(installBo.getPassword())) {
+        if (StringUtils.isBlank(dataBaseUrl) ||
+                StringUtils.isBlank(dbName) ||
+                StringUtils.isBlank(username) ||
+                StringUtils.isBlank(password)) {
             return RestResponseBo.fail("请确认数据库信息输入完整");
         }
 
@@ -124,9 +139,14 @@ public class InstallController {
             return RestResponseBo.fail("邮箱格式不正确");
         }
 
+        String cp = InstallController.class.getClassLoader().getResource("").getPath();
+        File lock = new File(cp + "install.lock");
         try {
-
             try {
+                //生成配置文件
+                TaleUtils.updateJDBCFile(dataBaseUrl,dbName,username,password);
+                lock.createNewFile();
+
                 //保存站点数据
                 UserVo users = new UserVo();
                 users.setUsername(admin_user);
@@ -140,18 +160,6 @@ public class InstallController {
                     throw new TipException("初始化站点失败");
                 }
 
-                //生成配置文件
-                Properties props = new Properties();
-                String cp = InstallController.class.getClassLoader().getResource("").getPath();
-                FileOutputStream fos = new FileOutputStream(cp + "application-jdbc.properties");
-                props.setProperty("db_host", installBo.getUrl());
-                props.setProperty("db_name", installBo.getDbName());
-                props.setProperty("db_user", installBo.getUsername());
-                props.setProperty("db_pass", installBo.getPassword());
-                props.store(fos, "update jdbc info.");
-                fos.close();
-                File lock = new File(cp + "install.lock");
-                lock.createNewFile();
 
                 //保存操作日志
                 LogVo logVo = new LogVo();
@@ -160,6 +168,9 @@ public class InstallController {
                 logVo.setAuthor_id(uid);
                 logService.insertLog(logVo);
             } catch (Exception e) {
+                if(lock.exists()){
+                    lock.delete();
+                }
                 throw new TipException("初始化站点失败");
             }
 
@@ -190,6 +201,5 @@ public class InstallController {
         }
         return RestResponseBo.ok();
     }
-
 
 }

@@ -58,41 +58,41 @@
                     </div>
                     <div class="panel-body">
                         <form id="wizard-validation-form">
-                            <div>
+                            <div id="steps">
                                 <h3>网站设置</h3>
                                 <section>
                                     <div class="form-group clearfix">
                                         <label class="col-md-3 control-label">* 网站名称</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" name="site_title" type="text" placeholder="请输入网站名称"
+                                            <input class="form-control" name="siteTitle" type="text" placeholder="请输入网站名称"
                                                    required="required" aria-required="true" maxlength="100"/>
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <label class="col-md-3 control-label">* 网站地址</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" name="site_url" type="text" placeholder="请输入网站地址，未绑定域名则输入http://ip:port"
+                                            <input class="form-control" name="siteUrl" type="text" placeholder="请输入网站地址，未绑定域名则输入http://ip:port"
                                                    required="required" aria-required="true"/>
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <label class="col-md-3 control-label">* 管理员账号</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" name="admin_user" type="text" placeholder="请输入管理员账号"
+                                            <input class="form-control" name="adminUser" type="text" placeholder="请输入管理员账号"
                                                    required="required" aria-required="true" maxlength="50"/>
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <label class="col-md-3 control-label">&nbsp;&nbsp;管理员邮箱</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" name="admin_email" type="email"
+                                            <input class="form-control" name="adminEmail" type="email"
                                                    placeholder="请输入管理员邮箱"/>
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <label class="col-md-3 control-label">* 管理员密码</label>
                                         <div class="col-md-8">
-                                            <input id="password1" name="admin_pwd" type="password" class="form-control"
+                                            <input id="password1" name="adminPwd" type="password" class="form-control"
                                                    required="required" aria-required="true" rangelength="[6,14]" placeholder="请输入6-14位管理员密码"/>
                                         </div>
                                     </div>
@@ -106,7 +106,6 @@
                                 </section>
                                 <h3>数据库设置</h3>
                                 <section>
-
                                     <div class="form-group clearfix">
                                         <label class="col-md-3 control-label" for="name2">* 数据库地址</label>
                                         <div class="col-md-8">
@@ -167,12 +166,13 @@
 </div>
 
 <!-- Main  -->
-<script th:src="@{https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js}" ></script>
+<!--<script th:src="@{https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js}" ></script>-->
+<script th:src="@{//cdn.bootcss.com/jquery/3.1.1/jquery.min.js}" ></script>
+<script th:src="@{https://cdn.bootcss.com/jquery-steps/1.1.0/jquery.steps.min.js}"></script>
 <script th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 <script th:src="@{https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.js}"></script>
 <script th:src="@{https://cdn.bootcss.com/jquery-validate/1.15.1/jquery.validate.min.js}"></script>
 <script th:src="@{https://cdn.bootcss.com/jquery-validate/1.15.1/localization/messages_zh.min.js}"></script>
-<script th:src="@{https://cdn.bootcss.com/jquery-steps/1.1.0/jquery.steps.min.js}"></script>
 <script th:src="@{/admin/js/base.js}"></script>
 <script th:src="@{/admin/js/install.js}"></script>
 </body>

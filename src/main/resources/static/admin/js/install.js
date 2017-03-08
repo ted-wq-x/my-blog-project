@@ -14,10 +14,10 @@
                 element.after(error);
             }
         });
-        $form_container.children("div").steps({
+        $("#steps").steps({
             headerTag: "h3",
             bodyTag: "section",
-            transitionEffect: "slideLeft",
+            transitionEffect: "fade",
             labels: {
                 previous: "上一步",
                 next: "下一步",
@@ -28,11 +28,15 @@
             onStepChanging: function (event, currentIndex, newIndex) {
                 tale.showLoading();
                 $form_container.validate().settings.ignore = ":disabled,:hidden";
-                var isValid = $form_container.valid();
-                if(!isValid){
-                    tale.hideLoading();
-                }
-                if (isValid && currentIndex == 1) {
+                var isValid=true;
+                // if(newIndex!=0){
+                //      isValid = $form_container.valid();
+                //     if(!isValid){
+                //         tale.hideLoading();
+                //     }
+                // }
+
+                if (isValid && currentIndex == 1&&newIndex==2) {
                     isValid = false;
                     var params = $form_container.serialize();
                     tale.post({
@@ -42,7 +46,7 @@
                             if (result && result.success) {
                                 tale.showLoading();
                                 tale.post({
-                                    url: '/install',
+                                    url: '/install/',
                                     data: params,
                                     success: function (result) {
                                         if (result && result.success) {
@@ -61,6 +65,7 @@
                     });
                     return isValid;
                 } else {
+                    tale.hideLoading();
                     return isValid;
                 }
             },

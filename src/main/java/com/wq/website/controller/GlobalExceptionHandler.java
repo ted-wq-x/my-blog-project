@@ -17,7 +17,8 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(value = Exception.class)
-    public String exception(){
+    public String exception(Exception e){
+        System.out.println(e.getMessage());
         return "/comm/error_404";
     }
 }

@@ -15,16 +15,19 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class initListener implements ApplicationListener<ApplicationReadyEvent> {
     private static final Logger LOGGER = LoggerFactory.getLogger(initListener.class);
 
+    private static boolean isOk = false;
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         LOGGER.debug("Enter method:init listener");
-        ConfigurableApplicationContext applicationContext = applicationReadyEvent.getApplicationContext();
-        OptionMapper optionDao = applicationContext.getBean(OptionMapper.class);
+        if(isOk){
+            ConfigurableApplicationContext applicationContext = applicationReadyEvent.getApplicationContext();
+            OptionMapper optionDao = applicationContext.getBean(OptionMapper.class);
 
-        // 初始化加载数据库配置
-        optionDao.getOptions().forEach((option)->{
-            WebConst.initConfig.put(option.getName(), option.getValue());
-        });
+            // 初始化加载数据库配置
+            optionDao.getOptions().forEach((option)->{
+                WebConst.initConfig.put(option.getName(), option.getValue());
+            });
+        }
         LOGGER.debug("Exit method:init listener");
     }
 }
