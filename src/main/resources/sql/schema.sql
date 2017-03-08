@@ -12,7 +12,7 @@ CREATE TABLE `t_logs` (
   `ip` varchar(20) DEFAULT NULL COMMENT '日志产生的ip',
   `created` int(10) DEFAULT NULL COMMENT '日志创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `t_attach`;
 
@@ -24,7 +24,7 @@ CREATE TABLE `t_attach` (
   `author_id` int(10) DEFAULT NULL,
   `created` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `t_comments`;
 
@@ -46,7 +46,7 @@ CREATE TABLE `t_comments` (
   PRIMARY KEY (`coid`),
   KEY `cid` (`cid`),
   KEY `created` (`created`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='评论';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论';
 
 DROP TABLE IF EXISTS `t_contents`;
 
@@ -70,7 +70,7 @@ CREATE TABLE `t_contents` (
   PRIMARY KEY (`cid`),
   UNIQUE KEY `slug` (`slug`),
   KEY `created` (`created`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='内容表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='内容表';
 
 LOCK TABLES `t_contents` WRITE;
 
@@ -93,7 +93,7 @@ CREATE TABLE `t_metas` (
   `parent` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`mid`),
   KEY `slug` (`slug`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='项目';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目';
 
 LOCK TABLES `t_metas` WRITE;
 
@@ -111,7 +111,7 @@ CREATE TABLE `t_options` (
   `value` varchar(1000) DEFAULT '' COMMENT '配置值',
   `description` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='配置表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配置表';
 
 LOCK TABLES `t_options` WRITE;
 
@@ -135,7 +135,7 @@ CREATE TABLE `t_relationships` (
   `cid` int(10) unsigned NOT NULL COMMENT '内容主键',
   `mid` int(10) unsigned NOT NULL COMMENT '项目主键',
   PRIMARY KEY (`cid`,`mid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='关联表';
 
 LOCK TABLES `t_relationships` WRITE;
 
@@ -161,4 +161,4 @@ CREATE TABLE `t_users` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `name` (`username`),
   UNIQUE KEY `mail` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';

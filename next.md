@@ -12,3 +12,7 @@
 
 1. springBoot默认使用的是tomcat-jdbc的数据库连接池，默认使用的是dbcp的
 2. 日志使用由'Starter POMs'，使用Commons Logging记录日志
+
+存在的问题
+
+1. 无法动态修改数据源的配置，只能重启解决（由于数据库连接参数变化造成的）

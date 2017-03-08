@@ -9,8 +9,10 @@ public interface IUserService {
 
     /**
      * 保存用户数据
+     *
      * @param userVo 用户数据
      * @return 主键
      */
+
     Integer insertUser(UserVo userVo);
 }

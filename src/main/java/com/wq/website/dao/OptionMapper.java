@@ -29,4 +29,11 @@ public interface OptionMapper {
      * @return
      */
     List<OptionVo> getOptions();
+
+    /**
+     * 更新option字段
+     * @param optionVo 待更新对象
+     * @return 更新记录数
+     */
+    int updateOptionByName(OptionVo optionVo);
 }

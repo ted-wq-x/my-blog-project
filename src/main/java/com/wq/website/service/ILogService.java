@@ -9,6 +9,7 @@ public interface ILogService {
 
     /**
      * 保存操作日志
+     *
      * @param logVo
      */
     void insertLog(LogVo logVo);

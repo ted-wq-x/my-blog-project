@@ -19,6 +19,10 @@
     <select id="getOptions" resultMap="optionMap">
         SELECT * FROM t_options 
     </select>
+
+    <update id="updateOptionByName" parameterType="com.wq.website.modal.Vo.OptionVo">
+        UPDATE t_options SET value=#{value},description=#{description} WHERE name=#{name}
+    </update>
     
     <resultMap id="optionMap" type="com.wq.website.modal.Vo.OptionVo">
         <id column="name" property="name"/>

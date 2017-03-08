@@ -2,23 +2,23 @@ package com.wq.website.controller;
 
 import com.wq.website.constant.WebConst;
 import com.wq.website.exception.TipException;
+import com.wq.website.listener.InitListener;
 import com.wq.website.modal.Bo.InstallBo;
 import com.wq.website.modal.Bo.RestResponseBo;
 import com.wq.website.modal.Vo.DataSourceVo;
 import com.wq.website.modal.Vo.LogVo;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
+import com.wq.website.service.IOptionService;
 import com.wq.website.service.IUserService;
-import com.wq.website.utils.CustomerRoutingDataSource;
 import com.wq.website.utils.LogActions;
 import com.wq.website.utils.TaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,18 +26,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created by BlueT on 2017/3/3.
  */
 @Controller
 @RequestMapping("/install")
+@Transactional(rollbackFor = TipException.class)
 public class InstallController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstallController.class);
 
@@ -48,7 +49,7 @@ public class InstallController {
     private ILogService logService;
 
     @Resource
-    private CustomerRoutingDataSource dataSource;
+    private IOptionService optionService;
 
     /**
      * 跳转安装页面
@@ -144,7 +145,7 @@ public class InstallController {
         try {
             try {
                 //生成配置文件
-                TaleUtils.updateJDBCFile(dataBaseUrl,dbName,username,password);
+                TaleUtils.updateJDBCFile(dataBaseUrl, dbName, username, password);
                 lock.createNewFile();
 
                 //保存站点数据
@@ -160,7 +161,6 @@ public class InstallController {
                     throw new TipException("初始化站点失败");
                 }
 
-
                 //保存操作日志
                 LogVo logVo = new LogVo();
                 logVo.setCreated(TaleUtils.getCurrentTime());
@@ -168,9 +168,10 @@ public class InstallController {
                 logVo.setAuthor_id(uid);
                 logService.insertLog(logVo);
             } catch (Exception e) {
-                if(lock.exists()){
+                if (lock.exists()) {
                     lock.delete();
                 }
+                LOGGER.error("insert fail:{}", e.getMessage());
                 throw new TipException("初始化站点失败");
             }
 
@@ -179,17 +180,13 @@ public class InstallController {
             }
 
 //            更新参数配置
+            optionService.insertOption("site_title", site_title);
+            optionService.insertOption("site_url", site_url);
 //            更新配置常量map
-//            TODO
-//            optionsService.saveOption("site_title", site_title);
-//            optionsService.saveOption("site_url", site_url);
-//
-//            Config config = new Config();
-//            config.addAll(optionsService.getOptions());
-//            TaleConst.OPTIONS = config;
-//            TaleConst.INSTALL = true;
-//            Commons.setSiteService(siteService);
+            optionService.getOptions().forEach((option) -> WebConst.initConfig.put(option.getName(), option.getValue()));
+            WebConst.INSTALL = true;
 
+            InitListener.dbIsOk = true;
         } catch (Exception e) {
             String msg = "安装失败";
             if (e instanceof TipException) {
@@ -201,5 +198,6 @@ public class InstallController {
         }
         return RestResponseBo.ok();
     }
+
 
 }

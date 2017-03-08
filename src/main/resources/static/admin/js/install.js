@@ -29,13 +29,12 @@
                 tale.showLoading();
                 $form_container.validate().settings.ignore = ":disabled,:hidden";
                 var isValid=true;
-                // if(newIndex!=0){
-                //      isValid = $form_container.valid();
-                //     if(!isValid){
-                //         tale.hideLoading();
-                //     }
-                // }
-
+                if(newIndex!=0){
+                     isValid = $form_container.valid();
+                    if(!isValid){
+                        tale.hideLoading();
+                    }
+                }
                 if (isValid && currentIndex == 1&&newIndex==2) {
                     isValid = false;
                     var params = $form_container.serialize();
