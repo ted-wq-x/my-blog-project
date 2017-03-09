@@ -1,4 +1,4 @@
-package com.wq.website.utils;
+package com.wq.website.dto;
 
 /**
  * 日志表的action字段

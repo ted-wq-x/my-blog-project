@@ -29,4 +29,13 @@ public class UserServiceImpl implements IUserService {
         }
         return uid;
     }
+
+    @Override
+    public UserVo queryUserById(Integer uid) {
+        UserVo userVo = null;
+        if (uid != null) {
+            userVo = userDao.findByUid(uid);
+        }
+        return userVo;
+    }
 }

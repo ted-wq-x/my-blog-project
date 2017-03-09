@@ -15,4 +15,11 @@ public interface IUserService {
      */
 
     Integer insertUser(UserVo userVo);
+
+    /**
+     * 通过uid查找对象
+     * @param uid
+     * @return
+     */
+    UserVo queryUserById(Integer uid);
 }

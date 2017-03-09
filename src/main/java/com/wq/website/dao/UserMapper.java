@@ -13,5 +13,7 @@ public interface UserMapper
     int insertUserVo(UserVo user);
     
     UserVo findByName(String name);
+
+    UserVo findByUid(Integer uid);
     
 }

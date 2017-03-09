@@ -14,4 +14,10 @@
                 #{logged}, #{group_name});
     </insert>
 
+    <select id="findByUid" resultType="com.wq.website.modal.Vo.UserVo" parameterType="Integer">
+        SELECT *
+        FROM t_users
+        WHERE uid = #{uid};
+    </select>
+
 </mapper>
