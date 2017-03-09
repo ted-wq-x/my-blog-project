@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 /**
+ * 首页
  * Created by Administrator on 2017/3/8 008.
  */
 @Controller
