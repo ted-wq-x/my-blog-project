@@ -34,11 +34,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
+ * 如果使用@Transcatinal注解添加到index方法上会默认开启数据库连接，由于此时还没有数据库配置所以会报错
  * Created by BlueT on 2017/3/3.
  */
 @Controller
-@RequestMapping("/install")
-@Transactional(rollbackFor = TipException.class)
 public class InstallController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstallController.class);
 
@@ -57,7 +56,7 @@ public class InstallController {
      * @param map
      * @return view
      */
-    @GetMapping(value = "/")
+    @GetMapping(value = "/install")
     public String index(ModelMap map) {
         String path = InstallController.class.getResource("").getPath();
         File file = new File(path + WebConst.INSTALL_FILE_CONF);
@@ -74,7 +73,7 @@ public class InstallController {
      *
      * @return
      */
-    @PostMapping(value = "/testCon")
+    @PostMapping(value = "/install/testCon")
     @ResponseBody
     public RestResponseBo testConnection(DataSourceVo dataSourceVo) {
         String url = "jdbc:mysql://" + dataSourceVo.getUrl() + "/" + dataSourceVo.getDbName() + "?useUnicode=true&characterEncoding=utf-8&useSSL=false";
@@ -84,10 +83,11 @@ public class InstallController {
             ScriptRunner runner = new ScriptRunner(con);
             runner.setAutoCommit(false);
             runner.setStopOnError(true);
-            String cp = InstallController.class.getClassLoader().getResource("").getPath();
-            InputStreamReader isr = new InputStreamReader(new FileInputStream(cp + "/sql/schema.sql"), "UTF-8");
+            InputStreamReader isr = new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("sql/schema.sql"), "UTF-8");
             BufferedReader read = new BufferedReader(isr);
             runner.runScript(read);
+            //生成配置文件
+            TaleUtils.updateJDBCFile( dataSourceVo.getUrl(), dataSourceVo.getDbName(), dataSourceVo.getUsername(), dataSourceVo.getPassword());
         } catch (Exception e) {
             String msg = "数据库连接失败, 请检查数据库配置";
             if (e instanceof TipException) {
@@ -101,8 +101,9 @@ public class InstallController {
     }
 
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/install")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo doInstall(InstallBo installBo) {
 
 //        网站参数
@@ -140,12 +141,9 @@ public class InstallController {
             return RestResponseBo.fail("邮箱格式不正确");
         }
 
-        String cp = InstallController.class.getClassLoader().getResource("").getPath();
-        File lock = new File(cp + "install.lock");
+        File lock = new File( "install.lock");
         try {
             try {
-                //生成配置文件
-                TaleUtils.updateJDBCFile(dataBaseUrl, dbName, username, password);
                 lock.createNewFile();
 
                 //保存站点数据

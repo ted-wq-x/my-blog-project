@@ -16,13 +16,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = TipException.class)
     public String tipException(Exception e) {
         LOGGER.error("find exception:e={}",e.getMessage());
-        return "/comm/error_500";
+        return "comm/error_500";
     }
 
 
     @ExceptionHandler(value = Exception.class)
     public String exception(Exception e){
         LOGGER.error("find exception:e={}",e.getMessage());
-        return "/comm/error_404";
+        return "comm/error_404";
     }
 }

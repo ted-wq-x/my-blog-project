@@ -1,6 +1,7 @@
 package com.wq.website;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -20,11 +21,12 @@ public class CoreApplicationTests
     private String url;
     
     @Test
+    @Ignore
     public void contextLoads()
     {
-//		logger.debug("Enter contextLoads method-----------------------------------------------------------------------wangqiang");
+		logger.debug("Enter contextLoads method-----------------------------------------------------------------------wangqiang");
 
-//        Assert.assertEquals("jdbc:mysql://45.76.205.80:3306/tale", url);
+        Assert.assertEquals("jdbc:mysql://45.76.205.80:3306/tale", url);
     }
     
 }

@@ -1,5 +1,6 @@
 package com.wq.website.utils;
 
+import com.wq.website.exception.TipException;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.parser.Parser;
 import org.slf4j.Logger;
@@ -7,11 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -74,13 +74,14 @@ public class TaleUtils {
      * @param password 密码
      */
     public static void updateJDBCFile(String url, String dbName, String userName, String password) {
+        LOGGER.info("Enter updateJDBCFile method");
         Properties props = new Properties();
         FileOutputStream fos = null;
 
         try {
-            fos = new FileOutputStream(location + "application-jdbc.properties");
-            props.setProperty("spring.datasource.url",
-                    "jdbc:mysql://" + url + "/" + dbName + "?useUnicode=true&characterEncoding=utf-8&useSSL=false");
+            fos = new FileOutputStream( "application-jdbc.properties");
+            props.setProperty("spring.datasource.url",url);
+            props.setProperty("spring.datasource.dbname",dbName);
             props.setProperty("spring.datasource.username", userName);
             props.setProperty("spring.datasource.password", password);
             props.setProperty("spring.datasource.driver-class-name", "com.mysql.jdbc.Driver");
@@ -97,20 +98,43 @@ public class TaleUtils {
                 }
             }
         }
+        LOGGER.info("Exit updateJDBCFile method");
     }
 
     /**
-     * 获取properties配置数据
+     * 获取properties配置数据,
      *
-     * @param fileName 文件名 如 application-jdbc.properties
+     * @param fileName 文件名 如 application-jdbc.properties来自jar中
      * @return
      */
-    public static Properties getPropFromFile(String fileName) {
+    public static Properties getPropFromJar(String fileName) {
         Properties properties = new Properties();
         try {
-            properties.load(TaleUtils.class.getResourceAsStream(location + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
+//            默认是classPath路径
+            InputStream resourceAsStream = TaleUtils.class.getClassLoader().getResourceAsStream(fileName);
+            if(resourceAsStream==null){
+                throw new TipException("get resource from path fail");
+            }
+            properties.load(resourceAsStream);
+        } catch (TipException | IOException e) {
+            LOGGER.error("get properties file fail={}",e.getMessage());
+        }
+        return properties;
+    }
+
+    /**
+     *
+     * @param fileName 获取jar外部的文件
+     * @return 返回属性
+     */
+    private static Properties getPropFromFile(String fileName) {
+        Properties properties = new Properties();
+        try {
+//            默认是classPath路径
+            InputStream resourceAsStream = new FileInputStream(fileName);
+            properties.load(resourceAsStream);
+        } catch (TipException | IOException e) {
+            LOGGER.error("get properties file fail={}",e.getMessage());
         }
         return properties;
     }
@@ -127,18 +151,15 @@ public class TaleUtils {
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException ignored) {
         }
         byte[] encode =messageDigest.digest(source.getBytes());
         StringBuilder hexString = new StringBuilder();
-        for (int i = 0; i < encode.length; i++) {
-            String hex = Integer.toHexString(0xff & encode[i]);
-
+        for (byte anEncode : encode) {
+            String hex = Integer.toHexString(0xff & anEncode);
             if (hex.length() == 1) {
                 hexString.append('0');
             }
-
             hexString.append(hex);
         }
         return hexString.toString();
@@ -149,18 +170,17 @@ public class TaleUtils {
      * @return
      */
     public static DataSource getNewDataSource(){
-        if(newDataSource==null){
-            synchronized (TaleUtils.class){
-                if (newDataSource==null){
-                    Properties properties = TaleUtils.getPropFromFile("application-jdbc.properties");
-                    DriverManagerDataSource managerDataSource = new DriverManagerDataSource();
-                    //        TODO 对不同数据库支持
-                    managerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-                    managerDataSource.setPassword(properties.getProperty("spring.datasource.password"));
-                    managerDataSource.setUrl(properties.getProperty("spring.datasource.url"));
-                    managerDataSource.setUsername(properties.getProperty("spring.datasource.username"));
-                    newDataSource = managerDataSource;
-                }
+        if(newDataSource==null) synchronized (TaleUtils.class) {
+            if (newDataSource == null) {
+                Properties properties = TaleUtils.getPropFromFile("application-jdbc.properties");
+                DriverManagerDataSource managerDataSource = new DriverManagerDataSource();
+                //        TODO 对不同数据库支持
+                managerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+                managerDataSource.setPassword(properties.getProperty("spring.datasource.password"));
+                String str = "jdbc:mysql://" + properties.getProperty("spring.datasource.url") + "/" + properties.getProperty("spring.datasource.dbname") + "?useUnicode=true&characterEncoding=utf-8&useSSL=false";
+                managerDataSource.setUrl(str);
+                managerDataSource.setUsername(properties.getProperty("spring.datasource.username"));
+                newDataSource = managerDataSource;
             }
         }
         return newDataSource;

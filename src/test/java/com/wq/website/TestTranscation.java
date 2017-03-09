@@ -5,6 +5,7 @@ import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
 import com.wq.website.service.IOptionService;
 import com.wq.website.service.IUserService;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,12 +31,13 @@ public class TestTranscation {
     private IOptionService optionService;
 
     @org.junit.Test
+    @Ignore
     public void test() {
-//        UserVo user = new UserVo();
-//        user.setUsername("wangqiang111");
-//        user.setPassword("123456");
-//        user.setEmail("8888");
-//        userService.insertUser(user);
-//        optionService.insertOption("site_keywords", "qwqwq");
+        UserVo user = new UserVo();
+        user.setUsername("wangqiang111");
+        user.setPassword("123456");
+        user.setEmail("8888");
+        userService.insertUser(user);
+        optionService.insertOption("site_keywords", "qwqwq");
     }
 }

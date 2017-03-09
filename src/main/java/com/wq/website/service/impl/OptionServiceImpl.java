@@ -41,8 +41,7 @@ public class OptionServiceImpl implements IOptionService {
         }else{
             optionDao.updateOptionByName(optionVo);
         }
-        throw new TipException("test");
-//        LOGGER.debug("Exit insertOption method.");
+        LOGGER.debug("Exit insertOption method.");
     }
 
     @Override

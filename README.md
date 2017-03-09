@@ -8,4 +8,8 @@ demo website：https://tale.biezhi.me
 
 this project frok from https://github.com/otale ,and use springMvc refactor(TODO list).
 
+Tips:The installation process takes longer,please wait.
+
+
+
 

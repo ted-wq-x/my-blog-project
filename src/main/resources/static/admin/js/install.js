@@ -45,7 +45,7 @@
                             if (result && result.success) {
                                 tale.showLoading();
                                 tale.post({
-                                    url: '/install/',
+                                    url: '/install',
                                     data: params,
                                     success: function (result) {
                                         if (result && result.success) {
