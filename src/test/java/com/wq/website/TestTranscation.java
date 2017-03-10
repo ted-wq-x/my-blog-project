@@ -2,7 +2,6 @@ package com.wq.website;
 
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.UserVo;
-import com.wq.website.service.ILogService;
 import com.wq.website.service.IOptionService;
 import com.wq.website.service.IUserService;
 import org.junit.Ignore;

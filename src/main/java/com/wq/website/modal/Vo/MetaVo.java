@@ -1,30 +1,44 @@
 package com.wq.website.modal.Vo;
 
+import java.io.Serializable;
 
 /**
- * Created by BlueT on 2017/3/2.
+ * @author 
  */
-public class MetaVo {
-
-    // 项目主键
+public class MetaVo implements Serializable {
+    /**
+     * 项目主键
+     */
     private Integer mid;
 
-    // 名称
+    /**
+     * 名称
+     */
     private String name;
 
-    // 项目缩略名
+    /**
+     * 项目缩略名
+     */
     private String slug;
 
-    // 项目类型
+    /**
+     * 项目类型
+     */
     private String type;
 
-    // 选项描述
+    /**
+     * 选项描述
+     */
     private String description;
 
-    // 项目排序
+    /**
+     * 项目排序
+     */
     private Integer sort;
 
     private Integer parent;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getMid() {
         return mid;
@@ -80,18 +94,5 @@ public class MetaVo {
 
     public void setParent(Integer parent) {
         this.parent = parent;
-    }
-
-    @Override
-    public String toString() {
-        return "MetaVo{" +
-                "mid=" + mid +
-                ", name='" + name + '\'' +
-                ", slug='" + slug + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", sort=" + sort +
-                ", parent=" + parent +
-                '}';
     }
 }

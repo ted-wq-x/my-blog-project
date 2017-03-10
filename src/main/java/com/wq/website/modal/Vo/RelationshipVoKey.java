@@ -1,16 +1,22 @@
 package com.wq.website.modal.Vo;
 
+import java.io.Serializable;
 
 /**
- * Created by BlueT on 2017/3/2.
+ * @author 
  */
-public class RelationshipVo {
-
-    // 内容主键
+public class RelationshipVoKey implements Serializable {
+    /**
+     * 内容主键
+     */
     private Integer cid;
 
-    // 项目主键
+    /**
+     * 项目主键
+     */
     private Integer mid;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getCid() {
         return cid;
@@ -26,13 +32,5 @@ public class RelationshipVo {
 
     public void setMid(Integer mid) {
         this.mid = mid;
-    }
-
-    @Override
-    public String toString() {
-        return "RelationshipVo{" +
-                "cid=" + cid +
-                ", mid=" + mid +
-                '}';
     }
 }

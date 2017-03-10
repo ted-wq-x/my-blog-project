@@ -1,6 +1,6 @@
 package com.wq.website.service.impl;
 
-import com.wq.website.dao.UserMapper;
+import com.wq.website.dao.UserVoMapper;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.IUserService;
 import com.wq.website.utils.TaleUtils;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 public class UserServiceImpl implements IUserService {
 
     @Resource
-    private UserMapper userDao;
+    private UserVoMapper userDao;
 
     @Override
     public Integer insertUser(UserVo userVo) {
@@ -25,7 +25,7 @@ public class UserServiceImpl implements IUserService {
 //            用户密码加密
             String encodePwd = TaleUtils.MD5encode(userVo.getUsername() + userVo.getPassword());
             userVo.setPassword(encodePwd);
-            uid = userDao.insertUserVo(userVo);
+            uid = userDao.insertSelective(userVo);
         }
         return uid;
     }
@@ -34,7 +34,7 @@ public class UserServiceImpl implements IUserService {
     public UserVo queryUserById(Integer uid) {
         UserVo userVo = null;
         if (uid != null) {
-            userVo = userDao.findByUid(uid);
+            userVo = userDao.selectByPrimaryKey(uid);
         }
         return userVo;
     }

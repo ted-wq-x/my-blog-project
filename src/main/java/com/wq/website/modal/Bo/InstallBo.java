@@ -1,11 +1,11 @@
 package com.wq.website.modal.Bo;
 
-import com.wq.website.modal.Vo.DataSourceVo;
+import com.wq.website.dto.DataSource;
 
 /**
  * Created by BlueT on 2017/3/4.
  */
-public class InstallBo extends DataSourceVo {
+public class InstallBo extends DataSource {
     private String adminUser;
     private String siteTitle;
     private String siteUrl;

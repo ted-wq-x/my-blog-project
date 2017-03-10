@@ -1,7 +1,6 @@
 package com.wq.website.service.impl;
 
-import com.wq.website.constant.WebConst;
-import com.wq.website.dao.LogMapper;
+import com.wq.website.dao.LogVoMapper;
 import com.wq.website.modal.Vo.LogVo;
 import com.wq.website.service.ILogService;
 import org.slf4j.Logger;
@@ -20,11 +19,11 @@ public class LogServiceImpl implements ILogService {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogServiceImpl.class);
 
     @Resource
-    private LogMapper logDao;
+    private LogVoMapper logDao;
 
     @Override
     public void insertLog(LogVo logVo) {
-        logDao.insertLog(logVo);
+        logDao.insert(logVo);
     }
 
     @Override

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wq.website.dao.CommentMapper">
+
+    <resultMap id="commentMap" type="com.wq.website.modal.Vo.CommentVo">
+        <id column="coid" property="coid"/>
+        <result column="cid" property="cid"/>
+        <result column="created" property="created"/>
+        <result column="author" property="author"/>
+        <result column="authorId" property="authorId"/>
+        <result column="owner_id" property="ownerId"/>
+        <result column="mail" property="mail"/>
+        <result column="url" property="url"/>
+        <result column="ip" property="ip"/>
+        <result column="agent" property="agent"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="parent" property="parent"/>
+    </resultMap>
+
+    <select id="findComments" resultMap="commentMap" parameterType="com.wq.website.modal.Vo.CommentVo">
+      SELECT * FROM t_comments
+        <where>
+            <if test="coid!=null">
+                and coid=#{coid}
+            </if>
+            <if test="cid!=null">
+                and cid=#{cid}
+            </if>
+            <if test="created!=null">
+                and created=#{created}
+            </if>
+            <if test="author!=null">
+                and author=#{author}
+            </if>
+            <if test="authorId!=null">
+                and author_id=#{authorId}
+            </if>
+            <if test="ownerId!=null">
+                and owner_id=#{ownerId}
+            </if>
+            <if test="mail!=null">
+                and mail=#{mail}
+            </if>
+            <if test="url!=null">
+                and url=#{url}
+            </if>
+            <if test="ip!=null">
+                and ip=#{ip}
+            </if>
+            <if test="agent!=null">
+                and agent=#{agent}
+            </if>
+            <if test="content!=null">
+                and content=#{content}
+            </if>
+            <if test="type!=null">
+                and type=#{type}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+            <if test="parent!=null">
+                and parent=#{parent}
+            </if>
+        </where>
+      <if test="order!=null">
+          ORDER BY #{order}
+      </if>
+    </select>
+
+    <select id="findById" parameterType="Integer">
+        SELECT * FROM t_comments WHERE coid=#{coid}
+    </select>
+
+
+</mapper>

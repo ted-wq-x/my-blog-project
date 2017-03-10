@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wq.website.dao.ContentMapper">
+
+    <resultMap id="contentMap" type="com.wq.website.modal.Vo.ContentVo">
+        <id column="cid" property="cid"/>
+        <result column="title" property="title"/>
+        <result column="slug" property="slug"/>
+        <result column="created" property="created"/>
+        <result column="modified" property="modified"/>
+        <result column="content" property="content"/>
+        <result column="author_id" property="authorId"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="tags" property="tags"/>
+        <result column="categories" property="categories"/>
+        <result column="hits" property="hits"/>
+        <result column="comments_num" property="commentsNum"/>
+        <result column="allow_comment" property="allowComment"/>
+        <result column="allow_ping" property="allowPing"/>
+        <result column="allow_feed" property="allowFeed"/>
+    </resultMap>
+
+    <resultMap id="archiveBoMap" type="com.wq.website.modal.Bo.ArchiveBo">
+        <id column="date" property="date"/>
+        <result column="count" property="count"/>
+    </resultMap>
+
+    <select id="findContents" resultMap="contentMap" parameterType="com.wq.website.dao.ContentMapper">
+        SELECT * FROM t_contents
+        <where>
+            <if test="cid!=null">
+                and cid=#{cid}
+            </if>
+            <if test="title!=null">
+                and title=#{title}
+            </if>
+            <if test="slug!=null">
+                and slug=#{slug}
+            </if>
+            <if test="created!=null">
+                and created=#{created}
+            </if>
+            <if test="modified!=null">
+                and modified=#{modified}
+            </if>
+            <if test="content!=null">
+                and content=#{content}
+            </if>
+            <if test="authorId!=null">
+                and author_id=#{authorId}
+            </if>
+            <if test="type!=null">
+                and type=#{type}
+            </if>
+            <if test="status!=null">
+                and `status`=#{status}
+            </if>
+            <if test="tags!=null">
+                and tags=#{tags}
+            </if>
+            <if test="categories!=null">
+                and categories=#{categories}
+            </if>
+            <if test="hits!=null">
+                and hits=#{hits}
+            </if>
+            <if test="commentsNum!=null">
+                and comments_num=#{commentsNum}
+            </if>
+            <if test="allowComment!=null">
+                and allow_comment=#{allowComment}
+            </if>
+            <if test="allowPing!=null">
+                and allow_ping=#{allowPing}
+            </if>
+            <if test="allowFeed!=null">
+                and allow_feed=#{allowFeed}
+            </if>
+        </where>
+        <if test="order!=null">
+            order by #{order}
+        </if>
+    </select>
+
+
+    <select id="" resultMap="archiveBoMap">
+        select FROM_UNIXTIME(created, '%Y年%m月') as date, count(*) as count from t_contents where type = 'post' and status = 'publish' group by date order by date desc
+    </select>
+</mapper>

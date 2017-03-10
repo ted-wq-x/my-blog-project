@@ -1,7 +1,8 @@
 package com.wq.website.listener;
 
 import com.wq.website.constant.WebConst;
-import com.wq.website.dao.OptionMapper;
+import com.wq.website.dao.OptionVoMapper;
+import com.wq.website.modal.Vo.OptionVoExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -23,10 +24,10 @@ public class InitListener implements ApplicationListener<ApplicationReadyEvent> 
         if (dbIsOk) {
             try {
                 ConfigurableApplicationContext applicationContext = applicationReadyEvent.getApplicationContext();
-                OptionMapper optionDao = applicationContext.getBean(OptionMapper.class);
+                OptionVoMapper optionDao = applicationContext.getBean(OptionVoMapper.class);
 
                 // 初始化加载数据库配置
-                optionDao.getOptions().forEach((option) -> {
+                optionDao.selectByExample(new OptionVoExample()).forEach((option) -> {
                     WebConst.initConfig.put(option.getName(), option.getValue());
                 });
             } catch (Exception e) {

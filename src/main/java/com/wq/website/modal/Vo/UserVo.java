@@ -1,38 +1,62 @@
 package com.wq.website.modal.Vo;
 
+import java.io.Serializable;
+
 /**
- * Created by BlueT on 2017/3/2.
+ * @author 
  */
-public class UserVo {
-    // user表主键
+public class UserVo implements Serializable {
+    /**
+     * user表主键
+     */
     private Integer uid;
 
-    // 用户名称
+    /**
+     * 用户名称
+     */
     private String username;
 
-    // 用户密码
+    /**
+     * 用户密码
+     */
     private String password;
 
-    // 用户的邮箱
+    /**
+     * 用户的邮箱
+     */
     private String email;
 
-    // 用户的主页
-    private String home_url;
+    /**
+     * 用户的主页
+     */
+    private String homeUrl;
 
-    // 用户显示的名称
-    private String screen_name;
+    /**
+     * 用户显示的名称
+     */
+    private String screenName;
 
-    // 用户注册时的GMT unix时间戳
+    /**
+     * 用户注册时的GMT unix时间戳
+     */
     private Integer created;
 
-    // 最后活动时间
+    /**
+     * 最后活动时间
+     */
     private Integer activated;
 
-    // 上次登录最后活跃时间
+    /**
+     * 上次登录最后活跃时间
+     */
     private Integer logged;
 
-    // 用户组
-    private String group_name;
+    /**
+     * 用户组
+     */
+    private String groupName;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getUid() {
         return uid;
@@ -66,20 +90,20 @@ public class UserVo {
         this.email = email;
     }
 
-    public String getHome_url() {
-        return home_url;
+    public String getHomeUrl() {
+        return homeUrl;
     }
 
-    public void setHome_url(String home_url) {
-        this.home_url = home_url;
+    public void setHomeUrl(String homeUrl) {
+        this.homeUrl = homeUrl;
     }
 
-    public String getScreen_name() {
-        return screen_name;
+    public String getScreenName() {
+        return screenName;
     }
 
-    public void setScreen_name(String screen_name) {
-        this.screen_name = screen_name;
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
     }
 
     public Integer getCreated() {
@@ -106,27 +130,11 @@ public class UserVo {
         this.logged = logged;
     }
 
-    public String getGroup_name() {
-        return group_name;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroup_name(String group_name) {
-        this.group_name = group_name;
-    }
-
-    @Override
-    public String toString() {
-        return "UserVo{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", home_url='" + home_url + '\'' +
-                ", screen_name='" + screen_name + '\'' +
-                ", created=" + created +
-                ", activated=" + activated +
-                ", logged=" + logged +
-                ", group_name='" + group_name + '\'' +
-                '}';
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

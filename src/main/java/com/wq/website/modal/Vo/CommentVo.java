@@ -1,52 +1,82 @@
 package com.wq.website.modal.Vo;
 
+import java.io.Serializable;
 
 /**
- * Created by BlueT on 2017/3/2.
+ * @author 
  */
-public class CommentVo {
-
-    // comment表主键
+public class CommentVo implements Serializable {
+    /**
+     * comment表主键
+     */
     private Integer coid;
 
-    // post表主键,关联字段
+    /**
+     * post表主键,关联字段
+     */
     private Integer cid;
 
-    // 评论生成时的GMT unix时间戳
+    /**
+     * 评论生成时的GMT unix时间戳
+     */
     private Integer created;
 
-    // 评论作者
+    /**
+     * 评论作者
+     */
     private String author;
 
-    // 评论所属用户id
-    private Integer author_id;
+    /**
+     * 评论所属用户id
+     */
+    private Integer authorId;
 
-    // 评论所属内容作者id
-    private Integer owner_id;
+    /**
+     * 评论所属内容作者id
+     */
+    private Integer ownerId;
 
-    // 评论者邮件
+    /**
+     * 评论者邮件
+     */
     private String mail;
 
-    // 评论者网址
+    /**
+     * 评论者网址
+     */
     private String url;
 
-    // 评论者ip地址
+    /**
+     * 评论者ip地址
+     */
     private String ip;
 
-    // 评论者客户端
+    /**
+     * 评论者客户端
+     */
     private String agent;
 
-    // 评论内容
-    private String content;
-
-    // 评论类型
+    /**
+     * 评论类型
+     */
     private String type;
 
-    // 评论状态
+    /**
+     * 评论状态
+     */
     private String status;
 
-    // 父级评论
+    /**
+     * 父级评论
+     */
     private Integer parent;
+
+    /**
+     * 评论内容
+     */
+    private String content;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getCoid() {
         return coid;
@@ -78,6 +108,22 @@ public class CommentVo {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Integer getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getMail() {
@@ -112,14 +158,6 @@ public class CommentVo {
         this.agent = agent;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getType() {
         return type;
     }
@@ -144,39 +182,11 @@ public class CommentVo {
         this.parent = parent;
     }
 
-    public Integer getAuthor_id() {
-        return author_id;
+    public String getContent() {
+        return content;
     }
 
-    public void setAuthor_id(Integer author_id) {
-        this.author_id = author_id;
-    }
-
-    public Integer getOwner_id() {
-        return owner_id;
-    }
-
-    public void setOwner_id(Integer owner_id) {
-        this.owner_id = owner_id;
-    }
-
-    @Override
-    public String toString() {
-        return "CommentVo{" +
-                "coid=" + coid +
-                ", cid=" + cid +
-                ", created=" + created +
-                ", author='" + author + '\'' +
-                ", author_id=" + author_id +
-                ", owner_id=" + owner_id +
-                ", mail='" + mail + '\'' +
-                ", url='" + url + '\'' +
-                ", ip='" + ip + '\'' +
-                ", agent='" + agent + '\'' +
-                ", content='" + content + '\'' +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", parent=" + parent +
-                '}';
+    public void setContent(String content) {
+        this.content = content;
     }
 }

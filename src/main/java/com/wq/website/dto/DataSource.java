@@ -1,10 +1,10 @@
-package com.wq.website.modal.Vo;
+package com.wq.website.dto;
 
 /**
  * 建立数据库连接的参数对象
  * Created by BlueT on 2017/3/4.
  */
-public class DataSourceVo {
+public class DataSource {
 
     /**
      * 数据库url
@@ -73,7 +73,7 @@ public class DataSourceVo {
 
     @Override
     public String toString() {
-        return "DataSourceVo{" +
+        return "DataSource{" +
                 "url='" + url + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

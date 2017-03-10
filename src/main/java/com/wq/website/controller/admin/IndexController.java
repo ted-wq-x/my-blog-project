@@ -20,7 +20,7 @@ import java.util.List;
  * 后台管理首页
  * Created by Administrator on 2017/3/9 009.
  */
-@Controller
+@Controller("adminIndexController")
 @RequestMapping("/admin")
 public class IndexController {
     private static final Logger LOGGER = LoggerFactory.getLogger(com.wq.website.controller.admin.IndexController.class);

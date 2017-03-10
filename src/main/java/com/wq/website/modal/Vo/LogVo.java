@@ -1,29 +1,42 @@
 package com.wq.website.modal.Vo;
 
+import java.io.Serializable;
 
 /**
- * 日志记录对象
- * Created by BlueT on 2017/3/2.
+ * @author 
  */
-public class LogVo {
-
-    // 项目主键
+public class LogVo implements Serializable {
+    /**
+     * 日志主键
+     */
     private Integer id;
 
-    // 产生的动作
+    /**
+     * 产生的动作
+     */
     private String action;
 
-    // 产生的数据
+    /**
+     * 产生的数据
+     */
     private String data;
 
-    // 发生人id
-    private Integer author_id;
+    /**
+     * 发生人id
+     */
+    private Integer authorId;
 
-    // 日志产生的ip
+    /**
+     * 日志产生的ip
+     */
     private String ip;
 
-    // 日志创建时间
+    /**
+     * 日志创建时间
+     */
     private Integer created;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -49,12 +62,12 @@ public class LogVo {
         this.data = data;
     }
 
-    public Integer getAuthor_id() {
-        return author_id;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(Integer author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public String getIp() {
@@ -71,17 +84,5 @@ public class LogVo {
 
     public void setCreated(Integer created) {
         this.created = created;
-    }
-
-    @Override
-    public String toString() {
-        return "LogVo{" +
-                "id=" + id +
-                ", action='" + action + '\'' +
-                ", data='" + data + '\'' +
-                ", author_id=" + author_id +
-                ", ip='" + ip + '\'' +
-                ", created=" + created +
-                '}';
     }
 }

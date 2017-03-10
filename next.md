@@ -12,6 +12,7 @@
 
 1. springBoot默认使用的是tomcat-jdbc的数据库连接池，默认使用的是dbcp的
 2. 日志使用由'Starter POMs'，使用Commons Logging记录日志
+3. 使用的是 [https://github.com/astarring/mybatis-generator-gui/releases]() 生成的DAO层
 
 # 存在的问题
 

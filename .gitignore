@@ -25,3 +25,4 @@ nbdist/
 
 ###my own###
 my.log
+application-jdbc.properties

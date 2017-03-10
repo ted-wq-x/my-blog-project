@@ -1,7 +1,8 @@
 package com.wq.website;
 
-import com.wq.website.dao.OptionMapper;
+import com.wq.website.dao.OptionVoMapper;
 import com.wq.website.modal.Vo.OptionVo;
+import com.wq.website.modal.Vo.OptionVoExample;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ import java.util.List;
 @MapperScan("com.wq.website.dao")
 public class OptionMapperTest {
     @Autowired
-    private OptionMapper optionMapper;
+    private OptionVoMapper optionMapper;
 
     @Test
     @Ignore
@@ -37,16 +38,16 @@ public class OptionMapperTest {
         op1.setValue("22");
         op1.setDescription("woowow");
         list.add(op1);
-        optionMapper.saveOptions(list);
+        optionMapper.insertOptions(list);
 
         op1 = new OptionVo();
         op1.setName("lyf");
 
         op1.setValue("33");
         op1.setDescription("0009");
-        optionMapper.saveOption(op1);
+        optionMapper.insertSelective(op1);
 
 
-        System.out.println(optionMapper.getOptions());
+        System.out.println(optionMapper.selectByExample(new OptionVoExample()));
     }
 }

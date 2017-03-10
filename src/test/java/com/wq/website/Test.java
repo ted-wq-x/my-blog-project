@@ -4,6 +4,8 @@ package com.wq.website;
  * Created by Administrator on 2017/3/6 006.
  */
 
+import com.wq.website.dto.Types;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -31,9 +33,7 @@ public class Test {
 //        }
 //
 //        System.out.println(hexString.toString());
-        String s = Arrays.toString(("jdbc:mysql://" + " 45.76.205.80:3306 " + "/tale?useUnicode=true&characterEncoding=utf-8&useSSL=false").getBytes());
-
-        System.out.println(new String(s.getBytes()));
+        System.out.println(Types.PUBLISH.name());
     }
 
     public static void test() throws IOException {

@@ -5,7 +5,7 @@ import com.wq.website.exception.TipException;
 import com.wq.website.listener.InitListener;
 import com.wq.website.modal.Bo.InstallBo;
 import com.wq.website.modal.Bo.RestResponseBo;
-import com.wq.website.modal.Vo.DataSourceVo;
+import com.wq.website.dto.DataSource;
 import com.wq.website.modal.Vo.LogVo;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
@@ -73,7 +73,7 @@ public class InstallController {
      */
     @PostMapping(value = "/install/testCon")
     @ResponseBody
-    public RestResponseBo testConnection(DataSourceVo dataSourceVo) {
+    public RestResponseBo testConnection(DataSource dataSourceVo) {
         String url = "jdbc:mysql://" + dataSourceVo.getUrl() + "/" + dataSourceVo.getDbName() + "?useUnicode=true&characterEncoding=utf-8&useSSL=false";
         try {
             Class.forName("com.mysql.jdbc.Driver"); //MYSQL驱动
@@ -149,7 +149,7 @@ public class InstallController {
                 users.setUsername(admin_user);
                 users.setPassword(admin_pwd);
                 users.setEmail(admin_email);
-                users.setScreen_name(admin_user);
+                users.setScreenName(admin_user);
                 users.setCreated(TaleUtils.getCurrentTime());
                 Integer uid = userService.insertUser(users);
                 if (uid == null) {
@@ -161,7 +161,7 @@ public class InstallController {
                 LogVo logVo = new LogVo();
                 logVo.setCreated(TaleUtils.getCurrentTime());
                 logVo.setAction(LogActions.INIT_SITE.getAction());
-                logVo.setAuthor_id(uid);
+                logVo.setAuthorId(uid);
                 logService.insertLog(logVo);
             } catch (Exception e) {
                 if (lock.exists()) {

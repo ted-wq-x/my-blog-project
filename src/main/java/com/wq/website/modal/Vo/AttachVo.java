@@ -1,18 +1,24 @@
 package com.wq.website.modal.Vo;
 
+import java.io.Serializable;
 
 /**
- * 日志记录对象
- * Created by BlueT on 2017/3/2.
+ * @author 
  */
-public class AttachVo {
-
+public class AttachVo implements Serializable {
     private Integer id;
+
     private String fname;
+
     private String ftype;
+
     private String fkey;
-    private Integer author_id;
+
+    private Integer authorId;
+
     private Integer created;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -46,12 +52,12 @@ public class AttachVo {
         this.fkey = fkey;
     }
 
-    public Integer getAuthor_id() {
-        return author_id;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(Integer author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public Integer getCreated() {
@@ -60,17 +66,5 @@ public class AttachVo {
 
     public void setCreated(Integer created) {
         this.created = created;
-    }
-
-    @Override
-    public String toString() {
-        return "AttachVo{" +
-                "id=" + id +
-                ", fname='" + fname + '\'' +
-                ", ftype='" + ftype + '\'' +
-                ", fkey='" + fkey + '\'' +
-                ", author_id=" + author_id +
-                ", created=" + created +
-                '}';
     }
 }

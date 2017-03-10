@@ -154,7 +154,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item" th:each="article : ${articles}">
                             <span class="badge badge-primary"
-                                  th:title="${article.comments_num}+'条评论'" th:text="${article.comments_num}"></span>
+                                  th:title="${article.commentsNum}+'条评论'" th:text="${article.commentsNum}"></span>
                                             <a target="_blank" th:href="${site_url}+'/article/'+${article.cid}"
                                                th:text="${article.title}"></a>
                                         </li>
