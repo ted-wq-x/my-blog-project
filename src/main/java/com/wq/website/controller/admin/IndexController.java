@@ -43,7 +43,7 @@ public class IndexController {
         List<ContentVo> contents = siteService.recentContents(5);
         StatisticsBo statistics = siteService.getStatistics();
         // 取最新的20条日志
-        List<LogVo> logs = logService.getLogs(1, 20);
+        List<LogVo> logs = logService.getLogs(1, 5);
 
         request.setAttribute("comments", comments);
         request.setAttribute("articles", contents);

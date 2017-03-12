@@ -68,7 +68,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        modelAndView.addObject("commons",new Commons());
+        httpServletRequest.setAttribute("commons",new Commons());
     }
 
     @Override
