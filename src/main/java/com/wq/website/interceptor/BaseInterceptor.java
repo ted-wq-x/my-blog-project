@@ -4,10 +4,7 @@ import com.wq.website.constant.WebConst;
 import com.wq.website.dto.Types;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.IUserService;
-import com.wq.website.utils.IPKit;
-import com.wq.website.utils.MapCache;
-import com.wq.website.utils.TaleUtils;
-import com.wq.website.utils.UUID;
+import com.wq.website.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -71,7 +68,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
+        modelAndView.addObject("commons",new Commons());
     }
 
     @Override

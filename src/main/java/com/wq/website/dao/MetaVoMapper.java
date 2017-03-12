@@ -1,8 +1,11 @@
 package com.wq.website.dao;
 
+import com.wq.website.dto.MetaDto;
 import com.wq.website.modal.Vo.MetaVo;
 import com.wq.website.modal.Vo.MetaVoExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -29,4 +32,6 @@ public interface MetaVoMapper {
     int updateByPrimaryKeySelective(MetaVo record);
 
     int updateByPrimaryKey(MetaVo record);
+
+    List<MetaDto> selectFromSql(Map<String,Object> paraMap);
 }

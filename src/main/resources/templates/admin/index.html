@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!--#include('./header.html',{active:'home', title:'管理中心'})-->
-<div th:insert="~{header :: header}('管理中心','home')"></div>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='管理中心',active='home'">
+<header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <body class="fixed-left">
 <div id="wrapper">
     <div class="topbar">
@@ -30,10 +29,10 @@
                     <ul class="nav navbar-nav navbar-right pull-right">
                         <li class="dropdown">
                             <a th:href="@{index.html}" class="dropdown-toggle profile" data-toggle="dropdown"
-                               aria-expanded="true"><img th:src="${gravatar(login_user.email)}" alt="user-img"
-                                                         class="img-circle"> </a>
+                               aria-expanded="true"><img th:src="${commons.gravatar(session.login_user.email)}" alt="user-img"
+                                                         class="img-circle"/> </a>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{${site_url}}" target="_blank"><i class="fa fa-eye"
+                                <li><a th:href="@{${commons.site_url()}}" target="_blank"><i class="fa fa-eye"
                                                                                    aria-hidden="true"></i>
                                     查看网站</a></li>
                                 <li><a th:href="@{/admin/profile}"><i class="fa fa-sun-o"></i> 个人设置</a></li>
@@ -49,47 +48,47 @@
         <div class="sidebar-inner slimscrollleft">
             <div id="sidebar-menu">
                 <ul>
-                    <li th:class="#{active}=='home'?'active':''">
+                    <li th:class="${active}=='home'?'active':''">
                         <a th:href="@{/admin/index}"
-                           th:class="#{active}=='home'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='home'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-dashboard" aria-hidden="true"></i><span> 仪表盘 </span></a>
                     </li>
-                    <li th:class="#{active}=='publish'?'active':''">
+                    <li th:class="${active}=='publish'?'active':''">
                         <a th:href="@{/admin/article/publish}"
-                           th:class="#{active}=='publish'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='publish'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-pencil-square-o" aria-hidden="true"></i><span> 发布文章 </span></a>
                     </li>
-                    <li th:class="#{active}=='article'?'active':''">
+                    <li th:class="${active}=='article'?'active':''">
                         <a th:href="@{/admin/article}"
-                           th:class="#{active}=='article'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='article'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-list" aria-hidden="true"></i><span> 文章管理 </span></a>
                     </li>
-                    <li th:class="#{active}=='page'?'active':''">
-                        <a th:href="@{/admin/page}" th:class="#{active}=='page'?'waves-effect active':'waves-effect'"><i
+                    <li th:class="${active}=='page'?'active':''">
+                        <a th:href="@{/admin/page}" th:class="${active}=='page'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-file-text" aria-hidden="true"></i><span> 页面管理 </span></a>
                     </li>
-                    <li th:class="#{active}=='comments'?'active':''">
+                    <li th:class="${active}=='comments'?'active':''">
                         <a th:href="@{/admin/comments}"
-                           th:class="#{active}=='comments'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='comments'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-comments" aria-hidden="true"></i><span> 评论管理 </span></a>
                     </li>
-                    <li th:class="#{active}=='category'?'active':''">
+                    <li th:class="${active}=='category'?'active':''">
                         <a th:href="@{/admin/category}"
-                           th:class="#{active}=='category'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='category'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-tags" aria-hidden="true"></i><span> 分类/标签 </span></a>
                     </li>
-                    <li th:class="#{active}=='attach'?'active':''">
+                    <li th:class="${active}=='attach'?'active':''">
                         <a th:href="@{/admin/attach}"
-                           th:class="#{active}=='attach'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='attach'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-cloud-upload" aria-hidden="true"></i><span> 文件管理 </span></a>
                     </li>
-                    <li th:class="#{active}=='links'?'active':''">
-                        <a th:href="@{/admin/links}" th:class="#{active}=='links'?'waves-effect active':'waves-effect'"><i
+                    <li th:class="${active}=='links'?'active':''">
+                        <a th:href="@{/admin/links}" th:class="${active}=='links'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-link" aria-hidden="true"></i><span> 友链管理 </span></a>
                     </li>
-                    <li th:class="#{active}=='setting'?'active':''">
+                    <li th:class="${active}=='setting'?'active':''">
                         <a th:href="@{/admin/setting}"
-                           th:class="#{active}=='setting'?'waves-effect active':'waves-effect'"><i
+                           th:class="${active}=='setting'?'waves-effect active':'waves-effect'"><i
                                 class="fa fa-gear" aria-hidden="true"></i><span> 系统设置 </span></a>
                     </li>
                 </ul>
@@ -155,7 +154,7 @@
                                         <li class="list-group-item" th:each="article : ${articles}">
                             <span class="badge badge-primary"
                                   th:title="${article.commentsNum}+'条评论'" th:text="${article.commentsNum}"></span>
-                                            <a target="_blank" th:href="${site_url}+'/article/'+${article.cid}"
+                                            <a target="_blank" th:href="${commons.site_url('/article/')}+${article.cid}"
                                                th:text="${article.title}"></a>
                                         </li>
                                     </ul>
@@ -176,18 +175,16 @@
                                     <ul class="list-group"
                                         th:unless="${comments}==null and ${#lists.size(comments)}==0">
                                         <li class="list-group-item" th:each="comment : ${comments}">
-                                            <div th:if="${comment.url}!=null && ${comment.url}!=''">
+                                            <div th:if="${comment.url}!=null and ${comment.url}!=''">
                                                 <a th:href="@{${comment.url}}" target="_blank"
                                                    th:text="${comment.author}"></a>
                                             </div>
-                                            <div th:unless="${comment.url}!=null && ${comment.url}!=''">
+                                            <div th:unless="${comment.url}!=null and ${comment.url}!=''">
                                                 <div th:text="${comment.author}"></div>
                                             </div>
-                                            于
-                                            <div th:text="${fmtdate(${comment.created},'MM月dd日HH:mm')}"></div>
-                                            ：<a
-                                                th:href="${site_url('/article/')}+${comment.cid}+'#comments'"
-                                                target="_blank" th:text="${article(${comment.content})}"></a>
+                                            于<th:block th:text="${commons.fmtdate(comment.created,'MM月dd日HH:mm')}"></th:block>：<a
+                                                th:href="${commons.site_url('/article/')}+${comment.cid}+'#comments'"
+                                                target="_blank" th:text="${commons.article(comment.content)}"></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -199,9 +196,9 @@
                                     <h4 class="panel-title">系统日志</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <ul class="list-group" th:each="log : ${logs}">
-                                        <li class="list-group-item">
-                                            <span th:text="${fmtdate(#{log.created}, 'yyyy-MM-dd HH:mm:ss')} +'=>'+ ${log.action}"></span>
+                                    <ul class="list-group" >
+                                        <li class="list-group-item" th:each="log : ${logs}">
+                                            <span th:text="${commons.fmtdate(log.created, 'yyyy-MM-dd HH:mm:ss')} +' => '+ ${log.action}"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -210,12 +207,12 @@
                     </div>
                 </div>
                 <footer class="footer text-right">
-                    2017 © <a th:href="@{https://github.com/biezhi}" target="_blank">Tale</a>.
+                    2017 © <a th:href="@{https://github.com/biezhi}" target="_blank">Tale</a><div class=""></div>
                 </footer>
             </div>
         </div>
     </div>
 </div>
-<div th:insert="~{footer :: footer}"></div>
+<div th:replace="admin/footer :: footer"></div>
 </body>
 </html>

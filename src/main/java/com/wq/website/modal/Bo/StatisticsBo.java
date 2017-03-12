@@ -7,40 +7,40 @@ import java.io.Serializable;
  */
 public class StatisticsBo implements Serializable {
 
-    private int articles;
-    private int comments;
-    private int links;
-    private int attachs;
+    private Long articles;
+    private Long comments;
+    private Long links;
+    private Long attachs;
 
-    public int getArticles() {
+    public Long getArticles() {
         return articles;
     }
 
-    public void setArticles(int articles) {
+    public void setArticles(Long articles) {
         this.articles = articles;
     }
 
-    public int getComments() {
+    public Long getComments() {
         return comments;
     }
 
-    public void setComments(int comments) {
+    public void setComments(Long comments) {
         this.comments = comments;
     }
 
-    public int getLinks() {
+    public Long getLinks() {
         return links;
     }
 
-    public void setLinks(int links) {
+    public void setLinks(Long links) {
         this.links = links;
     }
 
-    public int getAttachs() {
+    public Long getAttachs() {
         return attachs;
     }
 
-    public void setAttachs(int attachs) {
+    public void setAttachs(Long attachs) {
         this.attachs = attachs;
     }
 

@@ -56,7 +56,7 @@ public class InstallController {
      */
     @GetMapping(value = "/install")
     public String index(ModelMap map) {
-        String path = InstallController.class.getResource("").getPath();
+        String path = InstallController.class.getResource("/").getPath();
         File file = new File(path + WebConst.INSTALL_FILE_CONF);
         if (file.exists()) {
             map.addAttribute("is_install", !"1".equals(WebConst.initConfig.get("is_install")));

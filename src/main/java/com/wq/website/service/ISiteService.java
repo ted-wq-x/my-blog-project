@@ -1,5 +1,6 @@
 package com.wq.website.service;
 
+import com.wq.website.dto.MetaDto;
 import com.wq.website.modal.Bo.ArchiveBo;
 import com.wq.website.modal.Bo.StatisticsBo;
 import com.wq.website.modal.Vo.CommentVo;
@@ -67,5 +68,5 @@ public interface ISiteService {
      * 获取分类/标签列表
      * @return
      */
-    List<MetaVo> metas(String type, String orderBy, int limit);
+    List<MetaDto> metas(String type, String orderBy, int limit);
 }

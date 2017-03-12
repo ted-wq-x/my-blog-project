@@ -36,6 +36,8 @@ public class LogVo implements Serializable {
      */
     private Integer created;
 
+
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {

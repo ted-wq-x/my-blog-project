@@ -1,5 +1,6 @@
 package com.wq.website.dao;
 
+import com.wq.website.modal.Bo.ArchiveBo;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.ContentVoExample;
 import java.util.List;
@@ -35,4 +36,6 @@ public interface ContentVoMapper {
     int updateByPrimaryKeyWithBLOBs(ContentVo record);
 
     int updateByPrimaryKey(ContentVo record);
+
+    List<ArchiveBo> findReturnArchiveBo();
 }

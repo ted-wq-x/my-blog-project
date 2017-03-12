@@ -10,6 +10,11 @@
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="parent" jdbcType="INTEGER" property="parent" />
   </resultMap>
+
+  <resultMap id="MetaDto" type="com.wq.website.dto.MetaDto" extends="BaseResultMap">
+    <result column="count" property="count" jdbcType="INTEGER"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -94,7 +99,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_metas
     where mid = #{mid,jdbcType=INTEGER}
@@ -110,11 +115,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wq.website.modal.Vo.MetaVo">
-    insert into t_metas (mid, name, slug, 
-      type, description, sort, 
+    insert into t_metas (mid, name, slug,
+      type, description, sort,
       parent)
-    values (#{mid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+    values (#{mid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
       #{parent,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.MetaVo">
@@ -248,4 +253,8 @@
       parent = #{parent,jdbcType=INTEGER}
     where mid = #{mid,jdbcType=INTEGER}
   </update>
+
+  <select id="selectFromSql" resultMap="MetaDto" parameterType="Map">
+    select a.*, count(b.cid) as count from t_metas a left join `t_relationships` b on a.mid = b.mid where a.type = #{type} group by a.mid order by #{order} limit #{limit}
+  </select>
 </mapper>

@@ -1,8 +1,12 @@
 package com.wq.website.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.wq.website.constant.WebConst;
 import com.wq.website.dao.LogVoMapper;
 import com.wq.website.modal.Vo.LogVo;
+import com.wq.website.modal.Vo.LogVoExample;
 import com.wq.website.service.ILogService;
+import com.wq.website.utils.DateKit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,17 +31,30 @@ public class LogServiceImpl implements ILogService {
     }
 
     @Override
+    public void insertLog(String action, String data, String ip, Integer authorId) {
+        LogVo logs = new LogVo();
+        logs.setAction(action);
+        logs.setData(data);
+        logs.setIp(ip);
+        logs.setAuthorId(authorId);
+        logs.setCreated(DateKit.getCurrentUnixTime());
+        logDao.insert(logs);
+    }
+
+    @Override
     public List<LogVo> getLogs(int page, int limit) {
-//        LOGGER.debug("Enter getLogs method:page={},linit={}",page,limit);
-//        if (page <= 0) {
-//            page = 1;
-//        }
-//        if (limit < 1 || limit > WebConst.MAX_POSTS) {
-//            limit = 10;
-//        }
-//        Paginator<LogVo> logsPaginator = activeRecord.page(new Take(Logs.class).page(page, limit, "id desc"));
-//        LOGGER.debug("Exit getLogs method");
-//        return logsPaginator.getList();
-        return null;
+        LOGGER.debug("Enter getLogs method:page={},linit={}",page,limit);
+        if (page <= 0) {
+            page = 1;
+        }
+        if (limit < 1 || limit > WebConst.MAX_POSTS) {
+            limit = 10;
+        }
+        LogVoExample logVoExample = new LogVoExample();
+        logVoExample.setOrderByClause("id desc");
+        PageHelper.startPage((page - 1) * limit, limit);
+        List<LogVo> logVos = logDao.selectByExample(logVoExample);
+        LOGGER.debug("Exit getLogs method");
+        return logVos;
     }
 }

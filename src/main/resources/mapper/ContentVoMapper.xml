@@ -452,4 +452,14 @@
       allow_feed = #{allowFeed,jdbcType=BIT}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
+
+
+  <resultMap id="archiveBoMap" type="com.wq.website.modal.Bo.ArchiveBo">
+    <id column="date" property="date"/>
+    <result column="count" property="count"/>
+  </resultMap>
+
+  <select id="findReturnArchiveBo" resultMap="archiveBoMap">
+    select FROM_UNIXTIME(created, '%Y年%m月') as date, count(*) as count from t_contents where type = 'post' and status = 'publish' group by date order by date desc
+  </select>
 </mapper>
