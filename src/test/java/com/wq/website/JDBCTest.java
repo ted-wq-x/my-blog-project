@@ -1,9 +1,13 @@
 package com.wq.website;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.CommentVoMapper;
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.CommentVo;
+import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.UserVo;
+import com.wq.website.service.IContentService;
 import com.wq.website.service.IOptionService;
 import com.wq.website.service.ISiteService;
 import com.wq.website.service.IUserService;
@@ -40,6 +44,9 @@ public class JDBCTest {
     @Autowired
     private ISiteService siteService;
 
+    @Autowired
+    private IContentService contentService;
+
     @Test
     @Ignore
     @Rollback
@@ -68,6 +75,13 @@ public class JDBCTest {
         int limit = 3;
         List<CommentVo> commentVos = siteService.recentComments(limit);
         Assert.assertEquals(commentVos.size(),limit);
+    }
+
+    @Test
+//    @Ignore
+    public void testContentPage(){
+        PageInfo<ContentVo> contents = contentService.getContents(1, 10);
+        System.out.println(contents);
     }
 
 }
