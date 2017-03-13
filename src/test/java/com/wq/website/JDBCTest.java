@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -41,6 +42,7 @@ public class JDBCTest {
 
     @Test
     @Ignore
+    @Rollback
     public void testConnect() {
         UserVo user = new UserVo();
         user.setUsername("wangqiang");
@@ -48,7 +50,7 @@ public class JDBCTest {
         int i = userService.insertUser(user);
 
         optionService.insertOption("ssss", "qwqwq");
-        throw new TipException();
+       Assert.assertEquals(1,i);
     }
 
     @Ignore

@@ -3,12 +3,14 @@ package com.wq.website;
 import com.wq.website.dao.OptionVoMapper;
 import com.wq.website.modal.Vo.OptionVo;
 import com.wq.website.modal.Vo.OptionVoExample;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class OptionMapperTest {
 
     @Test
     @Ignore
+    @Rollback
     public void index(){
         List<OptionVo> list = new ArrayList<>();
         OptionVo op1 = new OptionVo();
@@ -38,16 +41,17 @@ public class OptionMapperTest {
         op1.setValue("22");
         op1.setDescription("woowow");
         list.add(op1);
-        optionMapper.insertOptions(list);
+        int i = optionMapper.insertOptions(list);
+        Assert.assertEquals(list.size(),i);
 
-        op1 = new OptionVo();
-        op1.setName("lyf");
-
-        op1.setValue("33");
-        op1.setDescription("0009");
-        optionMapper.insertSelective(op1);
-
-
-        System.out.println(optionMapper.selectByExample(new OptionVoExample()));
+//        op1 = new OptionVo();
+//        op1.setName("lyf");
+//
+//        op1.setValue("33");
+//        op1.setDescription("0009");
+//        optionMapper.insertSelective(op1);
+//
+//
+//        System.out.println(optionMapper.selectByExample(new OptionVoExample()));
     }
 }

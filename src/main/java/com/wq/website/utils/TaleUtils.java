@@ -266,7 +266,7 @@ public class TaleUtils {
             boolean isSSL = WebConst.initConfig.get("site_url").startsWith("https");
             Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, val);
             cookie.setPath("/");
-            cookie.setMaxAge(60*30);
+//            cookie.setMaxAge(60*30);
             cookie.setSecure(isSSL);
             response.addCookie(cookie);
         } catch (Exception e) {

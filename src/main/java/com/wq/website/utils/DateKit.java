@@ -76,12 +76,9 @@ public class DateKit {
             return null;
         } else {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            if(date != null) {
-                try {
-                    return format.parse(date);
-                } catch (Exception var4) {
-                    ;
-                }
+            try {
+                return format.parse(date);
+            } catch (Exception ignored) {
             }
 
             return null;

@@ -5,6 +5,7 @@ package com.wq.website;
  */
 
 import com.wq.website.dto.Types;
+import com.wq.website.utils.TaleUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +34,8 @@ public class Test {
 //        }
 //
 //        System.out.println(hexString.toString());
-        System.out.println(Types.PUBLISH.name());
+
+        System.out.println(TaleUtils.MD5encode("admin123456"));
     }
 
     public static void test() throws IOException {

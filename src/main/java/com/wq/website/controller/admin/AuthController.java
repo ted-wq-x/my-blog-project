@@ -1,5 +1,6 @@
 package com.wq.website.controller.admin;
 
+import com.sun.deploy.net.HttpResponse;
 import com.wq.website.constant.WebConst;
 import com.wq.website.dto.LogActions;
 import com.wq.website.exception.TipException;
@@ -7,6 +8,7 @@ import com.wq.website.modal.Bo.RestResponseBo;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
 import com.wq.website.service.IUserService;
+import com.wq.website.utils.Commons;
 import com.wq.website.utils.MapCache;
 import com.wq.website.utils.TaleUtils;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -18,7 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * 用户后台登录/登出
@@ -75,6 +80,25 @@ public class AuthController {
             return RestResponseBo.fail(msg);
         }
         return RestResponseBo.ok();
+    }
+
+    /**
+     * 注销
+     * @param session
+     * @param response
+     */
+    @RequestMapping("/logout")
+    public void logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+        session.removeAttribute(WebConst.LOGIN_SESSION_KEY);
+        Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, "");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        try {
+            response.sendRedirect(Commons.site_url());
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.error("注销失败", e);
+        }
     }
 
 }

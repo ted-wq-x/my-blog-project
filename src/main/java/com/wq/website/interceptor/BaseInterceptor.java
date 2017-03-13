@@ -52,7 +52,7 @@ public class BaseInterceptor implements HandlerInterceptor {
                 }
             }
             if (uri.startsWith("/admin") && !uri.startsWith("/admin/login") && null == user) {
-                response.sendRedirect("/admin/login");
+                response.sendRedirect(request.getContextPath()+"/admin/login");
                 return false;
             }
         }

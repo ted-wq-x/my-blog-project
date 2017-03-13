@@ -1,20 +1,31 @@
 package com.wq.website.controller.admin;
 
+import com.google.gson.Gson;
+import com.wq.website.constant.WebConst;
+import com.wq.website.controller.BaseController;
+import com.wq.website.dto.LogActions;
+import com.wq.website.exception.TipException;
+import com.wq.website.modal.Bo.RestResponseBo;
 import com.wq.website.modal.Bo.StatisticsBo;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.LogVo;
+import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
 import com.wq.website.service.ISiteService;
-import com.wq.website.utils.Commons;
+import com.wq.website.service.IUserService;
+import com.wq.website.utils.GsonUtils;
+import com.wq.website.utils.TaleUtils;
+import com.wq.website.utils.Tools;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -23,7 +34,7 @@ import java.util.List;
  */
 @Controller("adminIndexController")
 @RequestMapping("/admin")
-public class IndexController {
+public class IndexController extends BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(com.wq.website.controller.admin.IndexController.class);
 
     @Resource
@@ -31,6 +42,9 @@ public class IndexController {
 
     @Resource
     private ILogService logService;
+
+    @Resource
+    private IUserService userService;
 
     /**
      * 页面跳转
@@ -51,5 +65,80 @@ public class IndexController {
         request.setAttribute("logs", logs);
         LOGGER.info("Exit admin index method");
         return "admin/index";
+    }
+
+    /**
+     * 个人设置页面
+     */
+    @GetMapping(value = "profile")
+    public String profile() {
+        return "admin/profile";
+    }
+
+
+    /**
+     * 保存个人信息
+     */
+    @PostMapping(value = "/profile")
+    @ResponseBody
+    public RestResponseBo saveProfile(@RequestParam String screenName, @RequestParam String email, HttpServletRequest request, HttpSession session) {
+        UserVo users = this.user(request);
+        if (StringUtils.isNotBlank(screenName) && StringUtils.isNotBlank(email)) {
+            UserVo temp = new UserVo();
+            temp.setUid(users.getUid());
+            temp.setScreenName(screenName);
+            temp.setEmail(email);
+            userService.updateByUid(temp);
+            logService.insertLog(LogActions.UP_INFO.getAction(), GsonUtils.toJsonString(temp), request.getRemoteAddr(), this.getUid(request));
+
+            //更新session中的数据
+            UserVo original= (UserVo)session.getAttribute(WebConst.LOGIN_SESSION_KEY);
+            original.setScreenName(screenName);
+            original.setEmail(email);
+            session.setAttribute(WebConst.LOGIN_SESSION_KEY,original);
+        }
+        return RestResponseBo.ok();
+    }
+
+    /**
+     * 修改密码
+     */
+    @PostMapping(value = "/password")
+    @ResponseBody
+    public RestResponseBo upPwd(@RequestParam String oldPassword, @RequestParam String password, HttpServletRequest request,HttpSession session) {
+        UserVo users = this.user(request);
+        if (StringUtils.isBlank(oldPassword) || StringUtils.isBlank(password)) {
+            return RestResponseBo.fail("请确认信息输入完整");
+        }
+
+        if (!users.getPassword().equals(TaleUtils.MD5encode(users.getUsername() + oldPassword))) {
+            return RestResponseBo.fail("旧密码错误");
+        }
+        if (password.length() < 6 || password.length() > 14) {
+            return RestResponseBo.fail("请输入6-14位密码");
+        }
+
+        try {
+            UserVo temp = new UserVo();
+            temp.setUid(users.getUid());
+            String pwd = TaleUtils.MD5encode(users.getUsername() + password);
+            temp.setPassword(pwd);
+            userService.updateByUid(temp);
+            logService.insertLog(LogActions.UP_PWD.getAction(), null, request.getRemoteAddr(), this.getUid(request));
+
+            //更新session中的数据
+            UserVo original= (UserVo)session.getAttribute(WebConst.LOGIN_SESSION_KEY);
+            original.setPassword(pwd);
+            session.setAttribute(WebConst.LOGIN_SESSION_KEY,original);
+            return RestResponseBo.ok();
+        } catch (Exception e){
+            String msg = "密码修改失败";
+            if (e instanceof TipException) {
+                msg = e.getMessage();
+            } else {
+                LOGGER.error(msg, e);
+            }
+            return RestResponseBo.fail(msg);
+        }
     }
 }
