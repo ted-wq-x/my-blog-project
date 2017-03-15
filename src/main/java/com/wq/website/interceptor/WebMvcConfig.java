@@ -17,6 +17,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private BaseInterceptor baseInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(baseInterceptor).excludePathPatterns("/install");
+        registry.addInterceptor(baseInterceptor);
     }
 }

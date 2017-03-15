@@ -2,37 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
 <body>
 <footer class="footer bg-white">
-    <div class="footer-social">
-        <div class="footer-container clearfix">
-            <div class="social-list">
-                #tag social("weibo")
-                <a class="social weibo" target="blank" th:href="@{http://weibo.com/${commons.site_option('social_weibo')}}">微博</a>
-                #end
+    <!--TODO-->
+    <!--<div class="footer-social">-->
+        <!--<div class="footer-container clearfix">-->
+            <!--<div class="social-list">-->
+                <!--#tag social("weibo")-->
+                <!--<a class="social weibo" target="blank" th:href="@{http://weibo.com/${commons.site_option('social_weibo')}}">微博</a>-->
+                <!--#end-->
 
-                #tag social("zhihu")
-                <a class="social zhihu" target="blank"
-                   th:href="@{https://www.zhihu.com/people/${site_option('social_zhihu')}}">知乎</a>
-                #end
+                <!--#tag social("zhihu")-->
+                <!--<a class="social zhihu" target="blank"-->
+                   <!--th:href="@{https://www.zhihu.com/people/${site_option('social_zhihu')}}">知乎</a>-->
+                <!--#end-->
 
-                <a class="social rss" target="blank" href="/feed">RSS</a>
+                <!--<a class="social rss" target="blank" href="/feed">RSS</a>-->
 
-                #tag social("github")
-                <a class="social github" target="blank"
-                   th:href="@{http://github.com/${commons.site_option('social_github')}}">Github</a>
-                #end
+                <!--#tag social("github")-->
+                <!--<a class="social github" target="blank"-->
+                   <!--th:href="@{http://github.com/${commons.site_option('social_github')}}">Github</a>-->
+                <!--#end-->
 
-                #tag social("twitter")
-                <a class="social twitter" target="blank" th:href="@{http://weibo.com/${commons.site_option('social_twitter')}}">Twitter</a>
-                #end
-            </div>
-        </div>
-    </div>
+                <!--#tag social("twitter")-->
+                <!--<a class="social twitter" target="blank" th:href="@{http://weibo.com/${commons.site_option('social_twitter')}}">Twitter</a>-->
+                <!--#end-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="footer-meta">
         <div class="footer-container">
             <div class="meta-item meta-copyright">
                 <div class="meta-copyright-info">
-                    <a th:href="${ccommons.site_url()}" class="info-logo">
-                        <img th:src="@{/user/img/logo.png}" th:alt="${commons.site_title()}">
+                    <a th:href="${commons.site_url()}" class="info-logo">
+                        <img th:src="@{/user/img/logo.png}" th:alt="${commons.site_title()}"/>
                     </a>
                     <div class="info-text">
                         <p>一生有所追求.</p>
@@ -56,7 +57,7 @@
                 <h3 class="meta-title">最新评论</h3>
                 <div th:each="comm : ${commons.recent_comments(8)}">
                     <li>
-                        <a th:href="${commons.site_url('/article/')}${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+':'+${comm.content}"></a>
+                        <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+':'+${comm.content}"></a>
                     </li>
                 </div>
             </div>
@@ -167,7 +168,8 @@
 <script th:src="@{//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js}"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-     if([[${is_post}}]]){
+    var isOk = [[${is_post}]];
+     if(isOk){
         var postDirectory = new Headroom(document.getElementById("directory-content"), {
             tolerance: 0,
             offset : 100,
@@ -201,7 +203,8 @@
     });
     /*]]>*/
 </script>
-<script data-no-instant>
+<script data-no-instant="true">
+    /*<![CDATA[*/
     InstantClick.on('change', function (isInitialLoad) {
         var blocks = document.querySelectorAll('pre code');
         for (var i = 0; i < blocks.length; i++) {
@@ -212,6 +215,7 @@
         }
     });
     InstantClick.init();
+    /*]]>*/
 </script>
 </body>
 </html>

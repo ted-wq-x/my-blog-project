@@ -29,6 +29,9 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     private MapCache cache = MapCache.single();
 
+    @Resource
+    private Commons commons;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String uri = request.getRequestURI();
@@ -68,7 +71,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        httpServletRequest.setAttribute("commons",new Commons());
+        httpServletRequest.setAttribute("commons",commons);
     }
 
     @Override

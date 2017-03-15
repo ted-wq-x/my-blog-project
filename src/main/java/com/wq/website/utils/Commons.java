@@ -9,6 +9,7 @@ import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.service.ISiteService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
  * <p>
  * Created by biezhi on 2017/2/21.
  */
+@Component
 public final class Commons {
 
     private static ISiteService siteService;
@@ -33,7 +35,6 @@ public final class Commons {
     public static void setSiteService(ISiteService ss) {
         siteService = ss;
     }
-
 
 
     /**
@@ -274,7 +275,7 @@ public final class Commons {
         int cid = contents.getCid();
         int size = cid % 20;
         size = size == 0 ? 1 : size;
-        return "/static/user/img/rand/" + size + ".jpg";
+        return "/user/img/rand/" + size + ".jpg";
     }
 
     /**

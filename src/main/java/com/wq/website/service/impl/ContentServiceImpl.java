@@ -37,7 +37,7 @@ public class ContentServiceImpl implements IContentService {
         example.setOrderByClause("created desc");
         example.createCriteria().andTypeEqualTo(Types.ARTICLE.getType()).andStatusEqualTo(Types.PUBLISH.getType());
         PageHelper.offsetPage((p - 1), limit);
-        List<ContentVo> data = contentDao.selectByExample(example);
+        List<ContentVo> data = contentDao.selectByExampleWithBLOBs(example);
         PageInfo<ContentVo> pageInfo = new PageInfo<>(data);
         LOGGER.debug("Exit getContents method");
         return pageInfo;
