@@ -68,12 +68,13 @@
     </div>
 </footer>
 
-<div th:if="${is_post}">
+<th:block th:if="${is_post}">
     <div id="directory-content" class="directory-content">
         <div id="directory"></div>
     </div>
     <script>
         /*<![CDATA[*/
+        console.log(document.getElementById('post-content'));
         var postDirectoryBuild = function() {
             var postChildren = function children(childNodes, reg) {
                     var result = [],
@@ -164,7 +165,7 @@
         postDirectoryBuild();
         /*]]>*/
     </script>
-</div>
+</th:block>
 
 <script th:src="@{//cdn.bootcss.com/headroom/0.9.1/headroom.min.js}"></script>
 <script th:src="@{//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js}"></script>
@@ -206,7 +207,7 @@
     });
     /*]]>*/
 </script>
-<script data-no-instant="true">
+<script data-no-instant="">
     /*<![CDATA[*/
     InstantClick.on('change', function (isInitialLoad) {
         var blocks = document.querySelectorAll('pre code');

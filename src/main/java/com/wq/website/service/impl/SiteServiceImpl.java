@@ -53,7 +53,7 @@ public class SiteServiceImpl implements ISiteService {
         CommentVoExample example = new CommentVoExample();
         example.setOrderByClause("created desc");
         PageHelper.startPage(1, limit);
-        List<CommentVo> byPage = commentDao.selectByExample(example);
+        List<CommentVo> byPage = commentDao.selectByExampleWithBLOBs(example);
         LOGGER.debug("Exit recentComments method");
         return byPage;
     }

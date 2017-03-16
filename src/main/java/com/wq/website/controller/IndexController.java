@@ -1,21 +1,31 @@
 package com.wq.website.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.vdurmont.emoji.EmojiParser;
 import com.wq.website.constant.WebConst;
+import com.wq.website.dto.ErrorCode;
 import com.wq.website.dto.Types;
+import com.wq.website.exception.TipException;
+import com.wq.website.modal.Bo.RestResponseBo;
+import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
+import com.wq.website.service.ICommentService;
 import com.wq.website.service.IContentService;
-import com.wq.website.utils.Commons;
+import com.wq.website.utils.IPKit;
+import com.wq.website.utils.PatternKit;
+import com.wq.website.utils.TaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
 
 /**
  * 首页
@@ -27,6 +37,9 @@ public class IndexController extends BaseController{
 
     @Resource
     private IContentService contentService;
+
+    @Resource
+    private ICommentService commentService;
 
     /**
      * 首页
@@ -77,9 +90,105 @@ public class IndexController extends BaseController{
                 cp = "1";
             }
             request.setAttribute("cp", cp);
+            PageInfo<CommentVo> commentsPaginator = commentService.getComments(contents.getCid(), Integer.parseInt(cp), 6);
+            request.setAttribute("comments", commentsPaginator);
         }
         updateArticleHit(contents.getCid(), contents.getHits());
         return this.render("post");
+
+
+    }
+
+    /**
+     * 注销
+     *
+     * @param session
+     * @param response
+     */
+    @RequestMapping("logout")
+    public void logout(HttpSession session, HttpServletResponse response) {
+        TaleUtils.logout(session, response);
+    }
+
+    /**
+     * 评论操作
+     */
+    @PostMapping(value = "comment")
+    @ResponseBody
+    public RestResponseBo comment(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestParam Integer cid, @RequestParam Integer coid,
+                                  @RequestParam String author, @RequestParam String mail,
+                                  @RequestParam String url, @RequestParam String text, @RequestParam String _csrf_token) {
+
+        String ref = request.getHeader("Referer");
+        if (StringUtils.isBlank(ref) || StringUtils.isBlank(_csrf_token)) {
+            return RestResponseBo.fail(ErrorCode.BAD_REQUEST);
+        }
+
+        String token = cache.hget(Types.CSRF_TOKEN.getType(), _csrf_token);
+        if (StringUtils.isBlank(token)) {
+            return RestResponseBo.fail(ErrorCode.BAD_REQUEST);
+        }
+
+        if (null == cid || StringUtils.isBlank(author) || StringUtils.isBlank(mail) || StringUtils.isBlank(text)) {
+            return RestResponseBo.fail("请输入完整后评论");
+        }
+
+        if (author.length() > 50) {
+            return RestResponseBo.fail("姓名过长");
+        }
+
+        if (!TaleUtils.isEmail(mail)) {
+            return RestResponseBo.fail("请输入正确的邮箱格式");
+        }
+
+        if (StringUtils.isNotBlank(url) && !PatternKit.isURL(url)) {
+            return RestResponseBo.fail("请输入正确的URL格式");
+        }
+
+        if (text.length() > 2000) {
+            return RestResponseBo.fail("请输入2000个字符以内的评论");
+        }
+
+        String val = IPKit.getIpAddrByRequest(request) + ":" + cid;
+        Integer count = cache.hget(Types.COMMENTS_FREQUENCY.getType(), val);
+        if (null != count && count > 0) {
+            return RestResponseBo.fail("您发表评论太快了，请过会再试");
+        }
+
+        author = TaleUtils.cleanXSS(author);
+        text = TaleUtils.cleanXSS(text);
+
+        author = EmojiParser.parseToAliases(author);
+        text = EmojiParser.parseToAliases(text);
+
+        CommentVo comments = new CommentVo();
+        comments.setAuthor(author);
+        comments.setCid(cid);
+        comments.setIp(request.getRemoteAddr());
+        comments.setUrl(url);
+        comments.setContent(text);
+        comments.setMail(mail);
+        comments.setParent(coid);
+        try {
+            commentService.insertComment(comments);
+            cookie("tale_remember_author", URLEncoder.encode(author, "UTF-8"), 7 * 24 * 60 * 60,response);
+            cookie("tale_remember_mail", URLEncoder.encode(mail, "UTF-8"), 7 * 24 * 60 * 60,response);
+            if (StringUtils.isNotBlank(url)) {
+                cookie("tale_remember_url", URLEncoder.encode(url, "UTF-8"), 7 * 24 * 60 * 60,response);
+            }
+            // 设置对每个文章1分钟可以评论一次
+            cache.hset(Types.COMMENTS_FREQUENCY.getType(), val, 1, 60);
+            return RestResponseBo.ok();
+        } catch (Exception e) {
+            String msg = "评论发布失败";
+            if (e instanceof TipException) {
+                msg = e.getMessage();
+            } else {
+                LOGGER.error(msg, e);
+            }
+            return RestResponseBo.fail(msg);
+        }
     }
 
     /**
@@ -99,6 +208,13 @@ public class IndexController extends BaseController{
         } else {
             cache.hset("article", "hits", hits);
         }
+    }
+
+    private void cookie(String name, String value, int maxAge,HttpServletResponse response) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(maxAge);
+        cookie.setSecure(false);
+        response.addCookie(cookie);
     }
 
 }
