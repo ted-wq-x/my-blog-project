@@ -23,4 +23,19 @@ public interface IContentService {
      * @return
      */
     PageInfo<ContentVo> getContents(Integer p, Integer limit);
+
+
+    /**
+     * 根据id或slug获取文章
+     *
+     * @param id
+     * @return
+     */
+    ContentVo getContents(String id);
+
+    /**
+     * 根据主键更新
+     * @param contentVo
+     */
+    void updateContentByCid(ContentVo contentVo);
 }

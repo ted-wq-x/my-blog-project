@@ -3,18 +3,18 @@
 <body>
 <ol class="page-navigator" th:fragment="pageNav(pageInfo, prevText, nextText, prefix)">
     <th:block th:if="${pageInfo.hasPreviousPage}">
-        <li class="prev"><a th:href="@{/${prefix}/${pageInfo.prePage}}" th:text="${prevText}"></a></li>
+        <li class="prev"><a th:href="@{'/'+${prefix}+'/'+${pageInfo.prePage}}" th:text="${prevText}"></a></li>
     </th:block>
 
 
     <th:block th:each="navIndex :${ pageInfo.navigatepageNums}">
-        <li th:class="${pageInfo.pageNum==navIndex}?'current':''"><a th:href="@{/page/${navIndex}}"
-                                                                         th:text="${navIndex}"></a></li>
+        <li th:class="${pageInfo.pageNum==navIndex}?'current':''"><a th:href="@{'/page/'+${navIndex}}"
+                                                                     th:text="${navIndex}"></a></li>
     </th:block>
 
 
     <th:block th:if="${pageInfo.hasNextPage}">
-        <li class="next"><a th:href="@{/${prefix}/${pageInfo.nextPage}}" th:text="${nextText}"></a></li>
+        <li class="next"><a th:href="@{'/'+${prefix}+'/'+${pageInfo.nextPage}}" th:text="${nextText}"></a></li>
     </th:block>
 
 </ol>
@@ -29,7 +29,8 @@
             </li>
 
             <th:block th:each="nav : ${pageInfo.navigatepageNums}">
-                <li th:class="${nav==pageInfo.pageNum}?'active':''" ><a th:href="@{?page=${nav}}" th:text="${nav}"></a></li>
+                <li th:class="${nav==pageInfo.pageNum}?'active':''"><a th:href="@{?page=${nav}}" th:text="${nav}"></a>
+                </li>
             </th:block>
 
             <th:block th:if="${pageInfo.hasNextPage}">

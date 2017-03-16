@@ -1,6 +1,7 @@
 package com.wq.website.controller;
 
 import com.wq.website.modal.Vo.UserVo;
+import com.wq.website.utils.MapCache;
 import com.wq.website.utils.TaleUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseController {
 
     public static String THEME = "themes/default";
+
+    protected MapCache cache = MapCache.single();
 
     /**
      * 主页的页面主题

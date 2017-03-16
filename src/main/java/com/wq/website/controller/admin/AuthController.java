@@ -2,6 +2,7 @@ package com.wq.website.controller.admin;
 
 import com.sun.deploy.net.HttpResponse;
 import com.wq.website.constant.WebConst;
+import com.wq.website.controller.BaseController;
 import com.wq.website.dto.LogActions;
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Bo.RestResponseBo;
@@ -32,7 +33,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/admin")
 @Transactional(rollbackFor = TipException.class)
-public class AuthController {
+public class AuthController extends BaseController{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
@@ -41,8 +42,6 @@ public class AuthController {
 
     @Resource
     private ILogService logService;
-
-    private MapCache cache = MapCache.single();
 
     @GetMapping(value = "/login")
     public String login() {

@@ -4,9 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.ContentVoMapper;
 import com.wq.website.dto.Types;
+import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.ContentVoExample;
 import com.wq.website.service.IContentService;
+import com.wq.website.utils.TaleUtils;
+import com.wq.website.utils.Tools;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,5 +45,30 @@ public class ContentServiceImpl implements IContentService {
         PageInfo<ContentVo> pageInfo = new PageInfo<>(data);
         LOGGER.debug("Exit getContents method");
         return pageInfo;
+    }
+
+    @Override
+    public ContentVo getContents(String id) {
+        if (StringUtils.isNotBlank(id)) {
+            if (Tools.isNumber(id)) {
+                return contentDao.selectByPrimaryKey(Integer.valueOf(id));
+            } else {
+                ContentVoExample contentVoExample = new ContentVoExample();
+                contentVoExample.createCriteria().andSlugEqualTo(id);
+                List<ContentVo> contentVos = contentDao.selectByExampleWithBLOBs(contentVoExample);
+                if (contentVos.size() != 1) {
+                    throw new TipException("query content by id and return is not one");
+                }
+                return contentVos.get(0);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateContentByCid(ContentVo contentVo) {
+        if (null != contentVo && null != contentVo.getCid()) {
+            contentDao.updateByPrimaryKeySelective(contentVo);
+        }
     }
 }

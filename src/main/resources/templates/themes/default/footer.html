@@ -53,13 +53,16 @@
                 </div>
             </div>
 
-            <div class="meta-item meta-comments">
+            <div class="meta-item meta-comments" th:with="listValue=${commons.recent_comments(8)}">
                 <h3 class="meta-title">最新评论</h3>
-                <div th:each="comm : ${commons.recent_comments(8)}">
-                    <li>
-                        <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+':'+${comm.content}"></a>
-                    </li>
+                <div th:if="${listValue}!=null">
+                    <div th:each="comm : ${listValue}">
+                        <li>
+                            <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+':'+${comm.content}"></a>
+                        </li>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
