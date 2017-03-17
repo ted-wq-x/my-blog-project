@@ -462,4 +462,12 @@
   <select id="findReturnArchiveBo" resultMap="archiveBoMap">
     select FROM_UNIXTIME(created, '%Y年%m月') as date, count(*) as count from t_contents where type = 'post' and status = 'publish' group by date order by date desc
   </select>
+
+
+  <select id="findByCatalog" resultMap="BaseResultMap" parameterType="Integer">
+    select a.*
+    from t_contents a left join t_relationships b on a.cid = b.cid
+    where b.mid = #{value} and a.status = 'publish' and a.type = 'post'
+    order by a.created desc
+  </select>
 </mapper>

@@ -1,8 +1,10 @@
 package com.wq.website.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.ContentVoMapper;
+import com.wq.website.dao.MetaVoMapper;
 import com.wq.website.dto.Types;
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.ContentVo;
@@ -27,6 +29,9 @@ public class ContentServiceImpl implements IContentService {
 
     @Resource
     private ContentVoMapper contentDao;
+
+    @Resource
+    private MetaVoMapper metaDao;
 
 
     @Override
@@ -70,5 +75,15 @@ public class ContentServiceImpl implements IContentService {
         if (null != contentVo && null != contentVo.getCid()) {
             contentDao.updateByPrimaryKeySelective(contentVo);
         }
+    }
+
+    @Override
+    public PageInfo<ContentVo> getArticles(Integer mid, int page, int limit) {
+        int total = metaDao.countWithSql(mid);
+        PageHelper.startPage(page, limit);
+        List<ContentVo> list = contentDao.findByCatalog(mid);
+        PageInfo<ContentVo> paginator = new PageInfo<>(list);
+        paginator.setTotal(total);
+        return paginator;
     }
 }

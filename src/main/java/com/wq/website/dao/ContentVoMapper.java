@@ -38,4 +38,6 @@ public interface ContentVoMapper {
     int updateByPrimaryKey(ContentVo record);
 
     List<ArchiveBo> findReturnArchiveBo();
+
+    List<ContentVo> findByCatalog(Integer mid);
 }

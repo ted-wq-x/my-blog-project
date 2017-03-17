@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.vdurmont.emoji.EmojiParser;
 import com.wq.website.constant.WebConst;
 import com.wq.website.dto.ErrorCode;
+import com.wq.website.dto.MetaDto;
 import com.wq.website.dto.Types;
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Bo.CommentBo;
@@ -12,6 +13,7 @@ import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.service.ICommentService;
 import com.wq.website.service.IContentService;
+import com.wq.website.service.IMetaService;
 import com.wq.website.utils.IPKit;
 import com.wq.website.utils.PatternKit;
 import com.wq.website.utils.TaleUtils;
@@ -19,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -41,6 +44,9 @@ public class IndexController extends BaseController{
 
     @Resource
     private ICommentService commentService;
+
+    @Resource
+    private IMetaService metaService;
 
     /**
      * 首页
@@ -116,6 +122,7 @@ public class IndexController extends BaseController{
      */
     @PostMapping(value = "comment")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo comment(HttpServletRequest request, HttpServletResponse response,
                                   @RequestParam Integer cid, @RequestParam Integer coid,
                                   @RequestParam String author, @RequestParam String mail,
@@ -190,6 +197,36 @@ public class IndexController extends BaseController{
             }
             return RestResponseBo.fail(msg);
         }
+    }
+
+
+    /**
+     * 分类页
+     *
+     * @return
+     */
+    @GetMapping(value = "category/{keyword}")
+    public String categories(HttpServletRequest request, @PathVariable String keyword, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        return this.categories(request, keyword, 1, limit);
+    }
+
+    @GetMapping(value = "category/{keyword}/{page}")
+    public String categories(HttpServletRequest request, @PathVariable String keyword,
+                             @PathVariable int page, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        page = page < 0 || page > WebConst.MAX_PAGE ? 1 : page;
+        MetaDto metaDto = metaService.getMeta(Types.CATEGORY.getType(), keyword);
+        if (null == metaDto) {
+            return this.render_404();
+        }
+
+        PageInfo<ContentVo> contentsPaginator = contentService.getArticles(metaDto.getMid(), page, limit);
+
+        request.setAttribute("articles", contentsPaginator);
+        request.setAttribute("meta", metaDto);
+        request.setAttribute("type", "分类");
+        request.setAttribute("keyword", keyword);
+
+        return this.render("page-category");
     }
 
     /**
