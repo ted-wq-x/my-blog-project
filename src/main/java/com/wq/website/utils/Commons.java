@@ -152,6 +152,17 @@ public final class Commons {
         return permalink(contents.getCid(), contents.getSlug());
     }
 
+
+    /**
+     * 获取随机数
+     * @param max
+     * @param str
+     * @return
+     */
+    public static String random(int max, String str){
+        return UUID.random(1, max) + str;
+    }
+
     /**
      * 返回文章链接地址
      *

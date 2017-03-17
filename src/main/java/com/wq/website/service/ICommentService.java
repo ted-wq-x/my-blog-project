@@ -1,6 +1,7 @@
 package com.wq.website.service;
 
 import com.github.pagehelper.PageInfo;
+import com.wq.website.modal.Bo.CommentBo;
 import com.wq.website.modal.Vo.CommentVo;
 
 /**
@@ -21,5 +22,5 @@ public interface ICommentService {
      * @param limit
      * @return
      */
-    PageInfo<CommentVo> getComments(Integer cid, int page, int limit);
+    PageInfo<CommentBo> getComments(Integer cid, int page, int limit);
 }

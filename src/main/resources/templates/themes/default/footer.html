@@ -58,7 +58,7 @@
                 <div th:if="${listValue}!=null">
                     <div th:each="comm : ${listValue}">
                         <li>
-                            <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+':'+${comm.content}"></a>
+                            <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+' : '+${comm.content}"></a>
                         </li>
                     </div>
                 </div>
@@ -74,7 +74,6 @@
     </div>
     <script>
         /*<![CDATA[*/
-        console.log(document.getElementById('post-content'));
         var postDirectoryBuild = function() {
             var postChildren = function children(childNodes, reg) {
                     var result = [],

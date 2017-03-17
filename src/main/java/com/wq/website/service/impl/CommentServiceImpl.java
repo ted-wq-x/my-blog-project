@@ -1,10 +1,11 @@
 package com.wq.website.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.CommentVoMapper;
 import com.wq.website.dao.ContentVoMapper;
-import com.wq.website.dto.Comment;
+import com.wq.website.modal.Bo.CommentBo;
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.CommentVoExample;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,19 +52,19 @@ public class CommentServiceImpl implements ICommentService {
         if (StringUtils.isBlank(comments.getContent())) {
             throw new TipException("评论内容不能为空");
         }
-        if(comments.getContent().length() < 5 || comments.getContent().length() > 2000){
+        if (comments.getContent().length() < 5 || comments.getContent().length() > 2000) {
             throw new TipException("评论字数在5-2000个字符");
         }
         if (null == comments.getCid()) {
             throw new TipException("评论文章不能为空");
         }
-        ContentVo contents =contentDao.selectByPrimaryKey(comments.getCid());
+        ContentVo contents = contentDao.selectByPrimaryKey(comments.getCid());
         if (null == contents) {
             throw new TipException("不存在的文章");
         }
         comments.setOwnerId(contents.getAuthorId());
         comments.setCreated(DateKit.getCurrentUnixTime());
-        commentDao.insert(comments);
+        commentDao.insertSelective(comments);
 
         ContentVo temp = new ContentVo();
         temp.setCid(contents.getCid());
@@ -72,41 +72,47 @@ public class CommentServiceImpl implements ICommentService {
         contentDao.updateByPrimaryKeySelective(temp);
     }
 
-//    TODO
     @Override
-    public PageInfo<CommentVo> getComments(Integer cid, int page, int limit) {
-//
-//        if (null != cid) {
+    public PageInfo<CommentBo> getComments(Integer cid, int page, int limit) {
+
+        if (null != cid) {
+//            获取顶层评论
 //            PageHelper.offsetPage((page - 1), limit);
-//            CommentVoExample commentVoExample = new CommentVoExample();
-//            commentVoExample.createCriteria().andCidEqualTo(cid).andParentEqualTo(0);
-//            commentVoExample.setOrderByClause("coid desc");
-//            List<CommentVo> parents = commentDao.selectByExampleWithBLOBs(commentVoExample);
-//            PageInfo<CommentVo> commentPaginator = new PageInfo<>(parents);
-//            if (parents.size()!=0) {
-//                List<Comment> comments = new ArrayList<>(parents.size());
-//                parents.forEach(parent -> {
-//                    Comment comment = new Comment(parent);
-//                    List<CommentVo> children = new ArrayList<>();
-//                    getChildren(children, comment.getCoid());
-//                    comment.setChildren(children);
-//                    if (children.size() > 0) {
-//                        comment.setLevels(1);
-//                    }
-//                    comments.add(comment);
-//                });
-//                PageInfo<Comment> temp = commentPaginator;
-//                commentPaginator.setList(Comment);
-//            }
-//            return commentPaginator;
-//        }
+            PageHelper.startPage(page, limit);
+            CommentVoExample commentVoExample = new CommentVoExample();
+            commentVoExample.createCriteria().andCidEqualTo(cid).andParentEqualTo(0);
+            commentVoExample.setOrderByClause("coid desc");
+            List<CommentVo> parents = commentDao.selectByExampleWithBLOBs(commentVoExample);
+            PageInfo<CommentVo> commentPaginator = new PageInfo<>(parents);
+
+            //            获取父评论下的子评论内容
+            PageInfo<CommentBo> returnBo = copyPageInfo(commentPaginator);
+
+            if (parents.size() != 0) {
+                List<CommentBo> comments = new ArrayList<>(parents.size());
+                parents.forEach(parent -> {
+                    CommentBo comment = new CommentBo(parent);
+                    List<CommentVo> children = new ArrayList<>();
+                    getChildren(children, comment.getCoid());
+                    comment.setChildren(children);
+                    if (children.size() > 0) {
+                        comment.setLevels(1);
+                    }
+                    comments.add(comment);
+                });
+//                填充完整的评论体系和顶层评论的分页数据是相同的
+                returnBo.setList(comments);
+            }
+            return returnBo;
+        }
         return null;
     }
 
     /**
      * 获取该评论下的追加评论
-     * @param list
-     * @param coid
+     *
+     * @param list list
+     * @param coid coid
      */
     private void getChildren(List<CommentVo> list, Integer coid) {
         CommentVoExample commentVoExample = new CommentVoExample();
@@ -117,5 +123,30 @@ public class CommentServiceImpl implements ICommentService {
             list.addAll(cms);
             cms.forEach(c -> getChildren(list, c.getCoid()));
         }
+    }
+
+    /**
+     * copy原有的分页信息，除数据
+     * @param ordinal
+     * @param <T>
+     * @return
+     */
+    private <T> PageInfo<T> copyPageInfo(PageInfo ordinal){
+        PageInfo<T> returnBo = new PageInfo<T>();
+        returnBo.setPageSize(ordinal.getPageSize());
+        returnBo.setPageNum(ordinal.getPageNum());
+        returnBo.setEndRow(ordinal.getEndRow());
+        returnBo.setTotal(ordinal.getTotal());
+        returnBo.setHasNextPage(ordinal.isHasNextPage());
+        returnBo.setHasPreviousPage(ordinal.isHasPreviousPage());
+        returnBo.setIsFirstPage(ordinal.isIsFirstPage());
+        returnBo.setIsLastPage(ordinal.isIsLastPage());
+        returnBo.setNavigateFirstPage(ordinal.getNavigateFirstPage());
+        returnBo.setNavigateLastPage(ordinal.getNavigateLastPage());
+        returnBo.setNavigatepageNums(ordinal.getNavigatepageNums());
+        returnBo.setSize(ordinal.getSize());
+        returnBo.setPrePage(ordinal.getPrePage());
+        returnBo.setNextPage(ordinal.getNextPage());
+        return returnBo;
     }
 }

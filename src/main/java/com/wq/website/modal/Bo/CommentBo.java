@@ -1,18 +1,19 @@
-package com.wq.website.dto;
+package com.wq.website.modal.Bo;
 
 import com.wq.website.modal.Vo.CommentVo;
 
 import java.util.List;
 
 /**
+ * 返回页面的评论，包含父子评论内容
  * Created by biezhi on 2017/2/24.
  */
-public class Comment extends CommentVo {
+public class CommentBo extends CommentVo {
 
     private int levels;
     private List<CommentVo> children;
 
-    public Comment(CommentVo comments) {
+    public CommentBo(CommentVo comments) {
         setAuthor(comments.getAuthor());
         setMail(comments.getMail());
         setCoid(comments.getCoid());

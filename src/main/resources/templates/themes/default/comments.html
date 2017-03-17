@@ -5,9 +5,10 @@
     <div th:id="${article.cid ?: 0}" class="comment-container">
         <div id="comments" class="clearfix">
             <div th:if="${article.allowComment}">
-                <span class="response" >
+                <span class="response">
                 <th:block th:if="${session.login_user}">
-                    Hi，<a th:href="${session.login_user.homeUrl}" data-no-instant="" th:text="${session.login_user.username}"></a>
+                    Hi，<a th:href="${session.login_user.homeUrl}" data-no-instant=""
+                          th:text="${session.login_user.username}"></a>
             如果你想 <a href="/logout" title="注销" data-no-instant="">注销</a> ?
                 </th:block>
             </span>
@@ -16,21 +17,25 @@
                     <input type="hidden" name="coid" id="coid"/>
                     <input type="hidden" name="cid" id="cid" th:value="${article.cid}"/>
                     <input type="hidden" name="_csrf_token" th:value="${_csrf_token}"/>
-                    <input type="text" name="author" maxlength="12" id="author" class="form-control input-control clearfix"
-                           placeholder="姓名 (*)" th:value="${session.login_user}==null ?'': ${session.login_user.username}" required="required"/>
+                    <input type="text" name="author" maxlength="12" id="author"
+                           class="form-control input-control clearfix"
+                           placeholder="姓名 (*)"
+                           th:value="${session.login_user}==null ?'': ${session.login_user.username}"
+                           required="required"/>
                     <input type="email" name="mail" id="mail" class="form-control input-control clearfix"
                            placeholder="邮箱 (*)"
                            th:value="${session.login_user}==null?'':${session.login_user.email}" required="required"/>
                     <input type="url" name="url" id="url" class="form-control input-control clearfix"
                            placeholder="网址 (http://)"
                            th:value="${session.login_user}==null?'':${session.login_user.homeUrl}"/>
-                    <textarea name="text" id="textarea" class="form-control" placeholder="基佬，留下你的评论." required="required" minlength="5"
+                    <textarea name="text" id="textarea" class="form-control" placeholder="基佬，留下你的评论."
+                              required="required" minlength="5"
                               maxlength="2000"></textarea>
                     <button type="submit" class="submit" id="misubmit">提交</button>
                 </form>
             </div>
             <div th:unless="${article.allowComment}">
-                <span class="response" >评论已关闭.</span>
+                <span class="response">评论已关闭.</span>
             </div>
 
             <div th:if="${comments}">
@@ -41,21 +46,23 @@
                                 <div class="comment-view" onclick="">
                                     <div class="comment-header">
                                         <!--设置get请求的参数-->
-                                        <img class="avatar" th:src="@{${commons.gravatar(comment.mail)}(s='80',r='G',d='')}"
+                                        <img class="avatar"
+                                             th:src="@{${commons.gravatar(comment.mail)}(s='80',r='G',d='')}"
                                              th:title="${comment.author}"
                                              width="80" height="80"/>
                                         <span class="comment-author">
-                                <a th:href="${comment.url}" target="_blank" rel="external nofollow" th:text="${comment.author}"></a>
+                                <a th:href="${comment.url}" target="_blank" rel="external nofollow"
+                                   th:text="${comment.author}"></a>
                             </span>
                                     </div>
                                     <div class="comment-content">
                                         <span class="comment-author-at"></span>
-                                        <p th:text="${commons.article(comment.content)}"></p>
+                                        <p th:utext="${commons.article(comment.content)}"></p>
                                     </div>
                                     <div class="comment-meta">
                                         <time class="comment-time" th:text="${commons.fmtdate(comment.created)}"></time>
                                         <span class="comment-reply">
-                                <a rel="nofollow" th:onclick="'TaleComment.reply('+${comment.coid}+');">回复</a>
+                                <a rel="nofollow" th:onclick="|TaleComment.reply('${comment.coid}');|">回复</a>
                             </span>
                                     </div>
                                 </div>
@@ -70,22 +77,24 @@
                                                 <div th:id="'comment-'+${child.coid}">
                                                     <div class="comment-view">
                                                         <div class="comment-header">
-                                                            <img class="avatar" th:src="@{${commons.gravatar(child.mail)}(s='80',r='G',d='')}"
+                                                            <img class="avatar"
+                                                                 th:src="@{${commons.gravatar(child.mail)}(s='80',r='G',d='')}"
                                                                  th:title="${child.author}" width="80" height="80"/>
                                                             <span class="comment-author comment-by-author">
-                                            <a th:href="${child.url}" target="_blank" rel="external nofollow" th:text="${child.author}"></a>
+                                            <a th:href="${child.url}" target="_blank" rel="external nofollow"
+                                               th:text="${child.author}"></a>
                                         </span>
                                                         </div>
                                                         <div class="comment-content">
-                                        <span class="comment-author-at" th:text="${commons.comment_at(child.parent)}">
-
-                                        </span>
-                                                            <p th:text="${commons.article(child.content)}"></p>
+                                                            <span class="comment-author-at" style="float:left;margin-right:5px"
+                                                                  th:utext="${commons.comment_at(child.parent)}"></span>
+                                                            <p  th:utext="${commons.article(child.content)}"></p>
                                                         </div>
                                                         <div class="comment-meta">
-                                                            <time class="comment-time" th:text="${commons.fmtdate(child.created)}"></time>
+                                                            <time class="comment-time"
+                                                                  th:text="${commons.fmtdate(child.created)}"></time>
                                                             <span class="comment-reply">
-                                            <a rel="nofollow" th:onclick="'TaleComment.reply('+${child.coid+}');">回复</a>
+                                            <a rel="nofollow" th:onclick="|TaleComment.reply('${child.coid}');|">回复</a>
                                         </span>
                                                         </div>
                                                     </div>
@@ -105,7 +114,8 @@
                             <li class="prev"><a th:href="'?cp='+${comments.prePage}+'#comments'">←</a></li>
                         </th:block>
                         <th:block th:each="navIndex : ${comments.navigatepageNums}">
-                            <li th:class="${comments.pageNum}==${navIndex?'current':''}"><a th:href="'?cp='+${navIndex}+'#comments'" th:text="${navIndex}"></a>
+                            <li th:class="${comments.pageNum}==${navIndex}?'current':''"><a
+                                    th:href="'?cp='+${navIndex}+'#comments'" th:text="${navIndex}"></a>
                             </li>
                         </th:block>
                         <th:block th:if="${comments.hasNextPage}">

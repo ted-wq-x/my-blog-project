@@ -6,6 +6,7 @@ import com.wq.website.constant.WebConst;
 import com.wq.website.dto.ErrorCode;
 import com.wq.website.dto.Types;
 import com.wq.website.exception.TipException;
+import com.wq.website.modal.Bo.CommentBo;
 import com.wq.website.modal.Bo.RestResponseBo;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
@@ -90,7 +91,7 @@ public class IndexController extends BaseController{
                 cp = "1";
             }
             request.setAttribute("cp", cp);
-            PageInfo<CommentVo> commentsPaginator = commentService.getComments(contents.getCid(), Integer.parseInt(cp), 6);
+            PageInfo<CommentBo> commentsPaginator = commentService.getComments(contents.getCid(), Integer.parseInt(cp), 6);
             request.setAttribute("comments", commentsPaginator);
         }
         updateArticleHit(contents.getCid(), contents.getHits());
@@ -154,7 +155,7 @@ public class IndexController extends BaseController{
         Integer count = cache.hget(Types.COMMENTS_FREQUENCY.getType(), val);
         if (null != count && count > 0) {
             return RestResponseBo.fail("您发表评论太快了，请过会再试");
-        }
+    }
 
         author = TaleUtils.cleanXSS(author);
         text = TaleUtils.cleanXSS(text);
