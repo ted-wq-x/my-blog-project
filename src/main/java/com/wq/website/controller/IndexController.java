@@ -7,13 +7,16 @@ import com.wq.website.dto.ErrorCode;
 import com.wq.website.dto.MetaDto;
 import com.wq.website.dto.Types;
 import com.wq.website.exception.TipException;
+import com.wq.website.modal.Bo.ArchiveBo;
 import com.wq.website.modal.Bo.CommentBo;
 import com.wq.website.modal.Bo.RestResponseBo;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
+import com.wq.website.modal.Vo.MetaVo;
 import com.wq.website.service.ICommentService;
 import com.wq.website.service.IContentService;
 import com.wq.website.service.IMetaService;
+import com.wq.website.service.ISiteService;
 import com.wq.website.utils.IPKit;
 import com.wq.website.utils.PatternKit;
 import com.wq.website.utils.TaleUtils;
@@ -30,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * 首页
@@ -47,6 +51,9 @@ public class IndexController extends BaseController{
 
     @Resource
     private IMetaService metaService;
+
+    @Resource
+    private ISiteService siteService;
 
     /**
      * 首页
@@ -228,6 +235,78 @@ public class IndexController extends BaseController{
 
         return this.render("page-category");
     }
+
+
+    /**
+     * 归档页
+     *
+     * @return
+     */
+    @GetMapping(value = "archives")
+    public String archives(HttpServletRequest request) {
+        List<ArchiveBo> archives = siteService.getArchives();
+        request.setAttribute("archives", archives);
+        return this.render("archives");
+    }
+
+    /**
+     * 友链页
+     *
+     * @return
+     */
+    @GetMapping(value = "links")
+    public String links(HttpServletRequest request) {
+        List<MetaVo> links = metaService.getMetas(Types.LINK.getType());
+        request.setAttribute("links", links);
+        return this.render("links");
+    }
+
+    /**
+     * 自定义页面,如关于的页面
+     */
+    @GetMapping(value = "/{pagename}")
+    public String page(@PathVariable String pagename, HttpServletRequest request) {
+        ContentVo contents = contentService.getContents(pagename);
+        if (null == contents) {
+            return this.render_404();
+        }
+        if (contents.getAllowComment()) {
+            String cp = request.getParameter("cp");
+            if (StringUtils.isBlank(cp)) {
+                cp = "1";
+            }
+            PageInfo<CommentBo> commentsPaginator = commentService.getComments(contents.getCid(), Integer.parseInt(cp), 6);
+            request.setAttribute("comments", commentsPaginator);
+        }
+        request.setAttribute("article", contents);
+        updateArticleHit(contents.getCid(),contents.getHits());
+        return this.render("page");
+    }
+
+
+    /**
+     * 搜索页
+     *
+     * @param keyword
+     * @return
+     */
+    @GetMapping(value = "search/{keyword}")
+    public String search(HttpServletRequest request, @PathVariable String keyword, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        return this.search(request, keyword, 1, limit);
+    }
+
+    @GetMapping(value = "search/{keyword}/{page}")
+    public String search(HttpServletRequest request, @PathVariable String keyword, @PathVariable int page, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        page = page < 0 || page > WebConst.MAX_PAGE ? 1 : page;
+        PageInfo<ContentVo> articles = contentService.getArticles(keyword,page,limit);
+        request.setAttribute("articles", articles);
+        request.setAttribute("type", "搜索");
+        request.setAttribute("keyword", keyword);
+        return this.render("page-category");
+    }
+
+
+
 
     /**
      * 更新文章的点击率

@@ -1,6 +1,5 @@
 package com.wq.website.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.ContentVoMapper;
@@ -10,7 +9,6 @@ import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.ContentVoExample;
 import com.wq.website.service.IContentService;
-import com.wq.website.utils.TaleUtils;
 import com.wq.website.utils.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -85,5 +83,18 @@ public class ContentServiceImpl implements IContentService {
         PageInfo<ContentVo> paginator = new PageInfo<>(list);
         paginator.setTotal(total);
         return paginator;
+    }
+
+    @Override
+    public PageInfo<ContentVo> getArticles(String keyword, Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
+        ContentVoExample contentVoExample = new ContentVoExample();
+        ContentVoExample.Criteria criteria = contentVoExample.createCriteria();
+        criteria.andTypeEqualTo(Types.ARTICLE.getType());
+        criteria.andStatusEqualTo(Types.PUBLISH.getType());
+        criteria.andTitleLike("%" + keyword + "%");
+        contentVoExample.setOrderByClause("created desc");
+        List<ContentVo> contentVos = contentDao.selectByExampleWithBLOBs(contentVoExample);
+        return new PageInfo<>(contentVos);
     }
 }

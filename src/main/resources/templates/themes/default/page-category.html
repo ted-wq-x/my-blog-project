@@ -7,12 +7,12 @@
         <div class="common-title">
             <th:block th:text="${type}"/> : <th:block th:text="${keyword}"/>
         </div>
-        <th:block th:if="${articles}==null">
+        <th:block th:if="${commons.is_empty(articles)}">
             <div>
                 <p>抱歉，还没有相关文章.</p>
             </div>
         </th:block>
-        <th:block th:if="${articles}!=null">
+        <th:block th:unless="${commons.is_empty(articles)}">
             <div class="post-lists">
                 <div class="post-lists-body">
                     <th:block th:each="article : ${articles.list}">

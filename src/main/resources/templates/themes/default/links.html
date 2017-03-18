@@ -1,11 +1,14 @@
-#include('./header.html', {title: '友情链接'})
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="themes/default/header::header(title='友情链接',keywords=null)"></div>
+<body>
 <article class="main-content post-page">
     <div id="post-content" class="post-content">
         <h3>友情链接</h3>
         <ul class="flinks">
-            #for(link : links)
-            <li>🔒 <a href="${link.slug}" target="_blank">${link.name}</a></li>
-            #end
+            <th:block th:each="link : ${links}">
+                <li>🔒 <a th:href="${link.slug}" target="_blank" th:text="${link.name}"></a></li>
+            </th:block>
         </ul>
         <h3>链接须知</h3>
         <blockquote>
@@ -25,4 +28,6 @@
         <p>暂时先这样，同时欢迎互换友链，这个页面留言即可。 ^_^</p>
         <p>还有，我会不定时对无法访问的网址进行清理，请保证自己的链接长期有效。</p></div>
 </article>
-#include('./footer.html')
+</body>
+<div th:replace="themes/default/footer::footer"></div>
+</html>

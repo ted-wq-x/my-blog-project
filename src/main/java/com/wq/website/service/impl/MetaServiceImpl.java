@@ -2,6 +2,8 @@ package com.wq.website.service.impl;
 
 import com.wq.website.dao.MetaVoMapper;
 import com.wq.website.dto.MetaDto;
+import com.wq.website.modal.Vo.MetaVo;
+import com.wq.website.modal.Vo.MetaVoExample;
 import com.wq.website.service.IMetaService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by BlueT on 2017/3/17.
@@ -30,7 +33,18 @@ public class MetaServiceImpl implements IMetaService {
 
     @Override
     public Integer countMeta(Integer mid) {
-
         return metaDao.countWithSql(mid);
+    }
+
+    @Override
+    public List<MetaVo> getMetas(String types) {
+        if (StringUtils.isNotBlank(types)) {
+            MetaVoExample metaVoExample = new MetaVoExample();
+            metaVoExample.setOrderByClause("sort desc, mid desc");
+            metaVoExample.createCriteria().andTypeEqualTo(types);
+            List<MetaVo> metaVos = metaDao.selectByExample(metaVoExample);
+            return metaVos;
+        }
+        return null;
     }
 }

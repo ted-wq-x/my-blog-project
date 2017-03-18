@@ -1,6 +1,7 @@
 package com.wq.website.utils;
 
 
+import com.github.pagehelper.PageInfo;
 import com.vdurmont.emoji.EmojiParser;
 import com.wq.website.constant.WebConst;
 import com.wq.website.dto.MetaDto;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +39,15 @@ public final class Commons {
     }
 
 
+    /**
+     * 判断分页中是否有数据
+     *
+     * @param paginator
+     * @return
+     */
+    public static boolean is_empty(PageInfo paginator) {
+        return paginator == null||(paginator.getList() == null) || (paginator.getList().size() == 0);
+    }
     /**
      * 网站链接
      *
