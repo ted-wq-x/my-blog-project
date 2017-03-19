@@ -2,19 +2,24 @@ package com.wq.website.service;
 
 import com.github.pagehelper.PageInfo;
 import com.wq.website.modal.Vo.ContentVo;
-
-import java.util.List;
+import com.wq.website.modal.Vo.ContentVoExample;
 
 /**
  * Created by Administrator on 2017/3/13 013.
  */
 public interface IContentService {
 
+//    /**
+//     * 保存文章
+//     * @param contentVo contentVo
+//     */
+//    void insertContent(ContentVo contentVo);
+
     /**
-     * 保存文章
-     * @param contentVo contentVo
+     * 发布文章
+     * @param contents
      */
-    void insertContent(ContentVo contentVo);
+    void publish(ContentVo contents);
 
     /**
      *查询文章返回多条数据
@@ -57,4 +62,24 @@ public interface IContentService {
      * @return ContentVo
      */
     PageInfo<ContentVo> getArticles(String keyword,Integer page,Integer limit);
+
+
+    /**
+     * @param commentVoExample
+     * @param page
+     * @param limit
+     * @return
+     */
+    PageInfo<ContentVo> getArticlesWithpage(ContentVoExample commentVoExample, Integer page, Integer limit);
+    /**
+     * 根据文章id删除
+     * @param cid
+     */
+    void deleteByCid(Integer cid);
+
+    /**
+     * 编辑文章
+     * @param contents
+     */
+    void updateArticle(ContentVo contents);
 }

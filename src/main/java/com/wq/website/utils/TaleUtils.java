@@ -402,4 +402,21 @@ public class TaleUtils {
         }
         return cleanValue;
     }
+
+    /**
+     * 判断是否是合法路径
+     *
+     * @param slug
+     * @return
+     */
+    public static boolean isPath(String slug) {
+        if (StringUtils.isNotBlank(slug)) {
+            if (slug.contains("/") || slug.contains(" ") || slug.contains(".")) {
+                return false;
+            }
+            Matcher matcher = SLUG_REGEX.matcher(slug);
+            return matcher.find();
+        }
+        return false;
+    }
 }

@@ -32,6 +32,10 @@ public class BaseInterceptor implements HandlerInterceptor {
     @Resource
     private Commons commons;
 
+    @Resource
+    private AdminCommons adminCommons;
+
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String uri = request.getRequestURI();
@@ -72,6 +76,7 @@ public class BaseInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         httpServletRequest.setAttribute("commons",commons);
+        httpServletRequest.setAttribute("adminCommons",adminCommons);
     }
 
     @Override

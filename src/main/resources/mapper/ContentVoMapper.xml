@@ -142,7 +142,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wq.website.modal.Vo.ContentVo">
+  <insert id="insert" parameterType="com.wq.website.modal.Vo.ContentVo" useGeneratedKeys="true" keyProperty="cid">
     insert into t_contents (cid, title, slug, 
       created, modified, author_id, 
       type, status, tags, 
@@ -156,7 +156,7 @@
       #{allowComment,jdbcType=BIT}, #{allowPing,jdbcType=BIT}, #{allowFeed,jdbcType=BIT}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.ContentVo">
+  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.ContentVo" useGeneratedKeys="true" keyProperty="cid">
     insert into t_contents
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cid != null">

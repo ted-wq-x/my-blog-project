@@ -1,16 +1,15 @@
 package com.wq.website.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.CommentVoMapper;
-import com.wq.website.dao.ContentVoMapper;
-import com.wq.website.modal.Bo.CommentBo;
 import com.wq.website.exception.TipException;
+import com.wq.website.modal.Bo.CommentBo;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.CommentVoExample;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.service.ICommentService;
+import com.wq.website.service.IContentService;
 import com.wq.website.utils.DateKit;
 import com.wq.website.utils.TaleUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +32,7 @@ public class CommentServiceImpl implements ICommentService {
     private CommentVoMapper commentDao;
 
     @Resource
-    private ContentVoMapper contentDao;
+    private IContentService contentService;
 
     @Override
     public void insertComment(CommentVo comments) {
@@ -58,7 +57,7 @@ public class CommentServiceImpl implements ICommentService {
         if (null == comments.getCid()) {
             throw new TipException("评论文章不能为空");
         }
-        ContentVo contents = contentDao.selectByPrimaryKey(comments.getCid());
+        ContentVo contents = contentService.getContents(String.valueOf(comments.getCid()));
         if (null == contents) {
             throw new TipException("不存在的文章");
         }
@@ -69,7 +68,7 @@ public class CommentServiceImpl implements ICommentService {
         ContentVo temp = new ContentVo();
         temp.setCid(contents.getCid());
         temp.setCommentsNum(contents.getCommentsNum() + 1);
-        contentDao.updateByPrimaryKeySelective(temp);
+        contentService.updateContentByCid(temp);
     }
 
     @Override
@@ -104,6 +103,44 @@ public class CommentServiceImpl implements ICommentService {
                 returnBo.setList(comments);
             }
             return returnBo;
+        }
+        return null;
+    }
+
+    @Override
+    public PageInfo<CommentVo> getCommentsWithPage(CommentVoExample commentVoExample, int page, int limit) {
+        PageHelper.startPage(page, limit);
+        List<CommentVo> commentVos = commentDao.selectByExampleWithBLOBs(commentVoExample);
+        PageInfo<CommentVo> pageInfo = new PageInfo<>(commentVos);
+        return pageInfo;
+    }
+
+    @Override
+    public void update(CommentVo comments) {
+        if(null != comments && null != comments.getCoid()){
+            commentDao.updateByPrimaryKeyWithBLOBs(comments);
+        }
+    }
+
+    @Override
+    public void delete(Integer coid, Integer cid) {
+        if (null == coid) {
+            throw new TipException("主键为空");
+        }
+        commentDao.deleteByPrimaryKey(coid);
+        ContentVo contents = contentService.getContents(cid+"");
+        if(null != contents && contents.getCommentsNum() > 0){
+            ContentVo temp = new ContentVo();
+            temp.setCid(cid);
+            temp.setCommentsNum(contents.getCommentsNum() - 1);
+            contentService.updateContentByCid(temp);
+        }
+    }
+
+    @Override
+    public CommentVo getCommentById(Integer coid) {
+        if(null != coid){
+            return commentDao.selectByPrimaryKey(coid);
         }
         return null;
     }

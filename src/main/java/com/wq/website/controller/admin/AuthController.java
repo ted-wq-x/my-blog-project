@@ -1,6 +1,5 @@
 package com.wq.website.controller.admin;
 
-import com.sun.deploy.net.HttpResponse;
 import com.wq.website.constant.WebConst;
 import com.wq.website.controller.BaseController;
 import com.wq.website.dto.LogActions;
@@ -10,7 +9,6 @@ import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
 import com.wq.website.service.IUserService;
 import com.wq.website.utils.Commons;
-import com.wq.website.utils.MapCache;
 import com.wq.website.utils.TaleUtils;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
