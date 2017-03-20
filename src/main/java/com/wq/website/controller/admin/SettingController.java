@@ -59,7 +59,7 @@ public class SettingController extends BaseController {
      */
     @PostMapping(value = "")
     @ResponseBody
-    public RestResponseBo saveSetting(@RequestParam String site_theme, HttpServletRequest request) {
+    public RestResponseBo saveSetting(@RequestParam(required = false) String site_theme, HttpServletRequest request) {
         try {
             Map<String, String[]> parameterMap = request.getParameterMap();
             Map<String, String> querys = new HashMap<>();

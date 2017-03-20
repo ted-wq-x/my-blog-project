@@ -26,3 +26,4 @@ nbdist/
 ###my own###
 logs
 application-jdbc.properties
+upload

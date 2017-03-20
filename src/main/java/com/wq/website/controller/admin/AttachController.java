@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class AttachController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AttachController.class);
 
-    public static final String CLASSPATH = AttachController.class.getClassLoader().getResource("").getPath();
+    public static final String CLASSPATH = "";
 
     @Resource
     private IAttachService attachService;
@@ -74,7 +75,6 @@ public class AttachController extends BaseController {
     @PostMapping(value = "upload")
     @ResponseBody
     public RestResponseBo upload(HttpServletRequest request,@RequestParam("file") MultipartFile[] multipartFiles) throws IOException {
-        LOGGER.info("UPLOAD DIR = {}", TaleUtils.upDir);
         UserVo users = this.user(request);
         Integer uid = users.getUid();
         List<String> errorFiles = new ArrayList<>();
@@ -84,8 +84,7 @@ public class AttachController extends BaseController {
                 if (multipartFile.getSize() <= WebConst.MAX_FILE_SIZE) {
                     String fkey = TaleUtils.getFileKey(fname);
                     String ftype = TaleUtils.isImage(multipartFile.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType();
-                    String filePath = TaleUtils.upDir + fkey;
-                    File file = new File(filePath);
+                    File file = new File(fkey);
                     try {
                         FileCopyUtils.copy(multipartFile.getInputStream(),new FileOutputStream(file));
                     } catch (IOException e) {
@@ -109,8 +108,7 @@ public class AttachController extends BaseController {
             AttachVo attach = attachService.selectById(id);
             if (null == attach) return RestResponseBo.fail("不存在该附件");
             attachService.deleteById(id);
-            String upDir = CLASSPATH.substring(0, CLASSPATH.length() - 1);
-            new File(upDir + attach.getFkey()).delete();
+            new File(attach.getFkey()).delete();
             logService.insertLog(LogActions.DEL_ARTICLE.getAction(), attach.getFkey(), request.getRemoteAddr(), this.getUid(request));
         } catch (Exception e) {
             String msg = "附件删除失败";

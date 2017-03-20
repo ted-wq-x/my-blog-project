@@ -420,13 +420,10 @@ public class TaleUtils {
         return false;
     }
 
-    public static final String upDir = AttachController.CLASSPATH.substring(0, AttachController.CLASSPATH.length() - 1);
-
     public static String getFileKey(String name){
-        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
-        String dir = upDir + prefix;
-        if (!new File(dir).exists()) {
-            new File(dir).mkdirs();
+        String prefix = "upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
+        if (!new File(prefix).exists()) {
+            new File(prefix).mkdirs();
         }
 
         name = StringUtils.trimToNull(name);
