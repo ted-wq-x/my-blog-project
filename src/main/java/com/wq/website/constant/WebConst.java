@@ -3,7 +3,9 @@ package com.wq.website.constant;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by BlueT on 2017/3/3.
@@ -45,4 +47,14 @@ public class WebConst {
      * 点击次数超过多少更新到数据库
      */
     public static final int HIT_EXCEED = 10;
+
+    /**
+     * 上传文件最大20M
+     */
+    public static Integer MAX_FILE_SIZE = 204800;
+
+    /**
+     * 要过滤的ip列表
+     */
+    public static final Set<String> BLOCK_IPS = new HashSet<>(16);
 }

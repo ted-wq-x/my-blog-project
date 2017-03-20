@@ -69,4 +69,5 @@ public interface ISiteService {
      * @return
      */
     List<MetaDto> metas(String type, String orderBy, int limit);
+
 }

@@ -1,6 +1,7 @@
 package com.wq.website.utils;
 
 import com.wq.website.constant.WebConst;
+import com.wq.website.controller.admin.AttachController;
 import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
@@ -11,15 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.*;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
@@ -418,5 +418,47 @@ public class TaleUtils {
             return matcher.find();
         }
         return false;
+    }
+
+    public static final String upDir = AttachController.CLASSPATH.substring(0, AttachController.CLASSPATH.length() - 1);
+
+    public static String getFileKey(String name){
+        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
+        String dir = upDir + prefix;
+        if (!new File(dir).exists()) {
+            new File(dir).mkdirs();
+        }
+
+        name = StringUtils.trimToNull(name);
+        if(name == null) {
+            return prefix + "/" + UUID.UU32() + "."+null;
+        } else {
+            name = name.replace('\\', '/');
+            name = name.substring(name.lastIndexOf("/") + 1);
+            int index = name.lastIndexOf(".");
+            String ext = null;
+            if(index >= 0) {
+                ext = StringUtils.trimToNull(name.substring(index + 1));
+            }
+            return prefix + "/" + UUID.UU32() + "." + (ext == null?null:(ext));
+        }
+    }
+
+    /**
+     * 判断文件是否是图片类型
+     *
+     * @param imageFile
+     * @return
+     */
+    public static boolean isImage(InputStream imageFile) {
+        try {
+            Image img = ImageIO.read(imageFile);
+            if (img == null || img.getWidth(null) <= 0 || img.getHeight(null) <= 0) {
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
