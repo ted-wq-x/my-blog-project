@@ -108,7 +108,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wq.website.modal.Vo.LogVo">
+  <insert id="insert" parameterType="com.wq.website.modal.Vo.LogVo" useGeneratedKeys="true" keyProperty="id">
     insert into t_logs (id, action, data, 
       author_id, ip, created
       )
@@ -116,7 +116,7 @@
       #{authorId,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{created,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.LogVo">
+  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.LogVo" useGeneratedKeys="true" keyProperty="id">
     insert into t_logs
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

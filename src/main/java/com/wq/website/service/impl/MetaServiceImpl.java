@@ -154,7 +154,7 @@ public class MetaServiceImpl implements IMetaService {
         metaVoExample.createCriteria().andTypeEqualTo(type).andNameEqualTo(name);
         List<MetaVo> metaVos = metaDao.selectByExample(metaVoExample);
 
-        int mid;
+        int mid=0;
         MetaVo metas;
         if (metaVos.size() == 1) {
             metas = metaVos.get(0);
@@ -166,7 +166,8 @@ public class MetaServiceImpl implements IMetaService {
             metas.setSlug(name);
             metas.setName(name);
             metas.setType(type);
-            mid = metaDao.insertSelective(metas);
+//            TODO 待验证
+            metaDao.insertSelective(metas);
         }
         if (mid != 0) {
             Long count = relationshipService.countById(cid, mid);

@@ -113,7 +113,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wq.website.modal.Vo.UserVo">
+  <insert id="insert" parameterType="com.wq.website.modal.Vo.UserVo"  useGeneratedKeys="true" keyProperty="uid">
     insert into t_users (uid, username, password, 
       email, home_url, screen_name, 
       created, activated, logged, 
@@ -123,7 +123,7 @@
       #{created,jdbcType=INTEGER}, #{activated,jdbcType=INTEGER}, #{logged,jdbcType=INTEGER}, 
       #{groupName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.UserVo">
+  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.UserVo" useGeneratedKeys="true" keyProperty="uid">
     insert into t_users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">

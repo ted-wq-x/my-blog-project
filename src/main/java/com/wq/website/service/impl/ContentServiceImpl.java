@@ -85,7 +85,8 @@ public class ContentServiceImpl implements IContentService {
 
         String tags = contents.getTags();
         String categories = contents.getCategories();
-        Integer cid = contentDao.insert(contents);
+        contentDao.insert(contents);
+        Integer cid = contents.getCid();
 
         metasService.saveMetas(cid, tags, Types.TAG.getType());
         metasService.saveMetas(cid, categories, Types.CATEGORY.getType());

@@ -31,9 +31,9 @@ public class UserServiceImpl implements IUserService {
 //            用户密码加密
             String encodePwd = TaleUtils.MD5encode(userVo.getUsername() + userVo.getPassword());
             userVo.setPassword(encodePwd);
-            uid = userDao.insertSelective(userVo);
+             userDao.insertSelective(userVo);
         }
-        return uid;
+        return userVo.getUid();
     }
 
     @Override

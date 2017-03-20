@@ -140,7 +140,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wq.website.modal.Vo.CommentVo">
+  <insert id="insert" parameterType="com.wq.website.modal.Vo.CommentVo" useGeneratedKeys="true" keyProperty="coid">
     insert into t_comments (coid, cid, created, 
       author, author_id, owner_id, 
       mail, url, ip, agent, 
@@ -152,7 +152,7 @@
       #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{parent,jdbcType=INTEGER}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.CommentVo">
+  <insert id="insertSelective" parameterType="com.wq.website.modal.Vo.CommentVo" useGeneratedKeys="true" keyProperty="coid">
     insert into t_comments
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="coid != null">
