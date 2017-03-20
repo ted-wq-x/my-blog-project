@@ -461,4 +461,22 @@ public class TaleUtils {
             return false;
         }
     }
+
+    /**
+     * 随机数
+     * @param size
+     * @return
+     */
+    public static String getRandomNumber(int size) {
+        String num = "";
+
+        for(int i = 0; i < size; ++i) {
+            double a = Math.random() * 9.0D;
+            a = Math.ceil(a);
+            int randomNum = (new Double(a)).intValue();
+            num = num + randomNum;
+        }
+
+        return num;
+    }
 }

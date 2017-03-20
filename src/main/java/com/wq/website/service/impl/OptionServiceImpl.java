@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * options表的service
@@ -42,6 +43,13 @@ public class OptionServiceImpl implements IOptionService {
             optionDao.updateByPrimaryKeySelective(optionVo);
         }
         LOGGER.debug("Exit insertOption method.");
+    }
+
+    @Override
+    public void saveOptions(Map<String, String> options) {
+        if (null != options && !options.isEmpty()) {
+            options.forEach(this::insertOption);
+        }
     }
 
     @Override

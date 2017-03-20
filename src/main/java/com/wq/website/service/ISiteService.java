@@ -2,6 +2,7 @@ package com.wq.website.service;
 
 import com.wq.website.dto.MetaDto;
 import com.wq.website.modal.Bo.ArchiveBo;
+import com.wq.website.modal.Bo.BackResponseBo;
 import com.wq.website.modal.Bo.StatisticsBo;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
@@ -47,7 +48,7 @@ public interface ISiteService {
      * @param fmt
      * @return
      */
-//    BackResponse backup(String bk_type, String bk_path, String fmt) throws Exception;
+    BackResponseBo backup(String bk_type, String bk_path, String fmt) throws Exception;
 
 
     /**
