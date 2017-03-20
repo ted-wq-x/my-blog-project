@@ -190,4 +190,18 @@ public class MetaServiceImpl implements IMetaService {
         }
         return "";
     }
+
+    @Override
+    public void saveMeta(MetaVo metas) {
+        if (null != metas) {
+            metaDao.insertSelective(metas);
+        }
+    }
+
+    @Override
+    public void update(MetaVo metas) {
+        if (null != metas && null != metas.getMid()) {
+            metaDao.updateByPrimaryKeySelective(metas);
+        }
+    }
 }
