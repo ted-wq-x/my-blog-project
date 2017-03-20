@@ -59,7 +59,7 @@ public class ContentServiceImpl implements IContentService {
             throw new TipException("文章内容不能为空");
         if (contents.getTitle().length() > 200)
             throw new TipException("文章标题过长");
-        if (contents.getContent().length() > 10000)
+        if (contents.getContent().length() > 65000)
             throw new TipException("文章内容过长");
         if (null == contents.getAuthorId())
             throw new TipException("请登录后发布文章");
@@ -166,6 +166,15 @@ public class ContentServiceImpl implements IContentService {
             contentDao.deleteByPrimaryKey(cid);
             relationshipService.deleteById(cid, null);
         }
+    }
+
+    @Override
+    public void updateCategory(String ordinal, String newCatefory) {
+        ContentVo contentVo = new ContentVo();
+        contentVo.setCategories(newCatefory);
+        ContentVoExample example = new ContentVoExample();
+        example.createCriteria().andCategoriesEqualTo(ordinal);
+        contentDao.updateByExampleSelective(contentVo, example);
     }
 
     @Override

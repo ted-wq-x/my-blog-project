@@ -65,17 +65,17 @@ public class MetaServiceImpl implements IMetaService {
     @Override
     public List<MetaDto> getMetaList(String type, String orderby, int limit) {
         if (StringUtils.isNotBlank(type)) {
-            if(StringUtils.isBlank(orderby)){
+            if (StringUtils.isBlank(orderby)) {
                 orderby = "count desc, a.mid desc";
             }
-            if(limit < 1 || limit > WebConst.MAX_POSTS){
+            if (limit < 1 || limit > WebConst.MAX_POSTS) {
                 limit = 10;
             }
             Map<String, Object> paraMap = new HashMap<>();
             paraMap.put("type", type);
             paraMap.put("order", orderby);
             paraMap.put("limit", limit);
-            return  metaDao.selectFromSql(paraMap);
+            return metaDao.selectFromSql(paraMap);
         }
         return null;
     }
@@ -89,7 +89,7 @@ public class MetaServiceImpl implements IMetaService {
 
             metaDao.deleteByPrimaryKey(mid);
 
-            List<RelationshipVoKey> rlist = relationshipService.getRelationshipById(null,mid);
+            List<RelationshipVoKey> rlist = relationshipService.getRelationshipById(null, mid);
             if (null != rlist) {
                 for (RelationshipVoKey r : rlist) {
                     ContentVo contents = contentService.getContents(String.valueOf(r.getCid()));
@@ -106,7 +106,7 @@ public class MetaServiceImpl implements IMetaService {
                     }
                 }
             }
-            relationshipService.deleteById(null,mid);
+            relationshipService.deleteById(null, mid);
         }
     }
 
@@ -117,14 +117,17 @@ public class MetaServiceImpl implements IMetaService {
             metaVoExample.createCriteria().andTypeEqualTo(type).andNameEqualTo(name);
             List<MetaVo> metaVos = metaDao.selectByExample(metaVoExample);
             MetaVo metas;
-            if (metaVos.size()!=0) {
+            if (metaVos.size() != 0) {
                 throw new TipException("已经存在该项");
             } else {
                 metas = new MetaVo();
                 metas.setName(name);
                 if (null != mid) {
+                    MetaVo original = metaDao.selectByPrimaryKey(mid);
                     metas.setMid(mid);
                     metaDao.updateByPrimaryKeySelective(metas);
+//                    更新原有文章的categories
+                    contentService.updateCategory(original.getName(),name);
                 } else {
                     metas.setType(type);
                     metaDao.insertSelective(metas);

@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/3/6 006.
@@ -34,8 +32,11 @@ public class Test {
 //        }
 //
 //        System.out.println(hexString.toString());
-
-        System.out.println(TaleUtils.MD5encode("admin123456"));
+        Map<String, String> map = new HashMap<>();
+        map.put("name", "wq");
+        map.put("name", "scc");
+        System.out.println(map.get("name"));
+//        System.out.println(TaleUtils.MD5encode("admin123456"));
     }
 
     public static void test() throws IOException {

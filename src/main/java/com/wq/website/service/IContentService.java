@@ -82,4 +82,12 @@ public interface IContentService {
      * @param contents
      */
     void updateArticle(ContentVo contents);
+
+
+    /**
+     * 更新原有文章的category
+     * @param ordinal
+     * @param newCatefory
+     */
+    void updateCategory(String ordinal,String newCatefory);
 }
