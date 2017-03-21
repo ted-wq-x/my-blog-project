@@ -82,7 +82,7 @@
                       th:text="${commons.substr(attach.fname, 12)}"></span>
                                     </div>
                                     <div class="clearfix">
-                                        <button th:url="${commons.site_url(attach.fkey)}" type="button"
+                                        <button th:attr="url=${commons.site_url(attach.fkey)}" type="button"
                                                 class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
                                             <i class="fa fa-copy"></i> <span>复制</span>
                                         </button>
@@ -105,7 +105,7 @@
 <div th:replace="admin/footer :: footer"></div>
 <script src="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var tale = new $.tale();
 
@@ -121,7 +121,6 @@
             });
         }
     });
-
     var clipboard = new Clipboard('button.copy', {
         text: function (trigger) {
             return $(trigger).attr('url');

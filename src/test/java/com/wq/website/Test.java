@@ -7,6 +7,7 @@ package com.wq.website;
 import com.wq.website.dto.Types;
 import com.wq.website.utils.TaleUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -32,10 +33,6 @@ public class Test {
 //        }
 //
 //        System.out.println(hexString.toString());
-        Map<String, String> map = new HashMap<>();
-        map.put("name", "wq");
-        map.put("name", "scc");
-        System.out.println(map.get("name"));
 //        System.out.println(TaleUtils.MD5encode("admin123456"));
     }
 
