@@ -192,7 +192,7 @@ public class ContentServiceImpl implements IContentService {
         if (contents.getTitle().length() > 200) {
             throw new TipException("文章标题过长");
         }
-        if (contents.getContent().length() > 10000) {
+        if (contents.getContent().length() > 65000) {
             throw new TipException("文章内容过长");
         }
         if (null == contents.getAuthorId()) {
