@@ -10,7 +10,7 @@ public class GsonUtils {
 
     private static final Gson gson = new Gson();
 
-    public static String toJsonString(Object object){
-      return object==null?null:gson.toJson(object);
+    public static String toJsonString(Object object) {
+        return object == null ? null : gson.toJson(object);
     }
 }

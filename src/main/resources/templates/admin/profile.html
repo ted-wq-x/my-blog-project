@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='个人设置',active='home'">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:with="title='个人设置',active='home'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <body>
 <div id="wrapper">
@@ -22,25 +22,30 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">账号</label>
                                         <div class="col-md-9">
-                                            <input type="text" th:value="${session.login_user.username}" class="form-control"  readonly="readonly" disabled="disabled"/>
+                                            <input type="text" th:value="${session.login_user.username}"
+                                                   class="form-control" readonly="readonly" disabled="disabled"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">姓名</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="screenName" placeholder="输入您的姓名"
-                                                   th:value="${session.login_user.screenName}" required="required" aria-required="true"/>
+                                            <input type="text" class="form-control" name="screenName"
+                                                   placeholder="输入您的姓名"
+                                                   th:value="${session.login_user.screenName}" required="required"
+                                                   aria-required="true"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">邮箱</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" name="email" placeholder="输入您的邮箱"
-                                                   th:value="${session.login_user.email}" required="required" aria-required="true"/>
+                                                   th:value="${session.login_user.email}" required="required"
+                                                   aria-required="true"/>
                                         </div>
                                     </div>
                                     <div class="clearfix pull-right">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="saveSetting()">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light"
+                                                onclick="saveSetting()">
                                             保存信息
                                         </button>
                                     </div>
@@ -59,21 +64,24 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">输入旧密码</label>
                                         <div class="col-md-9">
-                                            <input type="password" class="form-control" name="oldPassword" required="required"
+                                            <input type="password" class="form-control" name="oldPassword"
+                                                   required="required"
                                                    aria-required="true"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">输入新密码</label>
                                         <div class="col-md-9">
-                                            <input type="password" name="password" id="password1" class="form-control" required="required"
+                                            <input type="password" name="password" id="password1" class="form-control"
+                                                   required="required"
                                                    aria-required="true" rangelength="[6,14]"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">确认新密码</label>
                                         <div class="col-md-9">
-                                            <input type="password" name="repass" class="form-control" equalTo="#password1"/>
+                                            <input type="password" name="repass" class="form-control"
+                                                   equalTo="#password1"/>
                                         </div>
                                     </div>
                                     <div class="clearfix pull-right">
@@ -105,10 +113,10 @@
     function saveSetting() {
         var param = $('#user-form').serialize();
         tale.post({
-            url : '/admin/profile',
+            url: '/admin/profile',
             data: param,
             success: function (result) {
-                if(result && result.success){
+                if (result && result.success) {
                     tale.alertOk('保存成功');
                 } else {
                     tale.alertError(result.msg || '保存失败');
@@ -121,10 +129,10 @@
         submitHandler: function (form) {
             var params = $("#pwd-form").serialize();
             tale.post({
-                url : '/admin/password',
+                url: '/admin/password',
                 data: params,
                 success: function (result) {
-                    if(result && result.success){
+                    if (result && result.success) {
                         tale.alertOk('密码修改成功');
                     } else {
                         tale.alertError(result.msg || '密码修改失败');

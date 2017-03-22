@@ -17,7 +17,8 @@ public interface ILogService {
     void insertLog(LogVo logVo);
 
     /**
-     *  保存
+     * 保存
+     *
      * @param action
      * @param data
      * @param ip
@@ -27,9 +28,10 @@ public interface ILogService {
 
     /**
      * 获取日志分页
-     * @param page 当前页
+     *
+     * @param page  当前页
      * @param limit 每页条数
      * @return 日志
      */
-    List<LogVo> getLogs(int page,int limit);
+    List<LogVo> getLogs(int page, int limit);
 }

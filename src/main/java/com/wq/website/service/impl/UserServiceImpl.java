@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 //            用户密码加密
             String encodePwd = TaleUtils.MD5encode(userVo.getUsername() + userVo.getPassword());
             userVo.setPassword(encodePwd);
-             userDao.insertSelective(userVo);
+            userDao.insertSelective(userVo);
         }
         return userVo.getUid();
     }
@@ -57,10 +57,10 @@ public class UserServiceImpl implements IUserService {
         if (count < 1) {
             throw new TipException("不存在该用户");
         }
-        String pwd = TaleUtils.MD5encode(username+password);
+        String pwd = TaleUtils.MD5encode(username + password);
         criteria.andPasswordEqualTo(pwd);
         List<UserVo> userVos = userDao.selectByExample(example);
-        if (userVos.size()!=1) {
+        if (userVos.size() != 1) {
             throw new TipException("用户名或密码错误");
         }
         return userVos.get(0);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements IUserService {
             throw new TipException("userVo is null");
         }
         int i = userDao.updateByPrimaryKeySelective(userVo);
-        if(i!=1){
+        if (i != 1) {
             throw new TipException("update user by uid and retrun is not one");
         }
     }

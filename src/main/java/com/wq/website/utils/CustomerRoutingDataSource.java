@@ -45,7 +45,7 @@ public class CustomerRoutingDataSource extends AbstractRoutingDataSource {
     @Override
     protected DataSource determineTargetDataSource() {
         LOGGER.info("Enter CustomerRoutingDataSource determineTargetDataSource method:change dataSource");
-        DataSource managerDataSource=TaleUtils.getNewDataSource();
+        DataSource managerDataSource = TaleUtils.getNewDataSource();
         LOGGER.info("Exit CustomerRoutingDataSource determineTargetDataSource method.");
         return managerDataSource;
     }

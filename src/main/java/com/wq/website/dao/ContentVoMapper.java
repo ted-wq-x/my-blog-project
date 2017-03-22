@@ -3,9 +3,10 @@ package com.wq.website.dao;
 import com.wq.website.modal.Bo.ArchiveBo;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.ContentVoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public interface ContentVoMapper {

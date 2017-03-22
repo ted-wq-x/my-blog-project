@@ -59,7 +59,7 @@ public class BaseInterceptor implements HandlerInterceptor {
                 }
             }
             if (uri.startsWith("/admin") && !uri.startsWith("/admin/login") && null == user) {
-                response.sendRedirect(request.getContextPath()+"/admin/login");
+                response.sendRedirect(request.getContextPath() + "/admin/login");
                 return false;
             }
         }
@@ -75,8 +75,8 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        httpServletRequest.setAttribute("commons",commons);
-        httpServletRequest.setAttribute("adminCommons",adminCommons);
+        httpServletRequest.setAttribute("commons", commons);
+        httpServletRequest.setAttribute("adminCommons", adminCommons);
     }
 
     @Override

@@ -57,7 +57,8 @@
                             <div id="comment-${child.coid}">
                                 <div class="comment-view">
                                     <div class="comment-header">
-                                        <img class="avatar" src="${gravatar(child.mail)}?s=80&r=G&d=" title="${child.author}" width="80" height="80">
+                                        <img class="avatar" src="${gravatar(child.mail)}?s=80&r=G&d="
+                                             title="${child.author}" width="80" height="80">
                                         <span class="comment-author comment-by-author">
                                             <a href="${child.url}" target="_blank" rel="external nofollow">${child.author}</a>
                                         </span>
@@ -90,7 +91,8 @@
                 <li class="prev"><a href="?cp=${comments.prevPage}#comments">←</a></li>
                 #end
                 #for(navIndex : comments.navPageNums)
-                <li #if(comments.pageNum== navIndex) class="current" #end><a href="?cp=${navIndex}#comments">${navIndex}</a></li>
+                <li #if(comments.pageNum== navIndex) class="current" #end><a
+                        href="?cp=${navIndex}#comments">${navIndex}</a></li>
                 #end
                 #if(comments.hasNextPage)
                 <li class="next"><a href="?cp=${comments.nextPage}#comments">→</a></li>

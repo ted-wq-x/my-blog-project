@@ -31,7 +31,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/admin")
 @Transactional(rollbackFor = TipException.class)
-public class AuthController extends BaseController{
+public class AuthController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
@@ -81,6 +81,7 @@ public class AuthController extends BaseController{
 
     /**
      * 注销
+     *
      * @param session
      * @param response
      */

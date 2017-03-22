@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='文章管理',active='article'">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:with="title='文章管理',active='article'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <body class="fixed-left">
 <div id="wrapper">
@@ -29,16 +29,22 @@
                                     <td>
                                         <a th:href="@{'/admin/article/'+${post.cid}}" th:text="${post.title}"></a>
                                     </td>
-                                    <td><th:block th:text="${commons.fmtdate(post.created, 'yyyy-MM-dd HH:mm:ss')}"/></td>
-                                    <td><th:block th:text="${post.hits}"/></td>
-                                    <td><th:block th:text="${post.categories}"/></td>
+                                    <td>
+                                        <th:block th:text="${commons.fmtdate(post.created, 'yyyy-MM-dd HH:mm:ss')}"/>
+                                    </td>
+                                    <td>
+                                        <th:block th:text="${post.hits}"/>
+                                    </td>
+                                    <td>
+                                        <th:block th:text="${post.categories}"/>
+                                    </td>
                                     <td>
                                         <th:block th:if="${post.status == 'publish'}">
                                             <span class="label label-success">已发布</span>
                                         </th:block>
-                                       <th:block th:if="${post.status == 'draft'}">
-                                           <span class="label label-default">草稿</span>
-                                       </th:block>
+                                        <th:block th:if="${post.status == 'draft'}">
+                                            <span class="label label-default">草稿</span>
+                                        </th:block>
                                     </td>
                                     <td>
                                         <a th:href="@{'/admin/article/'+${post.cid}}"
@@ -47,7 +53,8 @@
                                         <a href="javascript:void(0)" th:onclick="'delPost('+${post.cid}+');'"
                                            class="btn btn-danger btn-sm waves-effect waves-light m-b-5"><i
                                                 class="fa fa-trash-o"></i> <span>删除</span></a>
-                                        <a class="btn btn-warning btn-sm waves-effect waves-light m-b-5" th:href="${commons.permalink(post)}"
+                                        <a class="btn btn-warning btn-sm waves-effect waves-light m-b-5"
+                                           th:href="${commons.permalink(post)}"
                                            target="_blank"><i
                                                 class="fa fa-rocket"></i> <span>预览</span></a>
                                     </td>
@@ -70,13 +77,13 @@
     var tale = new $.tale();
     function delPost(cid) {
         tale.alertConfirm({
-            title:'确定删除该文章吗?',
+            title: '确定删除该文章吗?',
             then: function () {
                 tale.post({
-                    url : '/admin/article/delete',
+                    url: '/admin/article/delete',
                     data: {cid: cid},
                     success: function (result) {
-                        if(result && result.success){
+                        if (result && result.success) {
                             tale.alertOkAndReload('文章删除成功');
                         } else {
                             tale.alertError(result.msg || '文章删除失败');

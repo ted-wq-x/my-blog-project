@@ -17,6 +17,7 @@ public abstract class BaseController {
 
     /**
      * 主页的页面主题
+     *
      * @param viewName
      * @return
      */
@@ -36,6 +37,7 @@ public abstract class BaseController {
 
     /**
      * 获取请求绑定的登录对象
+     *
      * @param request
      * @return
      */
@@ -43,7 +45,7 @@ public abstract class BaseController {
         return TaleUtils.getLoginUser(request);
     }
 
-    public Integer getUid(HttpServletRequest request){
+    public Integer getUid(HttpServletRequest request) {
         return this.user(request).getUid();
     }
 

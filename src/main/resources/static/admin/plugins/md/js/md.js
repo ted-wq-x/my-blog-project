@@ -10,7 +10,7 @@ function markdown(textarea, toolbar, preview) {
         link: '链接 <a> Ctrl+L',
         linkdescription: '请输入链接描述',
 
-        quote:  '引用 <blockquote> Ctrl+Q',
+        quote: '引用 <blockquote> Ctrl+Q',
         quoteexample: '引用文字',
 
         code: '代码 <pre><code> Ctrl+K',
@@ -48,7 +48,7 @@ function markdown(textarea, toolbar, preview) {
 
     // 设置markdown
     Markdown.Extra.init(converter, {
-        extensions  :   ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes"]
+        extensions: ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes"]
     });
 
     // 自动跟随
@@ -81,12 +81,12 @@ function markdown(textarea, toolbar, preview) {
         if (diffs.length > 0) {
             var stack = [], markStr = mark;
 
-            for (var i = 0; i < diffs.length; i ++) {
+            for (var i = 0; i < diffs.length; i++) {
                 var diff = diffs[i], op = diff[0], str = diff[1]
                 sp = str.lastIndexOf('<'), ep = str.lastIndexOf('>');
 
                 if (op != 0) {
-                    if (sp >=0 && sp > ep) {
+                    if (sp >= 0 && sp > ep) {
                         if (op > 0) {
                             stack.push(str.substring(0, sp) + markStr + str.substring(sp));
                         } else {
@@ -131,7 +131,7 @@ function markdown(textarea, toolbar, preview) {
         $('img', preview).load(function () {
             if (scrolled) {
                 preview.scrollTo(diff, {
-                    offset  :   - 50
+                    offset: -50
                 });
             }
         });
@@ -142,7 +142,7 @@ function markdown(textarea, toolbar, preview) {
 
             if (p.top < 0 || p.top > preview.height() - lh) {
                 preview.scrollTo(diff, {
-                    offset  :   - 50
+                    offset: -50
                 });
                 scrolled = true;
             }
@@ -181,7 +181,7 @@ function markdown(textarea, toolbar, preview) {
     var edittab = $('#md-button-bar').prepend('<div class="md-edittab"><a href="#md-editarea" class="active">撰写</a><a href="#md-preview">预览</a></div>'),
         editarea = $(textarea.parent()).attr("id", "md-editarea");
 
-    $(".md-edittab a").click(function() {
+    $(".md-edittab a").click(function () {
         $(".md-edittab a").removeClass('active');
         $(this).addClass("active");
         $("#md-editarea, #md-preview").addClass("md-hidetab");
