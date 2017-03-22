@@ -102,6 +102,8 @@ public class ArticleController extends BaseController {
     public RestResponseBo modifyArticle(ContentVo contents, HttpServletRequest request) {
         UserVo users = this.user(request);
         contents.setAuthorId(users.getUid());
+        contents.setType(Types.ARTICLE.getType());
+        contents.setSlug(null);
         try {
             contentsService.updateArticle(contents);
         } catch (Exception e) {
