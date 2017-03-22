@@ -2,7 +2,6 @@ package com.wq.website;
 
 import com.wq.website.dao.OptionVoMapper;
 import com.wq.website.modal.Vo.OptionVo;
-import com.wq.website.modal.Vo.OptionVoExample;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class OptionMapperTest {
     @Test
     @Ignore
     @Rollback
-    public void index(){
+    public void index() {
         List<OptionVo> list = new ArrayList<>();
         OptionVo op1 = new OptionVo();
         op1.setName("wq");
@@ -42,7 +41,7 @@ public class OptionMapperTest {
         op1.setDescription("woowow");
         list.add(op1);
         int i = optionMapper.insertOptions(list);
-        Assert.assertEquals(list.size(),i);
+        Assert.assertEquals(list.size(), i);
 
 //        op1 = new OptionVo();
 //        op1.setName("lyf");

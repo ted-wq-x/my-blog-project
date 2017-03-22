@@ -2,7 +2,8 @@ package com.wq.website.modal.Bo;
 
 /**
  * rest返回对象
- *^
+ * ^
+ *
  * @param <T>
  */
 public class RestResponseBo<T> {
@@ -67,6 +68,38 @@ public class RestResponseBo<T> {
         this.code = code;
     }
 
+    public static RestResponseBo ok() {
+        return new RestResponseBo(true);
+    }
+
+    public static <T> RestResponseBo ok(T payload) {
+        return new RestResponseBo(true, payload);
+    }
+
+    public static <T> RestResponseBo ok(int code) {
+        return new RestResponseBo(true, null, code);
+    }
+
+    public static <T> RestResponseBo ok(T payload, int code) {
+        return new RestResponseBo(true, payload, code);
+    }
+
+    public static RestResponseBo fail() {
+        return new RestResponseBo(false);
+    }
+
+    public static RestResponseBo fail(String msg) {
+        return new RestResponseBo(false, msg);
+    }
+
+    public static RestResponseBo fail(int code) {
+        return new RestResponseBo(false, null, code);
+    }
+
+    public static RestResponseBo fail(int code, String msg) {
+        return new RestResponseBo(false, msg, code);
+    }
+
     public T getPayload() {
         return payload;
     }
@@ -105,38 +138,6 @@ public class RestResponseBo<T> {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public static RestResponseBo ok() {
-        return new RestResponseBo(true);
-    }
-
-    public static <T> RestResponseBo ok(T payload) {
-        return new RestResponseBo(true, payload);
-    }
-
-    public static <T> RestResponseBo ok(int code) {
-        return new RestResponseBo(true, null, code);
-    }
-
-    public static <T> RestResponseBo ok(T payload, int code) {
-        return new RestResponseBo(true, payload, code);
-    }
-
-    public static RestResponseBo fail() {
-        return new RestResponseBo(false);
-    }
-
-    public static RestResponseBo fail(String msg) {
-        return new RestResponseBo(false, msg);
-    }
-
-    public static RestResponseBo fail(int code) {
-        return new RestResponseBo(false, null, code);
-    }
-
-    public static RestResponseBo fail(int code, String msg) {
-        return new RestResponseBo(false, msg, code);
     }
 
 }

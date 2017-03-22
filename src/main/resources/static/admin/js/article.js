@@ -43,12 +43,12 @@ function subArticle(status) {
     var params = $("#articleForm").serialize();
     var url = $('#articleForm #cid').val() != '' ? '/admin/article/modify' : '/admin/article/publish';
     tale.post({
-        url:url,
-        data:params,
+        url: url,
+        data: params,
         success: function (result) {
             if (result && result.success) {
                 tale.alertOk({
-                    text:'文章保存成功',
+                    text: '文章保存成功',
                     then: function () {
                         setTimeout(function () {
                             window.location.href = '/admin/article';

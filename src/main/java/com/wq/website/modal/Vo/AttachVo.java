@@ -3,22 +3,16 @@ package com.wq.website.modal.Vo;
 import java.io.Serializable;
 
 /**
- * @author 
+ * @author
  */
 public class AttachVo implements Serializable {
-    private Integer id;
-
-    private String fname;
-
-    private String ftype;
-
-    private String fkey;
-
-    private Integer authorId;
-
-    private Integer created;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private String fname;
+    private String ftype;
+    private String fkey;
+    private Integer authorId;
+    private Integer created;
 
     public Integer getId() {
         return id;

@@ -7,7 +7,6 @@ import com.wq.website.dao.ContentVoMapper;
 import com.wq.website.dao.MetaVoMapper;
 import com.wq.website.dto.Types;
 import com.wq.website.exception.TipException;
-import com.wq.website.modal.Vo.CommentVoExample;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.ContentVoExample;
 import com.wq.website.service.IContentService;
@@ -87,7 +86,7 @@ public class ContentServiceImpl implements IContentService {
     }
 
     @Override
-    public PageInfo<ContentVo> getContents(Integer p,Integer limit) {
+    public PageInfo<ContentVo> getContents(Integer p, Integer limit) {
         LOGGER.debug("Enter getContents method");
         ContentVoExample example = new ContentVoExample();
         example.setOrderByClause("created desc");
@@ -201,7 +200,7 @@ public class ContentServiceImpl implements IContentService {
         contents.setContent(EmojiParser.parseToAliases(contents.getContent()));
 
         contentDao.updateByPrimaryKeySelective(contents);
-        relationshipService.deleteById(cid,null);
+        relationshipService.deleteById(cid, null);
         metasService.saveMetas(cid, contents.getTags(), Types.TAG.getType());
         metasService.saveMetas(cid, contents.getCategories(), Types.CATEGORY.getType());
     }

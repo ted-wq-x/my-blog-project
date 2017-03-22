@@ -3,22 +3,19 @@ package com.wq.website.modal.Vo;
 import java.io.Serializable;
 
 /**
- * @author 
+ * @author
  */
 public class OptionVo implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 配置名称
      */
     private String name;
-
     /**
      * 配置值
      */
     private String value;
-
     private String description;
-
-    private static final long serialVersionUID = 1L;
 
     public String getName() {
         return name;

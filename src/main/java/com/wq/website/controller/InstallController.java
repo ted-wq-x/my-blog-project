@@ -1,17 +1,17 @@
 package com.wq.website.controller;
 
 import com.wq.website.constant.WebConst;
+import com.wq.website.dto.DataSource;
+import com.wq.website.dto.LogActions;
 import com.wq.website.exception.TipException;
 import com.wq.website.listener.InitListener;
 import com.wq.website.modal.Bo.InstallBo;
 import com.wq.website.modal.Bo.RestResponseBo;
-import com.wq.website.dto.DataSource;
 import com.wq.website.modal.Vo.LogVo;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.ILogService;
 import com.wq.website.service.IOptionService;
 import com.wq.website.service.IUserService;
-import com.wq.website.dto.LogActions;
 import com.wq.website.utils.TaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -85,7 +85,7 @@ public class InstallController {
             BufferedReader read = new BufferedReader(isr);
             runner.runScript(read);
             //生成配置文件
-            TaleUtils.updateJDBCFile( dataSourceVo.getUrl(), dataSourceVo.getDbName(), dataSourceVo.getUsername(), dataSourceVo.getPassword());
+            TaleUtils.updateJDBCFile(dataSourceVo.getUrl(), dataSourceVo.getDbName(), dataSourceVo.getUsername(), dataSourceVo.getPassword());
         } catch (Exception e) {
             String msg = "数据库连接失败, 请检查数据库配置";
             if (e instanceof TipException) {
@@ -139,7 +139,7 @@ public class InstallController {
             return RestResponseBo.fail("邮箱格式不正确");
         }
 
-        File lock = new File( "install.lock");
+        File lock = new File("install.lock");
         try {
             try {
                 lock.createNewFile();

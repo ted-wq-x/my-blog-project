@@ -5,14 +5,14 @@ public class FK {
     private Table referenceTable;
     private String referencePK;
 
-    public Table getReferenceTable() {
-        return referenceTable;
-    }
-
     public FK(String column, Table referenceTable, String referencePK) {
         this.column = column;
         this.referenceTable = referenceTable;
         this.referencePK = referencePK;
+    }
+
+    public Table getReferenceTable() {
+        return referenceTable;
     }
 
     @Override

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="pic=${commons.random(5, '.png')}" th:style="'background:url(/admin/images/bg/'+@{${pic}}+');no-repeat; background-size: cover;'">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:with="pic=${commons.random(5, '.png')}"
+      th:style="'background:url(/admin/images/bg/'+@{${pic}}+');no-repeat; background-size: cover;'">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -22,6 +23,7 @@
             -webkit-box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
             box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
         }
+
         .bg-overlay {
             -moz-border-radius: 6px 6px 0 0;
             -webkit-border-radius: 6px 6px 0 0;
@@ -33,7 +35,9 @@
             top: 0;
             width: 100%;
         }
-        .input-border {b1.png
+
+        .input-border {
+            b1 . png
             font-size: 14px;
             width: 100%;
             height: 40px;
@@ -49,7 +53,7 @@
     </style>
 
 </head>
-<body th:style="'background:url(/admin/images/bg/'+@{${pic}}+');no-repeat; background-size: cover;'" >
+<body th:style="'background:url(/admin/images/bg/'+@{${pic}}+');no-repeat; background-size: cover;'">
 <div style="margin: 0 auto; padding-bottom: 0%; padding-top: 7.5%; width: 380px;">
     <div class="panel panel-color panel-danger panel-pages panel-shadow">
         <div class="panel-heading bg-img">
@@ -80,7 +84,8 @@
                 </div>
                 <div class="form-group text-center m-t-40">
                     <div class="col-xs-12">
-                        <button class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light" style="box-shadow: 0px 0px 4px #868282;" type="submit">登&nbsp;录
+                        <button class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light"
+                                style="box-shadow: 0px 0px 4px #868282;" type="submit">登&nbsp;录
                         </button>
                     </div>
                 </div>

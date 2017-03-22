@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='友链管理',active='links'">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:with="title='友链管理',active='links'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <body class="fixed-left">
 <div id="wrapper">
@@ -54,13 +54,15 @@
 
                                         <div class="form-group">
                                             <label class="sr-only">链接标题</label>
-                                            <input type="text" id="title" name="title" class="form-control" placeholder="请输入链接标题"
+                                            <input type="text" id="title" name="title" class="form-control"
+                                                   placeholder="请输入链接标题"
                                                    required="required" aria-required="true"/>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="sr-only">链接URL</label>
-                                            <input type="url" id="url" name="url" class="form-control" placeholder="请输入链接地址" required="required"
+                                            <input type="url" id="url" name="url" class="form-control"
+                                                   placeholder="请输入链接地址" required="required"
                                                    aria-required="true"/>
                                         </div>
 
@@ -75,7 +77,9 @@
                                             <input type="number" id="sort" name="sort" class="form-control" value="0"/>
                                         </div>
 
-                                        <button type="submit" class="btn btn-success waves-effect waves-light m-l-10">保存链接</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light m-l-10">
+                                            保存链接
+                                        </button>
                                     </form>
                                 </div> <!-- panel-body -->
                             </div> <!-- panel -->
@@ -99,12 +103,12 @@
         submitHandler: function (form) {
             var params = $("#linkForm").serialize();
             tale.post({
-                url : '/admin/links/save',
+                url: '/admin/links/save',
                 data: params,
                 success: function (result) {
                     $('#linkForm input').val('');
                     $('#linkForm #sort').val('0');
-                    if(result && result.success){
+                    if (result && result.success) {
                         tale.alertOkAndReload('友链保存成功');
                     } else {
                         tale.alertError(result.msg || '友链保存失败');
@@ -132,13 +136,13 @@
 
     function delLink(mid) {
         tale.alertConfirm({
-            title:'确定删除该链接吗?',
+            title: '确定删除该链接吗?',
             then: function () {
                 tale.post({
-                    url : '/admin/links/delete',
+                    url: '/admin/links/delete',
                     data: {mid: mid},
                     success: function (result) {
-                        if(result && result.success){
+                        if (result && result.success) {
                             tale.alertOkAndReload('链接删除成功');
                         } else {
                             tale.alertError(result.msg || '链接删除失败');

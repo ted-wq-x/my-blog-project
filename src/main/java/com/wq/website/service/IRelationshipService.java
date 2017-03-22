@@ -10,6 +10,7 @@ import java.util.List;
 public interface IRelationshipService {
     /**
      * 按住键删除
+     *
      * @param cid
      * @param mid
      */
@@ -17,6 +18,7 @@ public interface IRelationshipService {
 
     /**
      * 按主键统计条数
+     *
      * @param cid
      * @param mid
      * @return 条数
@@ -26,12 +28,14 @@ public interface IRelationshipService {
 
     /**
      * 保存對象
+     *
      * @param relationshipVoKey
      */
     void insertVo(RelationshipVoKey relationshipVoKey);
 
     /**
      * 根据id搜索
+     *
      * @param cid
      * @param mid
      * @return

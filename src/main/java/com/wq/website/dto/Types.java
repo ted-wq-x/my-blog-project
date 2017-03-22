@@ -26,15 +26,15 @@ public enum Types {
 
     private String type;
 
+    Types(java.lang.String type) {
+        this.type = type;
+    }
+
     public java.lang.String getType() {
         return type;
     }
 
     public void setType(java.lang.String type) {
-        this.type = type;
-    }
-
-    Types(java.lang.String type) {
         this.type = type;
     }
 }
