@@ -34,6 +34,8 @@ public class Test {
 //
 //        System.out.println(hexString.toString());
 //        System.out.println(TaleUtils.MD5encode("admin123456"));
+        String str = "Oriented+Design+Principles";
+        System.out.println(str.replaceAll("\\+", " "));
     }
 
     public static void test() throws IOException {

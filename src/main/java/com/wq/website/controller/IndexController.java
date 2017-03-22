@@ -348,6 +348,8 @@ public class IndexController extends BaseController{
     public String tags(HttpServletRequest request, @PathVariable String name, @PathVariable int page, @RequestParam(value = "limit", defaultValue = "12") int limit) {
 
         page = page < 0 || page > WebConst.MAX_PAGE ? 1 : page;
+//        对于空格的特殊处理
+        name=name.replaceAll("\\+", " ");
         MetaDto metaDto = metaService.getMeta(Types.TAG.getType(), name);
         if (null == metaDto) {
             return this.render_404();
