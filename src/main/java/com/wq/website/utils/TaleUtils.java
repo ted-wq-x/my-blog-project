@@ -35,8 +35,6 @@ import java.util.regex.Pattern;
  */
 public class TaleUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaleUtils.class);
-
-    private static DataSource newDataSource;
     /**
      * 一个月
      */
@@ -47,6 +45,7 @@ public class TaleUtils {
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static final Pattern SLUG_REGEX = Pattern.compile("^[A-Za-z0-9_-]{5,100}$", Pattern.CASE_INSENSITIVE);
+    private static DataSource newDataSource;
     /**
      * markdown解析器
      */
@@ -334,10 +333,11 @@ public class TaleUtils {
 
     /**
      * 替换HTML脚本
+     *
      * @param value
      * @return
      */
-    public static String cleanXSS(String value){
+    public static String cleanXSS(String value) {
         //You'll need to remove the spaces from the html entities below
         value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
         value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
@@ -420,24 +420,24 @@ public class TaleUtils {
         return false;
     }
 
-    public static String getFileKey(String name){
+    public static String getFileKey(String name) {
         String prefix = "upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
-        if (!new File(AttachController.CLASSPATH+prefix).exists()) {
-            new File(AttachController.CLASSPATH+prefix).mkdirs();
+        if (!new File(AttachController.CLASSPATH + prefix).exists()) {
+            new File(AttachController.CLASSPATH + prefix).mkdirs();
         }
 
         name = StringUtils.trimToNull(name);
-        if(name == null) {
-            return prefix + "/" + UUID.UU32() + "."+null;
+        if (name == null) {
+            return prefix + "/" + UUID.UU32() + "." + null;
         } else {
             name = name.replace('\\', '/');
             name = name.substring(name.lastIndexOf("/") + 1);
             int index = name.lastIndexOf(".");
             String ext = null;
-            if(index >= 0) {
+            if (index >= 0) {
                 ext = StringUtils.trimToNull(name.substring(index + 1));
             }
-            return prefix + "/" + UUID.UU32() + "." + (ext == null?null:(ext));
+            return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
         }
     }
 
@@ -461,13 +461,14 @@ public class TaleUtils {
 
     /**
      * 随机数
+     *
      * @param size
      * @return
      */
     public static String getRandomNumber(int size) {
         String num = "";
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             double a = Math.random() * 9.0D;
             a = Math.ceil(a);
             int randomNum = (new Double(a)).intValue();
@@ -479,9 +480,10 @@ public class TaleUtils {
 
     /**
      * 获取保存文件的位置,jar所在目录的路径
+     *
      * @return
      */
-    public static String getUplodFilePath(){
+    public static String getUplodFilePath() {
         String path = TaleUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 //        path = path.substring(1,path.length());
 //        try {
@@ -492,6 +494,6 @@ public class TaleUtils {
 //        int lastIndex = path.lastIndexOf("/") +1;
 //        path = path.substring(0, lastIndex);
         File file = new File("");
-        return file.getAbsolutePath()+"/";
+        return file.getAbsolutePath() + "/";
     }
 }

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <div th:replace="themes/default/header::header(${keyword},null)"></div>
 <body>
 <div class="main-content common-page clearfix">
     <div class="categorys-item">
         <div class="common-title">
-            <th:block th:text="${type}"/> : <th:block th:text="${keyword}"/>
+            <th:block th:text="${type}"/>
+            :
+            <th:block th:text="${keyword}"/>
         </div>
         <th:block th:if="${commons.is_empty(articles)}">
             <div>
@@ -25,7 +27,9 @@
                                     <div class="item-meta clearfix">
                                         <div th:class="'item-meta-ico '+${commons.show_icon(article.cid)} "
                                              th:style="'background: url('+@{/user/img/bg-ico.png}+') no-repeat;background-size: 40px auto;'"></div>
-                                        <div class="item-meta-date">发布于 <th:block th:text="${commons.fmtdate(article.created)}"/></div>
+                                        <div class="item-meta-date">发布于
+                                            <th:block th:text="${commons.fmtdate(article.created)}"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

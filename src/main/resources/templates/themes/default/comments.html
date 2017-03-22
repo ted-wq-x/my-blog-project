@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="comments">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:fragment="comments">
 <body>
 <div th:if="${article}!=null">
     <div th:id="${article.cid ?: 0}" class="comment-container">
@@ -86,9 +86,10 @@
                                         </span>
                                                         </div>
                                                         <div class="comment-content">
-                                                            <span class="comment-author-at" style="float:left;margin-right:5px"
+                                                            <span class="comment-author-at"
+                                                                  style="float:left;margin-right:5px"
                                                                   th:utext="${commons.comment_at(child.parent)}"></span>
-                                                            <p  th:utext="${commons.article(child.content)}"></p>
+                                                            <p th:utext="${commons.article(child.content)}"></p>
                                                         </div>
                                                         <div class="comment-meta">
                                                             <time class="comment-time"

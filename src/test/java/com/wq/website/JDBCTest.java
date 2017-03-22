@@ -1,9 +1,7 @@
 package com.wq.website;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.CommentVoMapper;
-import com.wq.website.exception.TipException;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
 import com.wq.website.modal.Vo.UserVo;
@@ -57,12 +55,12 @@ public class JDBCTest {
         int i = userService.insertUser(user);
 
         optionService.insertOption("ssss", "qwqwq");
-       Assert.assertEquals(1,i);
+        Assert.assertEquals(1, i);
     }
 
     @Ignore
     @Test
-    public void testPage(){
+    public void testPage() {
 //        int pageSize = 8;
 //        PageHelper.startPage(1, pageSize);
 //        List<CommentVo> byPage = commentMapper.findByPage();
@@ -71,15 +69,15 @@ public class JDBCTest {
 
     @Test
     @Ignore
-    public void testPageService(){
+    public void testPageService() {
         int limit = 3;
         List<CommentVo> commentVos = siteService.recentComments(limit);
-        Assert.assertEquals(commentVos.size(),limit);
+        Assert.assertEquals(commentVos.size(), limit);
     }
 
     @Test
 //    @Ignore
-    public void testContentPage(){
+    public void testContentPage() {
         PageInfo<ContentVo> contents = contentService.getContents(1, 10);
         System.out.println(contents);
     }

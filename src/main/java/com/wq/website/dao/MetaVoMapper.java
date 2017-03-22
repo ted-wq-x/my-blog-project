@@ -3,11 +3,11 @@ package com.wq.website.dao;
 import com.wq.website.dto.MetaDto;
 import com.wq.website.modal.Vo.MetaVo;
 import com.wq.website.modal.Vo.MetaVoExample;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
 
 @Component
 public interface MetaVoMapper {
@@ -33,9 +33,9 @@ public interface MetaVoMapper {
 
     int updateByPrimaryKey(MetaVo record);
 
-    List<MetaDto> selectFromSql(Map<String,Object> paraMap);
+    List<MetaDto> selectFromSql(Map<String, Object> paraMap);
 
-    MetaDto selectDtoByNameAndType(@Param("name") String name,@Param("type") String type);
+    MetaDto selectDtoByNameAndType(@Param("name") String name, @Param("type") String type);
 
     Integer countWithSql(Integer mid);
 }

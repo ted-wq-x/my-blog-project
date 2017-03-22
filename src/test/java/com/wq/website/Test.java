@@ -4,15 +4,10 @@ package com.wq.website;
  * Created by Administrator on 2017/3/6 006.
  */
 
-import com.wq.website.dto.Types;
-import com.wq.website.utils.TaleUtils;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Properties;
 
 /**
  * Created by Administrator on 2017/3/6 006.
@@ -41,7 +36,7 @@ public class Test {
     public static void test() throws IOException {
         Properties properties = new Properties();
         InputStream resourceAsStream = Test.class.getClassLoader().getResourceAsStream("application-jdbc.properties");
-        properties.load( resourceAsStream);
+        properties.load(resourceAsStream);
         System.out.println(properties.getProperty("spring.datasource.url"));
     }
 }

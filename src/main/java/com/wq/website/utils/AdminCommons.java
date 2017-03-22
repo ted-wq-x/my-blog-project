@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public final class AdminCommons {
 
+    private static final String[] COLORS = {"default", "primary", "success", "info", "warning", "danger", "inverse", "purple", "pink"};
+
     /**
      * 判断category和cat的交集
      *
@@ -30,8 +32,6 @@ public final class AdminCommons {
         }
         return false;
     }
-
-    private static final String[] COLORS = {"default", "primary", "success", "info", "warning", "danger", "inverse", "purple", "pink"};
 
     public static String rand_color() {
         int r = Tools.rand(0, COLORS.length - 1);

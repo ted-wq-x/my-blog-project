@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='管理中心',active='home'">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:with="title='管理中心',active='home'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <body class="fixed-left">
 <div id="wrapper">
@@ -86,8 +86,11 @@
                                                 <a th:href="@{${comment.url}}" target="_blank"
                                                    th:text="${comment.author}"></a>
                                             </div>
-                                            <th:block th:unless="${comment.url}!=null and ${comment.url}!=''" th:text="${comment.author}"/>
-                                            于<th:block th:text="${commons.fmtdate(comment.created,'MM月dd日HH:mm')}"/>：<a
+                                            <th:block th:unless="${comment.url}!=null and ${comment.url}!=''"
+                                                      th:text="${comment.author}"/>
+                                            于
+                                            <th:block th:text="${commons.fmtdate(comment.created,'MM月dd日HH:mm')}"/>
+                                            ：<a
                                                 th:href="${commons.site_url('/article/')}+${comment.cid}+'#comments'"
                                                 target="_blank" th:utext="${commons.article(comment.content)}"></a>
                                         </li>
@@ -101,7 +104,7 @@
                                     <h4 class="panel-title">系统日志</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <ul class="list-group" >
+                                    <ul class="list-group">
                                         <li class="list-group-item" th:each="log : ${logs}">
                                             <span th:text="${commons.fmtdate(log.created, 'yyyy-MM-dd HH:mm:ss')} +' => '+ ${log.action}"></span>
                                         </li>

@@ -17,13 +17,15 @@ public interface IContentService {
 
     /**
      * 发布文章
+     *
      * @param contents
      */
     void publish(ContentVo contents);
 
     /**
-     *查询文章返回多条数据
-     * @param p 当前页
+     * 查询文章返回多条数据
+     *
+     * @param p     当前页
      * @param limit 每页条数
      * @return ContentVo
      */
@@ -40,6 +42,7 @@ public interface IContentService {
 
     /**
      * 根据主键更新
+     *
      * @param contentVo contentVo
      */
     void updateContentByCid(ContentVo contentVo);
@@ -47,8 +50,9 @@ public interface IContentService {
 
     /**
      * 查询分类/标签下的文章归档
-     * @param mid mid
-     * @param page page
+     *
+     * @param mid   mid
+     * @param page  page
      * @param limit limit
      * @return ContentVo
      */
@@ -56,12 +60,13 @@ public interface IContentService {
 
     /**
      * 搜索、分页
+     *
      * @param keyword keyword
-     * @param page page
-     * @param limit limit
+     * @param page    page
+     * @param limit   limit
      * @return ContentVo
      */
-    PageInfo<ContentVo> getArticles(String keyword,Integer page,Integer limit);
+    PageInfo<ContentVo> getArticles(String keyword, Integer page, Integer limit);
 
 
     /**
@@ -71,14 +76,17 @@ public interface IContentService {
      * @return
      */
     PageInfo<ContentVo> getArticlesWithpage(ContentVoExample commentVoExample, Integer page, Integer limit);
+
     /**
      * 根据文章id删除
+     *
      * @param cid
      */
     void deleteByCid(Integer cid);
 
     /**
      * 编辑文章
+     *
      * @param contents
      */
     void updateArticle(ContentVo contents);
@@ -86,8 +94,9 @@ public interface IContentService {
 
     /**
      * 更新原有文章的category
+     *
      * @param ordinal
      * @param newCatefory
      */
-    void updateCategory(String ordinal,String newCatefory);
+    void updateCategory(String ordinal, String newCatefory);
 }

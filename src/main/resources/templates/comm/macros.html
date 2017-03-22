@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 <ol class="page-navigator" th:fragment="pageNav(pageInfo, prevText, nextText, prefix)">
     <th:block th:if="${pageInfo.hasPreviousPage}">
@@ -29,7 +29,8 @@
             </li>
 
             <th:block th:each="nav : ${pageInfo.navigatepageNums}">
-                <li th:class="${nav==pageInfo.pageNum}?'active':''"><a th:href="@{'?page='+${nav}}" th:text="${nav}"></a>
+                <li th:class="${nav==pageInfo.pageNum}?'active':''"><a th:href="@{'?page='+${nav}}"
+                                                                       th:text="${nav}"></a>
                 </li>
             </th:block>
 

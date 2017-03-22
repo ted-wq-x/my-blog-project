@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <div th:replace="themes/default/header::header(null,null)"></div>
 <body>
 <div class="main-content index-page clearfix">
@@ -14,7 +14,8 @@
                     <div class="item-slant reverse-slant &lt; bg-deepgrey"></div>
                     <div class="item-slant"></div>
                     <div class="item-label">
-                        <div class="item-title"><a th:href="${commons.permalink(article)}" th:text="${article.title}"></a>
+                        <div class="item-title"><a th:href="${commons.permalink(article)}"
+                                                   th:text="${article.title}"></a>
                         </div>
                         <div class="item-meta clearfix">
                             <div th:class="'item-meta-ico '+ ${commons.show_icon(article.cid)}"

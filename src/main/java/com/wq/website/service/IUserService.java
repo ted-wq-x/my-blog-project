@@ -18,6 +18,7 @@ public interface IUserService {
 
     /**
      * 通过uid查找对象
+     *
      * @param uid
      * @return
      */
@@ -25,6 +26,7 @@ public interface IUserService {
 
     /**
      * 用戶登录
+     *
      * @param username
      * @param password
      * @return
@@ -33,6 +35,7 @@ public interface IUserService {
 
     /**
      * 根据主键更新user对象
+     *
      * @param userVo
      * @return
      */

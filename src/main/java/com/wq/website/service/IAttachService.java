@@ -9,11 +9,12 @@ import com.wq.website.modal.Vo.AttachVo;
 public interface IAttachService {
     /**
      * 分页查询附件
+     *
      * @param page
      * @param limit
      * @return
      */
-    PageInfo<AttachVo> getAttachs(Integer page,Integer limit);
+    PageInfo<AttachVo> getAttachs(Integer page, Integer limit);
 
     /**
      * 保存附件
@@ -27,6 +28,7 @@ public interface IAttachService {
 
     /**
      * 根据附件id查询附件
+     *
      * @param id
      * @return
      */
@@ -34,6 +36,7 @@ public interface IAttachService {
 
     /**
      * 删除附件
+     *
      * @param id
      */
     void deleteById(Integer id);

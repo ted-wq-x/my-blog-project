@@ -35,7 +35,7 @@ public class AttachServiceImpl implements IAttachService {
 
     @Override
     public AttachVo selectById(Integer id) {
-        if(null != id){
+        if (null != id) {
             return attachDao.selectByPrimaryKey(id);
         }
         return null;
@@ -55,7 +55,7 @@ public class AttachServiceImpl implements IAttachService {
     @Override
     public void deleteById(Integer id) {
         if (null != id) {
-            attachDao.deleteByPrimaryKey( id);
+            attachDao.deleteByPrimaryKey(id);
         }
     }
 }

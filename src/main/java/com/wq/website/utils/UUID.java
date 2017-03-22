@@ -9,23 +9,21 @@ import java.util.Random;
  */
 public abstract class UUID {
 
+    private static final char[] _UU64 = "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".toCharArray();
+    private static final char[] _UU32 = "0123456789abcdefghijklmnopqrstuv".toCharArray();
+    private static final char[] _UU16 = "0123456789abcdef".toCharArray();
     static Random r = new Random();
 
     /**
      * 根据一个范围，生成一个随机的整数
-     * 
-     * @param min
-     *            最小值（包括）
-     * @param max
-     *            最大值（包括）
+     *
+     * @param min 最小值（包括）
+     * @param max 最大值（包括）
      * @return 随机数
      */
     public static int random(int min, int max) {
         return r.nextInt(max - min + 1) + min;
     }
-
-    private static final char[] _UU64 = "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".toCharArray();
-    private static final char[] _UU32 = "0123456789abcdefghijklmnopqrstuv".toCharArray();
 
     /**
      * @return 64进制表示的紧凑格式的 UUID
@@ -38,7 +36,7 @@ public abstract class UUID {
      * 返回一个 UUID ，并用 64 进制转换成紧凑形式的字符串，内容为 [\\-0-9a-zA-Z_]
      * <p>
      * 比如一个类似下面的 UUID:
-     * 
+     * <p>
      * <pre>
      * a6c5c51c-689c-4525-9bcd-c14c1e107c80
      * 一共 128 位，分做L64 和 R64，分为为两个 64位数（两个 long）
@@ -51,9 +49,8 @@ public abstract class UUID {
      * 4. 剩下的两位最后取
      * 这样，就能用一个 22 长度的字符串表示一个 32 长度的UUID，压缩了 1/3
      * </pre>
-     * 
-     * @param uu
-     *            UUID 对象
+     *
+     * @param uu UUID 对象
      * @return 64进制表示的紧凑格式的 UUID
      */
     public static String UU64(java.util.UUID uu) {
@@ -83,9 +80,8 @@ public abstract class UUID {
 
     /**
      * 从一个 UU64 恢复回一个 UUID 对象
-     * 
-     * @param uu64
-     *            64进制表示的 UUID, 内容为 [\\-0-9a-zA-Z_]
+     *
+     * @param uu64 64进制表示的 UUID, 内容为 [\\-0-9a-zA-Z_]
      * @return UUID 对象
      */
     public static java.util.UUID fromUU64(String uu64) {
@@ -112,7 +108,7 @@ public abstract class UUID {
 
     public static java.util.UUID fromUU32(String u32) {
         return new java.util.UUID(parseUnsignedLong(u32.substring(0, 13), 32),
-                        parseUnsignedLong(u32.substring(13), 32));
+                parseUnsignedLong(u32.substring(13), 32));
     }
 
     public static long parseUnsignedLong(String s, int radix) {
@@ -124,7 +120,7 @@ public abstract class UUID {
 
     /**
      * 将紧凑格式的 UU16 字符串变成标准 UUID 格式的字符串
-     * 
+     *
      * @param uu16
      * @return 标准 UUID 字符串
      */
@@ -142,14 +138,12 @@ public abstract class UUID {
         return sb.toString();
     }
 
-    private static final char[] _UU16 = "0123456789abcdef".toCharArray();
-
     /**
      * 将一个 UU64 表示的紧凑字符串，变成 UU16 表示的字符串
-     * 
+     * <p>
      * <pre>
      * 每次取2个字符，恢复成3个byte，重复10次， 最后一次，是用最后2个字符，恢复回2个byte </prev>
-     * 
+     *
      * @param uu64
      *            uu64 64进制表示的 UUID, 内容为 [\\-0-9a-zA-Z_]
      * @return 16进制表示的紧凑格式的 UUID
@@ -188,9 +182,8 @@ public abstract class UUID {
 
     /**
      * 返回指定长度由随机数字+小写字母组成的字符串
-     * 
-     * @param length
-     *            指定长度
+     *
+     * @param length 指定长度
      * @return 随机字符串
      */
     public static String captchaChar(int length) {
@@ -199,11 +192,9 @@ public abstract class UUID {
 
     /**
      * 返回指定长度随机数字+字母(大小写敏感)组成的字符串
-     * 
-     * @param length
-     *            指定长度
-     * @param caseSensitivity
-     *            是否区分大小写
+     *
+     * @param length          指定长度
+     * @param caseSensitivity 是否区分大小写
      * @return 随机字符串
      */
     public static String captchaChar(int length, boolean caseSensitivity) {
@@ -215,18 +206,18 @@ public abstract class UUID {
             int index = rand.nextInt(caseSensitivity ? 3 : 2);
             // 目的是随机选择生成数字，大小写字母
             switch (index) {
-            case 0:
-                data = randdata.nextInt(10);// 仅仅会生成0~9, 0~9的ASCII为48~57
-                sb.append(data);
-                break;
-            case 1:
-                data = randdata.nextInt(26) + 97;// 保证只会产生ASCII为97~122(a-z)之间的整数,
-                sb.append((char) data);
-                break;
-            case 2: // caseSensitivity为true的时候, 才会有大写字母
-                data = randdata.nextInt(26) + 65;// 保证只会产生ASCII为65~90(A~Z)之间的整数
-                sb.append((char) data);
-                break;
+                case 0:
+                    data = randdata.nextInt(10);// 仅仅会生成0~9, 0~9的ASCII为48~57
+                    sb.append(data);
+                    break;
+                case 1:
+                    data = randdata.nextInt(26) + 97;// 保证只会产生ASCII为97~122(a-z)之间的整数,
+                    sb.append((char) data);
+                    break;
+                case 2: // caseSensitivity为true的时候, 才会有大写字母
+                    data = randdata.nextInt(26) + 65;// 保证只会产生ASCII为65~90(A~Z)之间的整数
+                    sb.append((char) data);
+                    break;
             }
         }
         return sb.toString();
@@ -234,9 +225,8 @@ public abstract class UUID {
 
     /**
      * 返回指定长度随机数字组成的字符串
-     * 
-     * @param length
-     *            指定长度
+     *
+     * @param length 指定长度
      * @return 随机字符串
      */
     public static String captchaNumber(int length) {

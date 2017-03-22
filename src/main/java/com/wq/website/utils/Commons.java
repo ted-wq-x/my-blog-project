@@ -29,16 +29,14 @@ import java.util.regex.Pattern;
 @Component
 public final class Commons {
 
-    private static ISiteService siteService;
-
-    public static String THEME = "themes/default";
-
     private static final List EMPTY = new ArrayList(0);
+    private static final String[] ICONS = {"bg-ico-book", "bg-ico-game", "bg-ico-note", "bg-ico-chat", "bg-ico-code", "bg-ico-image", "bg-ico-web", "bg-ico-link", "bg-ico-design", "bg-ico-lock"};
+    public static String THEME = "themes/default";
+    private static ISiteService siteService;
 
     public static void setSiteService(ISiteService ss) {
         siteService = ss;
     }
-
 
     /**
      * 判断分页中是否有数据
@@ -47,8 +45,9 @@ public final class Commons {
      * @return
      */
     public static boolean is_empty(PageInfo paginator) {
-        return paginator == null||(paginator.getList() == null) || (paginator.getList().size() == 0);
+        return paginator == null || (paginator.getList() == null) || (paginator.getList().size() == 0);
     }
+
     /**
      * 网站链接
      *
@@ -164,14 +163,14 @@ public final class Commons {
         return permalink(contents.getCid(), contents.getSlug());
     }
 
-
     /**
      * 获取随机数
+     *
      * @param max
      * @param str
      * @return
      */
-    public static String random(int max, String str){
+    public static String random(int max, String str) {
         return UUID.random(1, max) + str;
     }
 
@@ -413,8 +412,6 @@ public final class Commons {
         return "";
     }
 
-    private static final String[] ICONS = {"bg-ico-book", "bg-ico-game", "bg-ico-note", "bg-ico-chat", "bg-ico-code", "bg-ico-image", "bg-ico-web", "bg-ico-link", "bg-ico-design", "bg-ico-lock"};
-
     /**
      * 显示文章图标
      *
@@ -427,15 +424,16 @@ public final class Commons {
 
     /**
      * 获取社交的链接地址
+     *
      * @return
      */
-    public static Map<String,String> social(){
+    public static Map<String, String> social() {
         final String prefix = "social_";
         Map<String, String> map = new HashMap<>();
-        map.put("weibo", WebConst.initConfig.get(prefix+"weibo"));
-        map.put("zhihu", WebConst.initConfig.get(prefix+"zhihu"));
-        map.put("github", WebConst.initConfig.get(prefix+"github"));
-        map.put("twitter", WebConst.initConfig.get(prefix+"twitter"));
+        map.put("weibo", WebConst.initConfig.get(prefix + "weibo"));
+        map.put("zhihu", WebConst.initConfig.get(prefix + "zhihu"));
+        map.put("github", WebConst.initConfig.get(prefix + "github"));
+        map.put("twitter", WebConst.initConfig.get(prefix + "twitter"));
         return map;
     }
 

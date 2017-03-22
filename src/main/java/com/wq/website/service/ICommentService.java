@@ -12,12 +12,14 @@ public interface ICommentService {
 
     /**
      * 保存对象
+     *
      * @param commentVo
      */
     void insertComment(CommentVo commentVo);
 
     /**
      * 获取文章下的评论
+     *
      * @param cid
      * @param page
      * @param limit
@@ -27,6 +29,7 @@ public interface ICommentService {
 
     /**
      * 获取文章下的评论
+     *
      * @param commentVoExample
      * @param page
      * @param limit
@@ -37,6 +40,7 @@ public interface ICommentService {
 
     /**
      * 根据主键查询评论
+     *
      * @param coid
      * @return
      */
@@ -45,6 +49,7 @@ public interface ICommentService {
 
     /**
      * 删除评论，暂时没用
+     *
      * @param coid
      * @param cid
      * @throws Exception
@@ -53,6 +58,7 @@ public interface ICommentService {
 
     /**
      * 更新评论状态
+     *
      * @param comments
      */
     void update(CommentVo comments);

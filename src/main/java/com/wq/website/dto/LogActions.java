@@ -12,15 +12,15 @@ public enum LogActions {
 
     private String action;
 
+    LogActions(String action) {
+        this.action = action;
+    }
+
     public String getAction() {
         return action;
     }
 
     public void setAction(String action) {
-        this.action = action;
-    }
-
-    LogActions(String action) {
         this.action = action;
     }
 }

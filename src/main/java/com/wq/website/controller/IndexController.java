@@ -40,7 +40,7 @@ import java.util.List;
  * Created by Administrator on 2017/3/8 008.
  */
 @Controller
-public class IndexController extends BaseController{
+public class IndexController extends BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
     @Resource
@@ -69,8 +69,8 @@ public class IndexController extends BaseController{
      * 首页分页
      *
      * @param request request
-     * @param p 第几页
-     * @param limit 每页大小
+     * @param p       第几页
+     * @param limit   每页大小
      * @return 主页
      */
     @GetMapping(value = "page/{p}")
@@ -86,12 +86,13 @@ public class IndexController extends BaseController{
 
     /**
      * 文章页
+     *
      * @param request 请求
-     * @param cid  文章主键
+     * @param cid     文章主键
      * @return
      */
     @GetMapping(value = {"article/{cid}", "article/{cid}.html"})
-    public String post(HttpServletRequest request, @PathVariable  String cid) {
+    public String post(HttpServletRequest request, @PathVariable String cid) {
         ContentVo contents = contentService.getContents(cid);
         if (null == contents) {
             return this.render_404();
@@ -169,7 +170,7 @@ public class IndexController extends BaseController{
         Integer count = cache.hget(Types.COMMENTS_FREQUENCY.getType(), val);
         if (null != count && count > 0) {
             return RestResponseBo.fail("您发表评论太快了，请过会再试");
-    }
+        }
 
         author = TaleUtils.cleanXSS(author);
         text = TaleUtils.cleanXSS(text);
@@ -187,10 +188,10 @@ public class IndexController extends BaseController{
         comments.setParent(coid);
         try {
             commentService.insertComment(comments);
-            cookie("tale_remember_author", URLEncoder.encode(author, "UTF-8"), 7 * 24 * 60 * 60,response);
-            cookie("tale_remember_mail", URLEncoder.encode(mail, "UTF-8"), 7 * 24 * 60 * 60,response);
+            cookie("tale_remember_author", URLEncoder.encode(author, "UTF-8"), 7 * 24 * 60 * 60, response);
+            cookie("tale_remember_mail", URLEncoder.encode(mail, "UTF-8"), 7 * 24 * 60 * 60, response);
             if (StringUtils.isNotBlank(url)) {
-                cookie("tale_remember_url", URLEncoder.encode(url, "UTF-8"), 7 * 24 * 60 * 60,response);
+                cookie("tale_remember_url", URLEncoder.encode(url, "UTF-8"), 7 * 24 * 60 * 60, response);
             }
             // 设置对每个文章1分钟可以评论一次
             cache.hset(Types.COMMENTS_FREQUENCY.getType(), val, 1, 60);
@@ -279,7 +280,7 @@ public class IndexController extends BaseController{
             request.setAttribute("comments", commentsPaginator);
         }
         request.setAttribute("article", contents);
-        updateArticleHit(contents.getCid(),contents.getHits());
+        updateArticleHit(contents.getCid(), contents.getHits());
         return this.render("page");
     }
 
@@ -298,7 +299,7 @@ public class IndexController extends BaseController{
     @GetMapping(value = "search/{keyword}/{page}")
     public String search(HttpServletRequest request, @PathVariable String keyword, @PathVariable int page, @RequestParam(value = "limit", defaultValue = "12") int limit) {
         page = page < 0 || page > WebConst.MAX_PAGE ? 1 : page;
-        PageInfo<ContentVo> articles = contentService.getArticles(keyword,page,limit);
+        PageInfo<ContentVo> articles = contentService.getArticles(keyword, page, limit);
         request.setAttribute("articles", articles);
         request.setAttribute("type", "搜索");
         request.setAttribute("keyword", keyword);
@@ -307,6 +308,7 @@ public class IndexController extends BaseController{
 
     /**
      * 更新文章的点击率
+     *
      * @param cid
      * @param chits
      */
@@ -353,7 +355,7 @@ public class IndexController extends BaseController{
 
         page = page < 0 || page > WebConst.MAX_PAGE ? 1 : page;
 //        对于空格的特殊处理
-        name=name.replaceAll("\\+", " ");
+        name = name.replaceAll("\\+", " ");
         MetaDto metaDto = metaService.getMeta(Types.TAG.getType(), name);
         if (null == metaDto) {
             return this.render_404();
@@ -370,12 +372,13 @@ public class IndexController extends BaseController{
 
     /**
      * 设置cookie
+     *
      * @param name
      * @param value
      * @param maxAge
      * @param response
      */
-    private void cookie(String name, String value, int maxAge,HttpServletResponse response) {
+    private void cookie(String name, String value, int maxAge, HttpServletResponse response) {
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(maxAge);
         cookie.setSecure(false);
