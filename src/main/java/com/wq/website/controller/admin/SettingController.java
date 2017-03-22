@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -59,6 +60,7 @@ public class SettingController extends BaseController {
      */
     @PostMapping(value = "")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo saveSetting(@RequestParam(required = false) String site_theme, HttpServletRequest request) {
         try {
             Map<String, String[]> parameterMap = request.getParameterMap();
@@ -95,6 +97,7 @@ public class SettingController extends BaseController {
      */
     @PostMapping(value = "backup")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo backup(@RequestParam String bk_type, @RequestParam String bk_path,
                                  HttpServletRequest request) {
         if (StringUtils.isBlank(bk_type)) {

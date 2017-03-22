@@ -74,7 +74,7 @@ public class SiteServiceImpl implements ISiteService {
         }
         ContentVoExample example = new ContentVoExample();
         example.createCriteria().andStatusEqualTo(Types.PUBLISH.getType()).andTypeEqualTo(Types.ARTICLE.getType());
-        example.setOrderByClause("created");
+        example.setOrderByClause("created desc");
         PageHelper.startPage(1, limit);
         List<ContentVo> list = contentDao.selectByExample(example);
         LOGGER.debug("Exit recentContents method");

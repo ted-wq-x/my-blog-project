@@ -305,16 +305,17 @@ public class IndexController extends BaseController{
         return this.render("page-category");
     }
 
-
-
-
     /**
      * 更新文章的点击率
      * @param cid
      * @param chits
      */
+    @Transactional(rollbackFor = TipException.class)
     private void updateArticleHit(Integer cid, Integer chits) {
         Integer hits = cache.hget("article", "hits");
+        if (chits == null) {
+            chits = 0;
+        }
         hits = null == hits ? 1 : hits + 1;
         if (hits >= WebConst.HIT_EXCEED) {
             ContentVo temp = new ContentVo();
@@ -327,6 +328,53 @@ public class IndexController extends BaseController{
         }
     }
 
+    /**
+     * 标签页
+     *
+     * @param name
+     * @return
+     */
+    @GetMapping(value = "tag/{name}")
+    public String tags(HttpServletRequest request, @PathVariable String name, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        return this.tags(request, name, 1, limit);
+    }
+
+    /**
+     * 标签分页
+     *
+     * @param request
+     * @param name
+     * @param page
+     * @param limit
+     * @return
+     */
+    @GetMapping(value = "tag/{name}/{page}")
+    public String tags(HttpServletRequest request, @PathVariable String name, @PathVariable int page, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+
+        page = page < 0 || page > WebConst.MAX_PAGE ? 1 : page;
+//        对于空格的特殊处理
+        name=name.replaceAll("\\+", " ");
+        MetaDto metaDto = metaService.getMeta(Types.TAG.getType(), name);
+        if (null == metaDto) {
+            return this.render_404();
+        }
+
+        PageInfo<ContentVo> contentsPaginator = contentService.getArticles(metaDto.getMid(), page, limit);
+        request.setAttribute("articles", contentsPaginator);
+        request.setAttribute("meta", metaDto);
+        request.setAttribute("type", "标签");
+        request.setAttribute("keyword", name);
+
+        return this.render("page-category");
+    }
+
+    /**
+     * 设置cookie
+     * @param name
+     * @param value
+     * @param maxAge
+     * @param response
+     */
     private void cookie(String name, String value, int maxAge,HttpServletResponse response) {
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(maxAge);

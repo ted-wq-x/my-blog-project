@@ -2,32 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
 <body>
 <footer class="footer bg-white">
-    <!--TODO-->
-    <!--<div class="footer-social">-->
-        <!--<div class="footer-container clearfix">-->
-            <!--<div class="social-list">-->
-                <!--#tag social("weibo")-->
-                <!--<a class="social weibo" target="blank" th:href="@{http://weibo.com/${commons.site_option('social_weibo')}}">微博</a>-->
-                <!--#end-->
-
-                <!--#tag social("zhihu")-->
-                <!--<a class="social zhihu" target="blank"-->
-                   <!--th:href="@{https://www.zhihu.com/people/${site_option('social_zhihu')}}">知乎</a>-->
-                <!--#end-->
-
-                <!--<a class="social rss" target="blank" href="/feed">RSS</a>-->
-
-                <!--#tag social("github")-->
-                <!--<a class="social github" target="blank"-->
-                   <!--th:href="@{http://github.com/${commons.site_option('social_github')}}">Github</a>-->
-                <!--#end-->
-
-                <!--#tag social("twitter")-->
-                <!--<a class="social twitter" target="blank" th:href="@{http://weibo.com/${commons.site_option('social_twitter')}}">Twitter</a>-->
-                <!--#end-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="footer-social">
+        <div class="footer-container clearfix">
+            <div class="social-list">
+                <th:block th:each="index:${commons.social()}">
+                    <th:block th:if="${index.value}!=null and ${index.value}!=''">
+                        <th:block th:switch="${index.key}">
+                            <th:block th:case="'weibo'" >
+                                <a class="social weibo" target="blank"
+                                   th:href="@{${index.value}}">微博</a>
+                            </th:block>
+                            <th:block th:case="'zhihu'" >
+                                <a class="social zhihu" target="blank"
+                                   th:href="@{${index.value}}">知乎</a>
+                            </th:block>
+                            <th:block th:case="'github'" >
+                                <a class="social github" target="blank"
+                                   th:href="@{${index.value}}">Github</a>
+                            </th:block>
+                            <th:block th:case="'twitter'" >
+                                <a class="social twitter" target="blank"
+                                   th:href="@{${index.value}}">Twitter</a>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </div>
+        </div>
+    </div>
     <div class="footer-meta">
         <div class="footer-container">
             <div class="meta-item meta-copyright">
@@ -58,7 +60,8 @@
                 <div th:if="${listValue}!=null">
                     <div th:each="comm : ${listValue}">
                         <li>
-                            <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}" th:text="${comm.author}+' : '+${comm.content}"></a>
+                            <a th:href="${commons.site_url('/article/')}+${comm.cid}+'#comment-'+${comm.coid}"
+                               th:text="${comm.author}+' : '+${comm.content}"></a>
                         </li>
                     </div>
                 </div>
@@ -74,7 +77,7 @@
     </div>
     <script>
         /*<![CDATA[*/
-        var postDirectoryBuild = function() {
+        var postDirectoryBuild = function () {
             var postChildren = function children(childNodes, reg) {
                     var result = [],
                         isReg = typeof reg === 'object',
@@ -91,12 +94,12 @@
                     }
                     return result;
                 },
-                createPostDirectory = function(article, directory, isDirNum) {
+                createPostDirectory = function (article, directory, isDirNum) {
                     var contentArr = [],
                         titleId = [],
                         levelArr, root, level,
                         currentList, list, li, link, i, len;
-                    levelArr = (function(article, contentArr, titleId) {
+                    levelArr = (function (article, contentArr, titleId) {
                         var titleElem = postChildren(article.childNodes, /^h\d$/),
                             levelArr = [],
                             lastNum = 1,
@@ -153,13 +156,13 @@
                         link = document.createElement('a');
                         link.href = '#' + titleId[i];
                         link.innerHTML = !isDirNum ? contentArr[i] :
-                            dirNum.join('.') + ' ' + contentArr[i] ;
+                            dirNum.join('.') + ' ' + contentArr[i];
                         li.appendChild(link);
                         currentList.appendChild(li);
                     }
                     directory.appendChild(root);
                 };
-            createPostDirectory(document.getElementById('post-content'),document.getElementById('directory'), true);
+            createPostDirectory(document.getElementById('post-content'), document.getElementById('directory'), true);
         };
         postDirectoryBuild();
         /*]]>*/
@@ -172,10 +175,10 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var isOk = [[${is_post}]];
-     if(isOk){
+    if (isOk) {
         var postDirectory = new Headroom(document.getElementById("directory-content"), {
             tolerance: 0,
-            offset : 100,
+            offset: 100,
             classes: {
                 initial: "initial",
                 pinned: "pinned",
@@ -187,7 +190,7 @@
 
     var header = new Headroom(document.getElementById("header"), {
         tolerance: 10,
-        offset : 80,
+        offset: 80,
         classes: {
             initial: "animated",
             pinned: "slideDown",

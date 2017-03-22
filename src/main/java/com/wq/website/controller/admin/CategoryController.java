@@ -10,6 +10,7 @@ import com.wq.website.service.IMetaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -39,6 +40,7 @@ public class CategoryController extends BaseController {
 
     @PostMapping(value = "save")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo saveCategory(@RequestParam String cname, @RequestParam Integer mid) {
         try {
             metasService.saveMeta(Types.CATEGORY.getType(),cname,mid);
@@ -56,6 +58,7 @@ public class CategoryController extends BaseController {
 
     @RequestMapping(value = "delete")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam int mid) {
         try {
             metasService.delete(mid);

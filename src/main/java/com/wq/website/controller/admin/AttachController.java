@@ -16,6 +16,7 @@ import com.wq.website.utils.TaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +41,7 @@ public class AttachController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AttachController.class);
 
-    public static final String CLASSPATH = "";
+    public static final String CLASSPATH = TaleUtils.getUplodFilePath();
 
     @Resource
     private IAttachService attachService;
@@ -74,6 +75,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping(value = "upload")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo upload(HttpServletRequest request,@RequestParam("file") MultipartFile[] multipartFiles) throws IOException {
         UserVo users = this.user(request);
         Integer uid = users.getUid();
@@ -84,7 +86,7 @@ public class AttachController extends BaseController {
                 if (multipartFile.getSize() <= WebConst.MAX_FILE_SIZE) {
                     String fkey = TaleUtils.getFileKey(fname);
                     String ftype = TaleUtils.isImage(multipartFile.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType();
-                    File file = new File(fkey);
+                    File file = new File(CLASSPATH+fkey);
                     try {
                         FileCopyUtils.copy(multipartFile.getInputStream(),new FileOutputStream(file));
                     } catch (IOException e) {
@@ -103,12 +105,13 @@ public class AttachController extends BaseController {
 
     @RequestMapping(value = "delete")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam Integer id, HttpServletRequest request) {
         try {
             AttachVo attach = attachService.selectById(id);
             if (null == attach) return RestResponseBo.fail("不存在该附件");
             attachService.deleteById(id);
-            new File(attach.getFkey()).delete();
+            new File(CLASSPATH+attach.getFkey()).delete();
             logService.insertLog(LogActions.DEL_ARTICLE.getAction(), attach.getFkey(), request.getRemoteAddr(), this.getUid(request));
         } catch (Exception e) {
             String msg = "附件删除失败";
