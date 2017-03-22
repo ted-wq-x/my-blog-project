@@ -16,6 +16,7 @@ import com.wq.website.service.IMetaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,9 +33,6 @@ public class PageController extends BaseController {
 
     @Resource
     private IContentService contentsService;
-
-    @Resource
-    private IMetaService metasService;
 
     @Resource
     private ILogService logService;
@@ -63,6 +61,7 @@ public class PageController extends BaseController {
 
     @PostMapping(value = "publish")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo publishPage(@RequestParam String title, @RequestParam String content,
                                       @RequestParam String status, @RequestParam String slug,
                                       @RequestParam(required = false) Integer allowComment, @RequestParam(required = false) Integer allowPing, HttpServletRequest request) {
@@ -98,6 +97,7 @@ public class PageController extends BaseController {
 
     @PostMapping(value = "modify")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo modifyArticle(@RequestParam Integer cid, @RequestParam String title,
                                         @RequestParam String content,
                                         @RequestParam String status, @RequestParam String slug,
@@ -134,6 +134,7 @@ public class PageController extends BaseController {
 
     @RequestMapping(value = "delete")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam int cid, HttpServletRequest request) {
         try {
             contentsService.deleteByCid(cid);

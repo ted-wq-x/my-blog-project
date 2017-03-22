@@ -43,12 +43,6 @@ public class ContentServiceImpl implements IContentService {
     @Resource
     private IMetaService metasService;
 
-
-//    @Override
-//    public void insertContent(ContentVo contentVo) {
-//
-//    }
-
     @Override
     public void publish(ContentVo contents) {
         if (null == contents)
@@ -197,6 +191,9 @@ public class ContentServiceImpl implements IContentService {
         }
         if (null == contents.getAuthorId()) {
             throw new TipException("请登录后发布文章");
+        }
+        if (StringUtils.isBlank(contents.getSlug())) {
+            contents.setSlug(null);
         }
         int time = DateKit.getCurrentUnixTime();
         contents.setModified(time);

@@ -74,6 +74,7 @@ public class ArticleController extends BaseController {
 
     @PostMapping(value = "/publish")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo publishArticle(ContentVo contents,  HttpServletRequest request) {
         UserVo users = this.user(request);
         contents.setAuthorId(users.getUid());
@@ -97,6 +98,7 @@ public class ArticleController extends BaseController {
 
     @PostMapping(value = "/modify")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo modifyArticle(ContentVo contents,HttpServletRequest request) {
         UserVo users = this.user(request);
         contents.setAuthorId(users.getUid());
@@ -116,6 +118,7 @@ public class ArticleController extends BaseController {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam int cid, HttpServletRequest request) {
         try {
             contentsService.deleteByCid(cid);

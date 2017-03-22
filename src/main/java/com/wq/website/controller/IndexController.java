@@ -310,8 +310,12 @@ public class IndexController extends BaseController{
      * @param cid
      * @param chits
      */
+    @Transactional(rollbackFor = TipException.class)
     private void updateArticleHit(Integer cid, Integer chits) {
         Integer hits = cache.hget("article", "hits");
+        if (chits == null) {
+            chits = 0;
+        }
         hits = null == hits ? 1 : hits + 1;
         if (hits >= WebConst.HIT_EXCEED) {
             ContentVo temp = new ContentVo();

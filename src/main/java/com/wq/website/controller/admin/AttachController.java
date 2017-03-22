@@ -16,6 +16,7 @@ import com.wq.website.utils.TaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,6 +75,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping(value = "upload")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo upload(HttpServletRequest request,@RequestParam("file") MultipartFile[] multipartFiles) throws IOException {
         UserVo users = this.user(request);
         Integer uid = users.getUid();
@@ -103,6 +105,7 @@ public class AttachController extends BaseController {
 
     @RequestMapping(value = "delete")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam Integer id, HttpServletRequest request) {
         try {
             AttachVo attach = attachService.selectById(id);

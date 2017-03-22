@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -50,6 +51,7 @@ public class CommentController extends BaseController {
      */
     @PostMapping(value = "delete")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam Integer coid) {
         try {
             CommentVo comments = commentsService.getCommentById(coid);
@@ -71,6 +73,7 @@ public class CommentController extends BaseController {
 
     @PostMapping(value = "status")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo delete(@RequestParam Integer coid, @RequestParam String status) {
         try {
             CommentVo comments = new CommentVo();
@@ -91,6 +94,7 @@ public class CommentController extends BaseController {
 
     @PostMapping(value = "")
     @ResponseBody
+    @Transactional(rollbackFor = TipException.class)
     public RestResponseBo reply(@RequestParam Integer coid, @RequestParam String content, HttpServletRequest request) {
         if(null == coid || StringUtils.isBlank(content)){
             return RestResponseBo.fail("请输入完整后评论");
