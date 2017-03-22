@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -421,6 +423,20 @@ public final class Commons {
      */
     public static String show_icon(int cid) {
         return ICONS[cid % ICONS.length];
+    }
+
+    /**
+     * 获取社交的链接地址
+     * @return
+     */
+    public static Map<String,String> social(){
+        final String prefix = "social_";
+        Map<String, String> map = new HashMap<>();
+        map.put("weibo", WebConst.initConfig.get(prefix+"weibo"));
+        map.put("zhihu", WebConst.initConfig.get(prefix+"zhihu"));
+        map.put("github", WebConst.initConfig.get(prefix+"github"));
+        map.put("twitter", WebConst.initConfig.get(prefix+"twitter"));
+        return map;
     }
 
 }
