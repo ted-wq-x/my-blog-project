@@ -78,7 +78,7 @@ public class JDBCTest {
     }
 
     @Test
-//    @Ignore
+    @Ignore
     public void testContentPage(){
         PageInfo<ContentVo> contents = contentService.getContents(1, 10);
         System.out.println(contents);
