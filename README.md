@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ted-wq-x/my-blog-project.svg?branch=master)](https://travis-ci.org/ted-wq-x/my-blog-project)
+
 # Tale
 
 > Tale's English meaning for the **Story**, I believe that every person who insists on writing a blog is a story; Chinese you call it ***Collapse*** does not matter.

@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional(rollbackFor = TipException.class)
-public class TestTranscation {
+public class TranscationTest {
 
     @Resource
     private IUserService userService;

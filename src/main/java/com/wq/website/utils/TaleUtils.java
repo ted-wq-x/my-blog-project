@@ -23,8 +23,7 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -302,11 +301,25 @@ public class TaleUtils {
         String content = renderer.render(document);
         content = Commons.emoji(content);
 
-        // TODO 支持网易云音乐输出
-//        if (TaleConst.BCONF.getBoolean("app.support_163_music", true) && content.contains("[mp3:")) {
-//            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
-//        }
-        // 支持gist代码输出
+        //支持网易云音乐输出 [mp3:xxx] 的形式
+        if (content.contains("[mp3:")) {
+            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
+        }
+
+//       TODO  爬虫获取的
+        if (content.contains("randomMusic")) {
+//            Properties muslicList = getPropFromFile("music_list.properties");
+            java.util.List music_list = MapCache.single().get("music_list");
+            StringBuilder sb = new StringBuilder();
+            if (null != music_list && music_list.size() > 0) {
+                music_list.forEach(index -> {
+                    sb.append("<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=").append(index).append("&auto=0&height=88\"></iframe>");
+                });
+            }
+            content = content.replaceAll("randomMusic", sb.toString());
+        }
+
+        //TODO  支持gist代码输出
 //        if (TaleConst.BCONF.getBoolean("app.support_gist", true) && content.contains("https://gist.github.com/")) {
 //            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
 //        }

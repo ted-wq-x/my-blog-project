@@ -12,17 +12,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CoreApplicationTests {
-    private static final Logger logger = LoggerFactory.getLogger(CoreApplicationTests.class);
+public class CoreApplicationTest
+{
+    private static final Logger logger = LoggerFactory.getLogger(CoreApplicationTest.class);
     @Value("${spring.datasource.url}")
     private String url;
-
+    
     @Test
     @Ignore
-    public void contextLoads() {
-        logger.debug("Enter contextLoads method-----------------------------------------------------------------------wangqiang");
+    public void contextLoads()
+    {
+		logger.debug("Enter contextLoads method-----------------------------------------------------------------------wangqiang");
 
         Assert.assertEquals("jdbc:mysql://45.76.205.80:3306/tale", url);
     }
-
+    
 }

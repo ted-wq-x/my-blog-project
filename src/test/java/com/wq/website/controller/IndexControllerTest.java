@@ -1,5 +1,6 @@
 package com.wq.website.controller;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class IndexControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Test
+    @Ignore
     public void index() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("")).andExpect(MockMvcResultMatchers.status().isOk());
 

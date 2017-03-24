@@ -36,3 +36,5 @@
     我遇到的基本上是由于后台代码报错引起的
     
 4. 无法实现动态修改运行的jar中的配置文件，因为运行的jar会被加写锁
+
+5. 使用travis ci 运行失败，需要修改mvnw的权限：git add --chmod=+x mvnw 然后commit提交
