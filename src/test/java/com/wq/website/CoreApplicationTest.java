@@ -10,13 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CoreApplicationTests
+public class CoreApplicationTest
 {
-    private static final Logger logger = LoggerFactory.getLogger(CoreApplicationTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(CoreApplicationTest.class);
     @Value("${spring.datasource.url}")
     private String url;
     
