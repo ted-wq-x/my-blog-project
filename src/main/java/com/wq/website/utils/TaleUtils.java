@@ -23,8 +23,7 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,8 +34,6 @@ import java.util.regex.Pattern;
  */
 public class TaleUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaleUtils.class);
-
-    private static DataSource newDataSource;
     /**
      * 一个月
      */
@@ -47,6 +44,7 @@ public class TaleUtils {
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static final Pattern SLUG_REGEX = Pattern.compile("^[A-Za-z0-9_-]{5,100}$", Pattern.CASE_INSENSITIVE);
+    private static DataSource newDataSource;
     /**
      * markdown解析器
      */
@@ -303,11 +301,25 @@ public class TaleUtils {
         String content = renderer.render(document);
         content = Commons.emoji(content);
 
-        // TODO 支持网易云音乐输出
-//        if (TaleConst.BCONF.getBoolean("app.support_163_music", true) && content.contains("[mp3:")) {
-//            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
-//        }
-        // 支持gist代码输出
+        //支持网易云音乐输出 [mp3:xxx] 的形式
+        if (content.contains("[mp3:")) {
+            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
+        }
+
+//       TODO  爬虫获取的
+        if (content.contains("randomMusic")) {
+//            Properties muslicList = getPropFromFile("music_list.properties");
+            java.util.List music_list = MapCache.single().get("music_list");
+            StringBuilder sb = new StringBuilder();
+            if (null != music_list && music_list.size() > 0) {
+                music_list.forEach(index -> {
+                    sb.append("<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=").append(index).append("&auto=0&height=88\"></iframe>");
+                });
+            }
+            content = content.replaceAll("randomMusic", sb.toString());
+        }
+
+        //TODO  支持gist代码输出
 //        if (TaleConst.BCONF.getBoolean("app.support_gist", true) && content.contains("https://gist.github.com/")) {
 //            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
 //        }
@@ -334,10 +346,11 @@ public class TaleUtils {
 
     /**
      * 替换HTML脚本
+     *
      * @param value
      * @return
      */
-    public static String cleanXSS(String value){
+    public static String cleanXSS(String value) {
         //You'll need to remove the spaces from the html entities below
         value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
         value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
@@ -420,24 +433,24 @@ public class TaleUtils {
         return false;
     }
 
-    public static String getFileKey(String name){
+    public static String getFileKey(String name) {
         String prefix = "upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
-        if (!new File(AttachController.CLASSPATH+prefix).exists()) {
-            new File(AttachController.CLASSPATH+prefix).mkdirs();
+        if (!new File(AttachController.CLASSPATH + prefix).exists()) {
+            new File(AttachController.CLASSPATH + prefix).mkdirs();
         }
 
         name = StringUtils.trimToNull(name);
-        if(name == null) {
-            return prefix + "/" + UUID.UU32() + "."+null;
+        if (name == null) {
+            return prefix + "/" + UUID.UU32() + "." + null;
         } else {
             name = name.replace('\\', '/');
             name = name.substring(name.lastIndexOf("/") + 1);
             int index = name.lastIndexOf(".");
             String ext = null;
-            if(index >= 0) {
+            if (index >= 0) {
                 ext = StringUtils.trimToNull(name.substring(index + 1));
             }
-            return prefix + "/" + UUID.UU32() + "." + (ext == null?null:(ext));
+            return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
         }
     }
 
@@ -461,13 +474,14 @@ public class TaleUtils {
 
     /**
      * 随机数
+     *
      * @param size
      * @return
      */
     public static String getRandomNumber(int size) {
         String num = "";
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             double a = Math.random() * 9.0D;
             a = Math.ceil(a);
             int randomNum = (new Double(a)).intValue();
@@ -479,9 +493,10 @@ public class TaleUtils {
 
     /**
      * 获取保存文件的位置,jar所在目录的路径
+     *
      * @return
      */
-    public static String getUplodFilePath(){
+    public static String getUplodFilePath() {
         String path = TaleUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 //        path = path.substring(1,path.length());
 //        try {
@@ -492,6 +507,6 @@ public class TaleUtils {
 //        int lastIndex = path.lastIndexOf("/") +1;
 //        path = path.substring(0, lastIndex);
         File file = new File("");
-        return file.getAbsolutePath()+"/";
+        return file.getAbsolutePath() + "/";
     }
 }
