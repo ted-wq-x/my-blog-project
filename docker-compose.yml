@@ -13,7 +13,7 @@ redis:
   image: redis:3.0
   ports:
    - 6379:6379
-user-service:
+tale-blog:
   image: blog/core
   ports:
    - 8080:8080
