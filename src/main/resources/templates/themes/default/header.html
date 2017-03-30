@@ -36,10 +36,10 @@
             <img th:src="@{/user/img/logo.png}" alt="首页"/>
         </a>
         <div class="navbar-menu">
-            <a th:href="${commons.site_url('/archives')}">归档</a>
-            <a th:href="${commons.site_url('/links')}">友链</a>
-            <a th:href="${commons.site_url('/music')}">音乐</a>
-            <a th:href="${commons.site_url('/about')}">关于</a>
+            <a th:href="${commons.site_url('archives')}">归档</a>
+            <a th:href="${commons.site_url('links')}">友链</a>
+            <a th:href="${commons.site_url('customize/music')}">音乐</a>
+            <a th:href="${commons.site_url('customize/about')}">关于</a>
         </div>
         <div class="navbar-search" onclick="">
             <span class="icon-search"></span>
