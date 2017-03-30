@@ -2,10 +2,11 @@
 
 > 使用springboot和mybatis重构，加深对框架的理解，原本使用的是轻量级的mvc框架Blade。完成
 > 模板引擎改用thymeleaf 完成
-> 实现docker服务部署mysql,tomcat,redis,mongdb并管理和Nginx反向代理 
+> 实现docker服务部署mysql,tomcat,redis,mongdb并管理和Nginx反向代理  由于服务器的内存限制，只使用了tomcat 完成
 > 使用websocket推送和统计在线人数
 > 使用python或者webmagic爬虫，推荐每日好文。
-> 接口使用aop记录日志
+> 接口使用aop记录日志 完成
+> 使用swagger2生成restful api，访问地址为http://域名/swagger-ui.html 完成 
 
 以上工作内容只是简单的罗列，详细内容后面补充。
 
