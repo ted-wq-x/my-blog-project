@@ -319,10 +319,10 @@ public class TaleUtils {
             content = content.replaceAll("randomMusic", sb.toString());
         }
 
-        //TODO  支持gist代码输出
-//        if (TaleConst.BCONF.getBoolean("app.support_gist", true) && content.contains("https://gist.github.com/")) {
-//            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
-//        }
+        // 支持gist代码输出
+        if (content.contains("https://gist.github.com/")) {
+            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
+        }
         return content;
     }
 
