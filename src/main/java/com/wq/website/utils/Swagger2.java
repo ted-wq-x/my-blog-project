@@ -20,11 +20,13 @@ public class Swagger2 {
 
     @Bean
     public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        Docket build = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select().paths(PathSelectors.any())
                 .apis(RequestHandlerSelectors.basePackage("com.wq.website"))
                 .build();
+        build.host("wangqiang.website");
+        return build;
     }
 
     private ApiInfo apiInfo() {
@@ -36,5 +38,4 @@ public class Swagger2 {
                 .version("1.0")
                 .build();
     }
-
 }
