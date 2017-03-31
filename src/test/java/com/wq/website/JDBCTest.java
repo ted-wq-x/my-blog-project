@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.wq.website.dao.CommentVoMapper;
 import com.wq.website.modal.Vo.CommentVo;
 import com.wq.website.modal.Vo.ContentVo;
+import com.wq.website.modal.Vo.OptionVo;
 import com.wq.website.modal.Vo.UserVo;
 import com.wq.website.service.IContentService;
 import com.wq.website.service.IOptionService;
@@ -58,13 +59,17 @@ public class JDBCTest {
         Assert.assertEquals(1, i);
     }
 
-    @Ignore
     @Test
+    @Ignore
     public void testPage() {
-//        int pageSize = 8;
-//        PageHelper.startPage(1, pageSize);
-//        List<CommentVo> byPage = commentMapper.findByPage();
-//        Assert.assertEquals(byPage.size(),pageSize);
+        optionService.insertOption("site_ll","wa");
+        List<OptionVo> options = optionService.getOptions();
+        options.forEach(index->{
+            if (index.getName().equals("site_ll")) {
+                Assert.assertEquals(index.getValue(),"wa");
+
+            }
+        });
     }
 
     @Test

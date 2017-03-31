@@ -27,3 +27,4 @@ nbdist/
 logs
 application-jdbc.properties
 upload
+install.lock

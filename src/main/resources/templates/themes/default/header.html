@@ -15,8 +15,8 @@
     <title>
         <th:block th:text="${title ?: '首页'}+' - '+${commons.site_option('site_title','Tale博客')}"></th:block>
     </title>
-    <link th:href="@{//cdn.bootcss.com/highlight.js/9.9.0/styles/xcode.min.css}" rel="stylesheet"/>
-    <link th:href="@{/user/css/style.min.css}" rel="stylesheet"/>
+    <link th:href="@{//cdn.bootcss.com/highlight.js/9.9.0/styles/xcode.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/user/css/style.min.css}" rel="stylesheet" type="text/css"/>
     <script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
 
     <!--[if lt IE 9]>
@@ -36,10 +36,10 @@
             <img th:src="@{/user/img/logo.png}" alt="首页"/>
         </a>
         <div class="navbar-menu">
-            <a th:href="${commons.site_url('archives')}">归档</a>
-            <a th:href="${commons.site_url('links')}">友链</a>
-            <a th:href="${commons.site_url('customize/music')}">音乐</a>
-            <a th:href="${commons.site_url('customize/about')}">关于</a>
+            <a th:href="${commons.site_url('/archives')}">归档</a>
+            <a th:href="${commons.site_url('/links')}">友链</a>
+            <a th:href="${commons.site_url('/customize/music')}">音乐</a>
+            <a th:href="${commons.site_url('/customize/about')}">关于</a>
         </div>
         <div class="navbar-search" onclick="">
             <span class="icon-search"></span>
