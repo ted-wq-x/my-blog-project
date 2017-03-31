@@ -16,6 +16,7 @@
 2. 日志使用由'Starter POMs'，使用Commons Logging记录日志
 3. 使用的是 [https://github.com/astarring/mybatis-generator-gui/releases]() 生成的DAO层
 4. 大致完成原有项目的翻译工作，目前处于测试阶段。
+5. 使用七牛云保存markdown的图片
 
 # 存在的问题
 
