@@ -37,7 +37,9 @@ public class OptionServiceImpl implements IOptionService {
         OptionVo optionVo = new OptionVo();
         optionVo.setName(name);
         optionVo.setValue(value);
-        if (optionDao.selectByExample(new OptionVoExample()).size() == 0) {
+        OptionVoExample optionVoExample = new OptionVoExample();
+        optionVoExample.createCriteria().andNameEqualTo(name);
+        if ( optionDao.countByExample(optionVoExample) == 0) {
             optionDao.insertSelective(optionVo);
         } else {
             optionDao.updateByPrimaryKeySelective(optionVo);

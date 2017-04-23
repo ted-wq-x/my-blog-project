@@ -70,6 +70,9 @@ public class PageController extends BaseController {
         contents.setTitle(title);
         contents.setContent(content);
         contents.setStatus(status);
+        if (!slug.startsWith("customize/")) {
+            slug = "customize/" + slug;
+        }
         contents.setSlug(slug);
         contents.setType(Types.PAGE.getType());
         if (null != allowComment) {
@@ -112,6 +115,9 @@ public class PageController extends BaseController {
         contents.setTitle(title);
         contents.setContent(content);
         contents.setStatus(status);
+        if (!slug.startsWith("customize/")) {
+            slug = "customize/" + slug;
+        }
         contents.setSlug(slug);
         contents.setType(Types.PAGE.getType());
         if (null != allowComment) {

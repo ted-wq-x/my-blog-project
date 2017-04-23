@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <div th:replace="themes/default/header::header(null,null)"></div>
+<script>
+
+    <!--标题闪烁-->
+    var initTitle = document.title;
+    var isture = true, isShine = true;
+    setInterval(function () {
+
+        if (isShine) {
+            if (isture) {
+                document.title = '（●＾o＾●）';
+                isture = false;
+            } else {
+                document.title = '(￣ε(#￣)';
+                isture = true;
+            }
+        } else {
+            document.title = initTitle;
+        }
+    }, 2000);
+    window.onfocus = function () {
+        isShine = false;
+    };
+    window.onblur = function () {
+        isShine = true;
+    };
+
+    /*  测试html5 Notification*/
+    if (window.Notification) {
+        //        请求权限
+        Notification.requestPermission();
+        //获取权限
+        if (Notification.permission === 'granted') {
+
+            var notification = new Notification('看一看瞧一瞧啊，(＠・ˍ・)',{
+                body:'Welcome,么么哒，(ΦωΦ)',
+                icon:'http://onmb5ryy1.bkt.clouddn.com/%E6%96%B0%E5%9F%82%E7%BB%93%E8%A1%A3.jpg',
+                tag:'welcome',
+                noscreen:true,
+                silent:false
+            });
+
+            setTimeout(function () {
+                notification.close();
+            },3000);
+            notification.onclick = function () {
+                notification.close();
+            };
+        }
+    }
+</script>
 <body>
 <div class="main-content index-page clearfix">
     <div class="post-lists">

@@ -20,6 +20,8 @@ import com.wq.website.service.ISiteService;
 import com.wq.website.utils.IPKit;
 import com.wq.website.utils.PatternKit;
 import com.wq.website.utils.TaleUtils;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +63,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @GetMapping(value = "/")
+    @ApiOperation(value = "请求首页")
     public String index(HttpServletRequest request, @RequestParam(value = "limit", defaultValue = "12") int limit) {
         return this.index(request, 1, limit);
     }
@@ -74,6 +77,8 @@ public class IndexController extends BaseController {
      * @return 主页
      */
     @GetMapping(value = "page/{p}")
+    @ApiOperation(value = "加载首页")
+    @ApiImplicitParam(name = "p",value = "分页",required = true,dataType = "Integer")
     public String index(HttpServletRequest request, @PathVariable int p, @RequestParam(value = "limit", defaultValue = "12") int limit) {
         p = p < 0 || p > WebConst.MAX_PAGE ? 1 : p;
         PageInfo<ContentVo> articles = contentService.getContents(p, limit);
@@ -265,9 +270,9 @@ public class IndexController extends BaseController {
     /**
      * 自定义页面,如关于的页面
      */
-    @GetMapping(value = "/{pagename}")
+    @GetMapping(value = "/customize/{pagename}")
     public String page(@PathVariable String pagename, HttpServletRequest request) {
-        ContentVo contents = contentService.getContents(pagename);
+        ContentVo contents = contentService.getContents("customize/"+pagename);
         if (null == contents) {
             return this.render_404();
         }

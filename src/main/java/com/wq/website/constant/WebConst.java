@@ -44,7 +44,7 @@ public class WebConst {
      */
     public static String AES_SALT = "0123456789abcdef";
     /**
-     * 上传文件最大20M
+     * 上传文件最大1M.tomcat 默认值
      */
-    public static Integer MAX_FILE_SIZE = 204800;
+    public static Integer MAX_FILE_SIZE = 1048576;
 }
