@@ -69,6 +69,9 @@ public class ContentServiceImpl implements IContentService {
         } else {
             contents.setSlug(null);
         }
+        if (null==contents.getCommentsNum()) {
+            contents.setCommentsNum(0);
+        }
 
         contents.setContent(EmojiParser.parseToAliases(contents.getContent()));
 
