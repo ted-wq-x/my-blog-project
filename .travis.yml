@@ -1,3 +1,10 @@
 language: java
 jdk:
   - oraclejdk8
+before_install:
+  - openssl aes-256-cbc -K $encrypted_66bfa865dee4_key -iv $encrypted_66bfa865dee4_iv -in travis.enc -out travis -d
+  - chmod 600 travis
+addons:
+  ssh_known_hosts: 45.76.205.80
+after_success:
+  - ssh root@45.76.205.80 "./deploy.sh"
