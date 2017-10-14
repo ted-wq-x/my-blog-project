@@ -10,4 +10,4 @@ addons:
 after_success:
   - pwd
   - ls
-  - ssh root@45.76.205.80 "./deploy.sh"
+  - ssh root@45.76.205.80 "bash" < deploy.sh
