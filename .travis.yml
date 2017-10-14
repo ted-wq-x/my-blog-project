@@ -8,4 +8,4 @@ before_install:
 addons:
   ssh_known_hosts: 45.76.205.80
 after_success:
-  - ssh root@45.76.205.80 "deploy.sh"
+  - ssh root@45.76.205.80 "./deploy.sh"
