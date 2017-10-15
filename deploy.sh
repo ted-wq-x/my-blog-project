@@ -29,4 +29,4 @@ echo 'kill core success'
 nohup java -jar /usr/java/core-blog.jar  &
 echo 'start core success'
 echo 'travis build done!'
-exit 0
+return
