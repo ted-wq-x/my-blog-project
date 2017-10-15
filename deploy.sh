@@ -12,6 +12,22 @@ filetemp=*.jar
 mv $filetemp core_proj_bak/$temp.jar
 
 mv ~/*.jar /usr/java/core-blog.jar
-rm -rf ~/*.jar
+
+# 重启
+
+
+varNum=$(ps x | grep core | grep 'java' | awk '{print $1}')
+
+#echo "varNum='$varNum'"
+##
+if [ -n $varNum ]
+then 	
+  kill -9 $varNum
+fi
+##
+echo 'kill core success'
+nohup java -jar /usr/java/core-blog.jar  &
+echo 'start core success'
+
 
 echo 'travis build done!'
