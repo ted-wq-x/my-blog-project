@@ -27,8 +27,8 @@ fi
 ##
 echo 'kill core success'
 # 删除日志文件
-if [ ! -d "/usr/java/core.blog" ]; then
-  mrm -rf /usr/java/core.blog
+if [ -d "/usr/java/core.blog" ]; then
+  rm -rf /usr/java/core.blog
 fi
 
 nohup java -jar /usr/java/core-blog.jar > core.blog &
