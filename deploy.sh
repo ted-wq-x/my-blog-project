@@ -26,7 +26,12 @@ then
 fi
 ##
 echo 'kill core success'
-nohup java -jar /usr/java/core-blog.jar  &
+# 删除日志文件
+if [ ! -d "/usr/java/core.blog" ]; then
+  mrm -rf /usr/java/core.blog
+fi
+
+nohup java -jar /usr/java/core-blog.jar > core.blog &
 echo 'start core success'
 echo 'travis build done!'
-return
+
