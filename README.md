@@ -12,6 +12,10 @@ this project frok from https://github.com/otale ,and use springMvc refactor(TODO
 
 Tips:The installation process takes longer,please wait.
 
+## Travis-ci
+
+use travis-ci realize ci and automatic deploy to my vps.
+
 
 
 
